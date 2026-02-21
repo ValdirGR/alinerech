@@ -1,0 +1,287 @@
+import { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { 
+  Phone, 
+  MapPin, 
+  Clock, 
+  Calendar, 
+  MessageCircle,
+  Send,
+  CheckCircle
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+
+gsap.registerPlugin(ScrollTrigger);
+
+export function Contact() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    message: ''
+  });
+
+  useEffect(() => {
+    const triggers: ScrollTrigger[] = [];
+    
+    const ctx = gsap.context(() => {
+      // Animação do conteúdo
+      const contentTrigger = ScrollTrigger.create({
+        trigger: contentRef.current,
+        start: 'top 80%',
+        onEnter: () => {
+          gsap.fromTo(
+            contentRef.current?.children || [],
+            { opacity: 0, x: -50 },
+            { opacity: 1, x: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out' }
+          );
+        },
+        once: true
+      });
+      triggers.push(contentTrigger);
+
+      // Animação do formulário
+      const formTrigger = ScrollTrigger.create({
+        trigger: formRef.current,
+        start: 'top 75%',
+        onEnter: () => {
+          gsap.fromTo(
+            formRef.current,
+            { opacity: 0, x: 50 },
+            { opacity: 1, x: 0, duration: 1, ease: 'power3.out' }
+          );
+        },
+        once: true
+      });
+      triggers.push(formTrigger);
+    }, sectionRef);
+
+    return () => {
+      triggers.forEach(t => t.kill());
+      ctx.revert();
+    };
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+    setTimeout(() => {
+      setIsSubmitted(false);
+      setFormData({ name: '', phone: '', email: '', message: '' });
+    }, 3000);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const contactInfo = [
+    {
+      icon: Phone,
+      title: 'Telefone',
+      content: '(48) 99999-9999',
+      link: 'tel:+5548999999999'
+    },
+    {
+      icon: MapPin,
+      title: 'Endereço',
+      content: 'Rua Altamiro Guimarães, 189 - Içara, SC',
+      link: 'https://maps.google.com'
+    },
+    {
+      icon: Clock,
+      title: 'Horário de Atendimento',
+      content: 'Seg - Sex: 8h às 18h | Sáb: 8h às 12h',
+      link: null
+    }
+  ];
+
+  return (
+    <section 
+      ref={sectionRef}
+      id="contato"
+      className="relative py-20 sm:py-28 lg:py-32 bg-[#F8F9FA] overflow-hidden"
+    >
+      {/* Decorative Elements */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#0B3D4C]/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#C9A962]/10 rounded-full blur-3xl" />
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+          {/* Content */}
+          <div ref={contentRef}>
+            <div className="inline-flex items-center gap-2 bg-[#0B3D4C]/10 rounded-full px-4 py-2 mb-6">
+              <Calendar className="w-4 h-4 text-[#C9A962]" />
+              <span className="text-[#0B3D4C] text-sm font-medium">Agende sua consulta</span>
+            </div>
+
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0B3D4C] mb-6 leading-tight">
+              Pronto para ter o{' '}
+              <span className="text-[#C9A962]">sorriso dos sonhos</span>?
+            </h2>
+
+            <p className="text-gray-600 text-lg mb-8 leading-relaxed">
+              Entre em contato e agende sua avaliação gratuita. Vamos juntos 
+              planejar a transformação do seu sorriso com o cuidado e a 
+              excelência que você merece.
+            </p>
+
+            {/* Contact Info */}
+            <div className="space-y-4 mb-8">
+              {contactInfo.map((item, index) => (
+                <div 
+                  key={index}
+                  className="flex items-start gap-4 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-300"
+                >
+                  <div className="w-12 h-12 bg-[#0B3D4C] rounded-lg flex items-center justify-center flex-shrink-0">
+                    <item.icon className="w-6 h-6 text-[#C9A962]" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-[#0B3D4C]">{item.title}</p>
+                    {item.link ? (
+                      <a 
+                        href={item.link}
+                        target={item.link.startsWith('http') ? '_blank' : undefined}
+                        rel={item.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        className="text-gray-600 hover:text-[#C9A962] transition-colors"
+                      >
+                        {item.content}
+                      </a>
+                    ) : (
+                      <p className="text-gray-600">{item.content}</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* WhatsApp CTA */}
+            <a
+              href="https://wa.me/5548999999999"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#128C7E] text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              <MessageCircle className="w-6 h-6" />
+              <span>Falar no WhatsApp</span>
+            </a>
+          </div>
+
+          {/* Form */}
+          <div ref={formRef}>
+            <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-xl">
+              <h3 className="text-2xl font-bold text-[#0B3D4C] mb-2">
+                Solicite um contato
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Preencha o formulário e retornaremos em breve.
+              </p>
+
+              {isSubmitted ? (
+                <div className="text-center py-12">
+                  <div className="w-20 h-20 bg-[#C9A962] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle className="w-10 h-10 text-[#0B3D4C]" />
+                  </div>
+                  <h4 className="text-xl font-bold text-[#0B3D4C] mb-2">
+                    Mensagem enviada!
+                  </h4>
+                  <p className="text-gray-600">
+                    Entraremos em contato em breve.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div>
+                    <Label htmlFor="name" className="text-[#0B3D4C] font-medium">
+                      Nome completo
+                    </Label>
+                    <Input
+                      id="name"
+                      name="name"
+                      type="text"
+                      placeholder="Seu nome"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="mt-1 border-gray-200 focus:border-[#C9A962] focus:ring-[#C9A962] rounded-xl"
+                    />
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="phone" className="text-[#0B3D4C] font-medium">
+                        Telefone
+                      </Label>
+                      <Input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        placeholder="(48) 99999-9999"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                        className="mt-1 border-gray-200 focus:border-[#C9A962] focus:ring-[#C9A962] rounded-xl"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="email" className="text-[#0B3D4C] font-medium">
+                        E-mail
+                      </Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="seu@email.com"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="mt-1 border-gray-200 focus:border-[#C9A962] focus:ring-[#C9A962] rounded-xl"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="message" className="text-[#0B3D4C] font-medium">
+                      Mensagem
+                    </Label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      placeholder="Conte-nos como podemos ajudar..."
+                      value={formData.message}
+                      onChange={handleChange}
+                      rows={4}
+                      className="mt-1 border-gray-200 focus:border-[#C9A962] focus:ring-[#C9A962] rounded-xl resize-none"
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-[#0B3D4C] hover:bg-[#155A6E] text-white font-semibold py-6 rounded-xl transition-all duration-300 hover:scale-[1.02]"
+                  >
+                    <Send className="w-5 h-5 mr-2" />
+                    Enviar mensagem
+                  </Button>
+
+                  <p className="text-xs text-gray-500 text-center">
+ Ao enviar, você concorda com nossa política de privacidade.
+                  </p>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
