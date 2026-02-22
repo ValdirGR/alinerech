@@ -7,6 +7,7 @@ import { Header } from '@/components/sections/Header';
 import { Hero } from '@/components/sections/Hero';
 import { About } from '@/components/sections/About';
 import { Services } from '@/components/sections/Services';
+import { Results } from '@/components/sections/Results';
 import { Process } from '@/components/sections/Process';
 import { MitoVerdade } from '@/components/sections/MitoVerdade';
 import { Features } from '@/components/sections/Features';
@@ -43,6 +44,7 @@ function App() {
                 <Hero />
                 <About />
                 <Services />
+                <Results />
                 <Process />
                 <MitoVerdade />
                 <Features />

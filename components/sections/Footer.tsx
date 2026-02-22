@@ -1,8 +1,8 @@
-import { 
-  Phone, 
-  MapPin, 
-  Clock, 
-  Instagram, 
+import {
+  Phone,
+  MapPin,
+  Clock,
+  Instagram,
   Facebook,
   Mail,
   Heart
@@ -48,7 +48,7 @@ export function Footer() {
               <p className="text-white/60 text-sm mt-1">Odontologia Estética</p>
             </div>
             <p className="text-white/70 text-sm leading-relaxed mb-6">
-              Transformando sorrisos e vidas através da odontologia estética 
+              Transformando sorrisos e vidas através da odontologia estética
               de excelência. Seu sorriso perfeito começa aqui.
             </p>
             <div className="flex gap-3">
@@ -124,11 +124,11 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-[#C9A962] flex-shrink-0" />
-                <a 
-                  href="tel:+5548999999999"
+                <a
+                  href="tel:+5548996374030"
                   className="text-white/70 hover:text-[#C9A962] transition-colors text-sm"
                 >
-                  (48) 99999-9999
+                  (48) 99637-4030
                 </a>
               </li>
               <li className="flex items-center gap-3">

@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { 
-  Phone, 
-  MapPin, 
-  Clock, 
-  Calendar, 
+import {
+  Phone,
+  MapPin,
+  Clock,
+  Calendar,
   MessageCircle,
   Send,
   CheckCircle
@@ -31,7 +31,7 @@ export function Contact() {
 
   useEffect(() => {
     const triggers: ScrollTrigger[] = [];
-    
+
     const ctx = gsap.context(() => {
       // Animação do conteúdo
       const contentTrigger = ScrollTrigger.create({
@@ -90,8 +90,8 @@ export function Contact() {
     {
       icon: Phone,
       title: 'Telefone',
-      content: '(48) 99999-9999',
-      link: 'tel:+5548999999999'
+      content: '(48) 99637-4030',
+      link: 'tel:+5548996374030'
     },
     {
       icon: MapPin,
@@ -108,7 +108,7 @@ export function Contact() {
   ];
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       id="contato"
       className="relative py-20 sm:py-28 lg:py-32 bg-[#F8F9FA] overflow-hidden"
@@ -132,15 +132,15 @@ export function Contact() {
             </h2>
 
             <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-              Entre em contato e agende sua avaliação gratuita. Vamos juntos 
-              planejar a transformação do seu sorriso com o cuidado e a 
+              Entre em contato e agende sua avaliação gratuita. Vamos juntos
+              planejar a transformação do seu sorriso com o cuidado e a
               excelência que você merece.
             </p>
 
             {/* Contact Info */}
             <div className="space-y-4 mb-8">
               {contactInfo.map((item, index) => (
-                <div 
+                <div
                   key={index}
                   className="flex items-start gap-4 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-300"
                 >
@@ -150,7 +150,7 @@ export function Contact() {
                   <div>
                     <p className="font-semibold text-[#0B3D4C]">{item.title}</p>
                     {item.link ? (
-                      <a 
+                      <a
                         href={item.link}
                         target={item.link.startsWith('http') ? '_blank' : undefined}
                         rel={item.link.startsWith('http') ? 'noopener noreferrer' : undefined}
@@ -168,7 +168,7 @@ export function Contact() {
 
             {/* WhatsApp CTA */}
             <a
-              href="https://wa.me/5548999999999"
+              href="https://wa.me/5548996374030"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#128C7E] text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
@@ -227,7 +227,7 @@ export function Contact() {
                         id="phone"
                         name="phone"
                         type="tel"
-                        placeholder="(48) 99999-9999"
+                        placeholder="(48) 99637-4030"
                         value={formData.phone}
                         onChange={handleChange}
                         required
@@ -274,7 +274,7 @@ export function Contact() {
                   </Button>
 
                   <p className="text-xs text-gray-500 text-center">
- Ao enviar, você concorda com nossa política de privacidade.
+                    Ao enviar, você concorda com nossa política de privacidade.
                   </p>
                 </form>
               )}

@@ -115,7 +115,7 @@ export function Hero() {
               <Button
                 size="lg"
                 variant="outline"
-                onClick={() => window.open('https://wa.me/5548999999999', '_blank')}
+                onClick={() => window.open('https://wa.me/5548996374030', '_blank')}
                 className="border-2 border-white/30 text-white hover:bg-white/10 font-semibold px-8 py-6 text-lg rounded-full transition-all duration-300"
               >
                 <Phone className="w-5 h-5 mr-2" />
