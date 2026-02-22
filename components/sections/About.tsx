@@ -13,7 +13,7 @@ export function About() {
 
   useEffect(() => {
     const triggers: ScrollTrigger[] = [];
-    
+
     const ctx = gsap.context(() => {
       // Animação do conteúdo
       const contentTrigger = ScrollTrigger.create({
@@ -91,7 +91,7 @@ export function About() {
   ];
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       id="sobre"
       className="relative py-20 sm:py-28 lg:py-32 bg-white overflow-hidden"
@@ -116,19 +116,19 @@ export function About() {
 
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
-                A Dra. Aline Rech é cirurgiã-dentista com mais de 10 anos de experiência, 
-                especializada em odontologia estética e implantodontia. Sua trajetória é 
-                marcada pelo compromisso incessante em proporcionar sorrisos naturais e 
+                A Dra. Aline Rech é cirurgiã-dentista com mais de 10 anos de experiência,
+                especializada em odontologia estética e implantodontia. Sua trajetória é
+                marcada pelo compromisso incessante em proporcionar sorrisos naturais e
                 harmoniosos que transformam vidas.
               </p>
               <p>
-                Formada por instituições renomadas, a Dra. Aline constantemente se atualiza 
-                através de cursos e congressos nacionais e internacionais, trazendo para 
+                Formada por instituições renomadas, a Dra. Aline constantemente se atualiza
+                através de cursos e congressos nacionais e internacionais, trazendo para
                 Içara as técnicas mais modernas e inovadoras do mercado odontológico.
               </p>
               <p>
-                Seu consultório foi projetado para oferecer conforto e tecnologia, 
-                garantindo que cada paciente tenha uma experiência única e resultados 
+                Seu consultório foi projetado para oferecer conforto e tecnologia,
+                garantindo que cada paciente tenha uma experiência única e resultados
                 que superem expectativas.
               </p>
             </div>
@@ -159,18 +159,18 @@ export function About() {
           <div ref={imageRef} className="relative">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
               <img
-                src="/dra-aline.jpg"
+                src="/aline.jpg"
                 alt="Dra. Aline Rech"
                 className="w-full h-[500px] sm:h-[600px] object-cover"
               />
               {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0B3D4C]/40 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-[#0B3D4C]/40 via-transparent to-transparent" />
             </div>
 
             {/* Experience Badge */}
             <div className="absolute -bottom-6 -left-6 bg-[#0B3D4C] text-white rounded-2xl p-6 shadow-xl">
               <p className="text-4xl font-bold text-[#C9A962]">+10</p>
-              <p className="text-sm text-white/80">Anos de<br/>Experiência</p>
+              <p className="text-sm text-white/80">Anos de<br />Experiência</p>
             </div>
 
             {/* Decorative Elements */}
@@ -182,7 +182,7 @@ export function About() {
         {/* Diferenciais Cards */}
         <div ref={cardsRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {diferenciais.map((item, index) => (
-            <div 
+            <div
               key={index}
               className="group bg-[#F8F9FA] hover:bg-[#0B3D4C] rounded-2xl p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl"
             >
