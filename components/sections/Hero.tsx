@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { Phone, Calendar, ChevronRight, Sparkles } from 'lucide-react';
+import { Phone, Calendar, ChevronRight, Sparkles, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
 
 export function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -15,13 +16,13 @@ export function Hero() {
       gsap.fromTo(
         contentRef.current?.children || [],
         { opacity: 0, y: 40 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.8, 
-          stagger: 0.15, 
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.15,
           ease: 'power3.out',
-          delay: 0.3 
+          delay: 0.3
         }
       );
 
@@ -29,11 +30,11 @@ export function Hero() {
       gsap.fromTo(
         imageRef.current,
         { opacity: 0, scale: 1.1 },
-        { 
-          opacity: 1, 
-          scale: 1, 
-          duration: 1.2, 
-          ease: 'power2.out' 
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 1.2,
+          ease: 'power2.out'
         }
       );
 
@@ -41,13 +42,13 @@ export function Hero() {
       gsap.fromTo(
         statsRef.current?.children || [],
         { opacity: 0, y: 30 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.6, 
-          stagger: 0.1, 
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.1,
           ease: 'power2.out',
-          delay: 0.8 
+          delay: 0.8
         }
       );
     }, heroRef);
@@ -63,7 +64,7 @@ export function Hero() {
   };
 
   return (
-    <section 
+    <section
       ref={heroRef}
       id="inicio"
       className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-[#0B3D4C] via-[#0F4A5C] to-[#155A6E]"
@@ -98,7 +99,7 @@ export function Hero() {
             </h1>
 
             <p className="text-lg sm:text-xl text-white/80 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              Facetas em resina e implantes dentários com tecnologia de ponta. 
+              Facetas em resina e implantes dentários com tecnologia de ponta.
               Resultados naturais que vão além da estética — devolvem sua confiança.
             </p>
 
@@ -141,29 +142,54 @@ export function Hero() {
 
           {/* Image */}
           <div ref={imageRef} className="relative order-1 lg:order-2">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-              <img
-                src="/hero-smile.jpg"
-                alt="Sorriso perfeito"
-                className="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover"
-              />
-              {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0B3D4C]/60 via-transparent to-transparent" />
-              
-              {/* Floating Card */}
-              <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-[#C9A962] rounded-full flex items-center justify-center">
-                    <Sparkles className="w-6 h-6 text-[#0B3D4C]" />
+            <Dialog>
+              <DialogTrigger asChild>
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl cursor-pointer group">
+                  <img
+                    src="/hero-smile.jpg"
+                    alt="Sorriso perfeito"
+                    className="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  {/* Overlay gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B3D4C]/80 via-black/20 to-transparent transition-opacity duration-500 group-hover:bg-black/40" />
+
+                  {/* Play Button Overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center z-10 drop-shadow-2xl">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 transition-transform duration-300 group-hover:scale-110 shadow-2xl">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#C9A962] rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(201,169,98,0.5)]">
+                        <Play className="w-8 h-8 sm:w-10 sm:h-10 text-[#0B3D4C] ml-2" fill="currentColor" />
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-semibold text-[#0B3D4C]">Dra. Aline Rech</p>
-                    <p className="text-sm text-gray-600">Cirurgiã-Dentista | CRO-SC</p>
+
+                  {/* Floating Card */}
+                  <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl z-20">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-[#C9A962] rounded-full flex items-center justify-center">
+                        <Sparkles className="w-6 h-6 text-[#0B3D4C]" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-[#0B3D4C]">Dra. Aline Rech</p>
+                        <p className="text-sm text-gray-600">Cirurgiã-Dentista | CRO-SC</p>
+                      </div>
+                      <ChevronRight className="w-5 h-5 text-[#C9A962] ml-auto transition-transform duration-300 group-hover:translate-x-1" />
+                    </div>
                   </div>
-                  <ChevronRight className="w-5 h-5 text-[#C9A962] ml-auto" />
                 </div>
-              </div>
-            </div>
+              </DialogTrigger>
+              <DialogContent className="max-w-5xl w-[90vw] p-0 overflow-hidden bg-transparent border-none shadow-none [&>button]:text-white [&>button]:bg-black/40 hover:[&>button]:bg-black/60 [&>button]:rounded-full [&>button]:p-2 [&>button]:w-10 [&>button]:h-10 [&>button]:flex [&>button]:items-center [&>button]:justify-center [&>button>svg]:w-6 [&>button>svg]:h-6">
+                <DialogTitle className="sr-only">Vídeo de Apresentação</DialogTitle>
+                <div className="aspect-video w-full rounded-xl overflow-hidden bg-black shadow-2xl">
+                  <iframe
+                    src="https://iframe.mediadelivery.net/embed/604126/2353cb85-56c0-40cc-8ea4-c6944d44cf99?autoplay=1"
+                    loading="lazy"
+                    className="border-0 w-full h-full"
+                    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                    allowFullScreen={true}
+                  />
+                </div>
+              </DialogContent>
+            </Dialog>
 
             {/* Decorative Ring */}
             <div className="absolute -top-4 -right-4 w-24 h-24 border-4 border-[#C9A962]/30 rounded-full" />
@@ -172,7 +198,7 @@ export function Hero() {
         </div>
 
         {/* Stats */}
-        <div 
+        <div
           ref={statsRef}
           className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-8 border-t border-white/10"
         >
