@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Camera, Sparkles } from 'lucide-react';
+import Image from 'next/image';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -113,6 +114,17 @@ export function Results() {
                             />
                             {/* Overlay suave inferior */}
                             <div className="absolute inset-0 bg-linear-to-t from-[#0B3D4C]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+                            {/* Marca d'água */}
+                            <div className="absolute bottom-4 left-4 w-28 h-auto opacity-30 pointer-events-none z-10 mix-blend-overlay">
+                                <Image
+                                    src="/logo-aline.png"
+                                    alt="Marca d'água"
+                                    width={112}
+                                    height={34}
+                                    className="w-full h-auto brightness-0 invert"
+                                />
+                            </div>
 
                             {/* Ícone de destaque ao passar o mouse */}
                             <div className="absolute bottom-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0">
