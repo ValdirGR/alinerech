@@ -154,7 +154,10 @@ export function Hero() {
                   <div className="absolute inset-0 bg-linear-to-t from-[#0B3D4C]/80 via-black/20 to-transparent transition-opacity duration-500 group-hover:bg-black/40" />
 
                   {/* Play Button Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center z-10 drop-shadow-2xl">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center z-10 drop-shadow-2xl">
+                    <p className="text-white bg-black/40 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-medium mb-4 transform transition-transform duration-300 group-hover:-translate-y-1 border border-white/20">
+                      Assistir Apresentação
+                    </p>
                     <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 transition-transform duration-300 group-hover:scale-110 shadow-2xl">
                       <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#C9A962] rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(201,169,98,0.5)]">
                         <Play className="w-8 h-8 sm:w-10 sm:h-10 text-[#0B3D4C] ml-2" fill="currentColor" />
