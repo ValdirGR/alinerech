@@ -7,6 +7,7 @@ import {
   Mail,
   Heart
 } from 'lucide-react';
+import Image from 'next/image';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -42,9 +43,13 @@ export function Footer() {
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="mb-6">
-              <h3 className="text-2xl font-bold text-white">
-                Dra. Aline <span className="text-[#C9A962]">Rech</span>
-              </h3>
+              <Image
+                src="/logo-aline.png"
+                alt="Dra. Aline Rech"
+                width={264}
+                height={84}
+                className="h-14 md:h-16 w-auto object-contain mb-3 brightness-0 invert"
+              />
               <p className="text-white/60 text-sm mt-1">Odontologia Estética</p>
             </div>
             <p className="text-white/70 text-sm leading-relaxed mb-6">
@@ -116,14 +121,14 @@ export function Footer() {
             <h4 className="font-semibold text-lg mb-4 text-[#C9A962]">Contato</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-[#C9A962] flex-shrink-0 mt-0.5" />
+                <MapPin className="w-5 h-5 text-[#C9A962] shrink-0 mt-0.5" />
                 <span className="text-white/70 text-sm">
                   Rua Altamiro Guimarães, 189<br />
                   Içara, SC
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-[#C9A962] flex-shrink-0" />
+                <Phone className="w-5 h-5 text-[#C9A962] shrink-0" />
                 <a
                   href="tel:+5548996374030"
                   className="text-white/70 hover:text-[#C9A962] transition-colors text-sm"
@@ -132,7 +137,7 @@ export function Footer() {
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <Clock className="w-5 h-5 text-[#C9A962] flex-shrink-0" />
+                <Clock className="w-5 h-5 text-[#C9A962] shrink-0" />
                 <span className="text-white/70 text-sm">
                   Seg - Sex: 8h às 18h<br />
                   Sáb: 8h às 12h

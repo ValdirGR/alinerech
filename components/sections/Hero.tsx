@@ -67,7 +67,7 @@ export function Hero() {
     <section
       ref={heroRef}
       id="inicio"
-      className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-[#0B3D4C] via-[#0F4A5C] to-[#155A6E]"
+      className="relative min-h-screen w-full overflow-hidden bg-linear-to-br from-[#0B3D4C] via-[#0F4A5C] to-[#155A6E]"
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
@@ -81,7 +81,7 @@ export function Hero() {
       <div className="absolute top-20 left-10 w-72 h-72 bg-[#C9A962] rounded-full blur-[120px] opacity-20" />
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#C9A962] rounded-full blur-[150px] opacity-15" />
 
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 pt-24 pb-16 min-h-screen flex flex-col justify-center">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 pt-36 pb-16 min-h-screen flex flex-col justify-center">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Content */}
           <div ref={contentRef} className="text-center lg:text-left order-2 lg:order-1">
@@ -90,7 +90,7 @@ export function Hero() {
               <span className="text-white/90 text-sm font-medium">Especialista em Odontologia Estética</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-none tracking-tight mb-8">
               Transforme seu{' '}
               <span className="text-[#C9A962]">sorriso</span>
               <br />
@@ -151,7 +151,7 @@ export function Hero() {
                     className="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   {/* Overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B3D4C]/80 via-black/20 to-transparent transition-opacity duration-500 group-hover:bg-black/40" />
+                  <div className="absolute inset-0 bg-linear-to-t from-[#0B3D4C]/80 via-black/20 to-transparent transition-opacity duration-500 group-hover:bg-black/40" />
 
                   {/* Play Button Overlay */}
                   <div className="absolute inset-0 flex items-center justify-center z-10 drop-shadow-2xl">

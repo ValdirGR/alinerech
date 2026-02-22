@@ -144,7 +144,7 @@ export function Contact() {
                   key={index}
                   className="flex items-start gap-4 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-300"
                 >
-                  <div className="w-12 h-12 bg-[#0B3D4C] rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-[#0B3D4C] rounded-lg flex items-center justify-center shrink-0">
                     <item.icon className="w-6 h-6 text-[#C9A962]" />
                   </div>
                   <div>

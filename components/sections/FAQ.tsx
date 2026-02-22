@@ -170,7 +170,7 @@ export function FAQ() {
         <div ref={contentRef} className="grid lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Facetas FAQ */}
           <div>
-            <div className="bg-gradient-to-r from-[#0B3D4C] to-[#155A6E] rounded-2xl p-6 mb-6">
+            <div className="bg-linear-to-r from-[#0B3D4C] to-[#155A6E] rounded-2xl p-6 mb-6">
               <h3 className="text-xl font-bold text-white flex items-center gap-3">
                 <span className="w-10 h-10 bg-[#C9A962] rounded-lg flex items-center justify-center">
                   <span className="text-[#0B3D4C] font-bold">F</span>
@@ -191,7 +191,7 @@ export function FAQ() {
                   >
                     <span className="font-medium text-[#0B3D4C] pr-4">{item.question}</span>
                     <ChevronDown
-                      className={`w-5 h-5 text-[#C9A962] flex-shrink-0 transition-transform duration-300 ${openFacetas === index ? 'rotate-180' : ''
+                      className={`w-5 h-5 text-[#C9A962] shrink-0 transition-transform duration-300 ${openFacetas === index ? 'rotate-180' : ''
                         }`}
                     />
                   </button>
@@ -210,7 +210,7 @@ export function FAQ() {
 
           {/* Implantes FAQ */}
           <div>
-            <div className="bg-gradient-to-r from-[#0B3D4C] to-[#155A6E] rounded-2xl p-6 mb-6">
+            <div className="bg-linear-to-r from-[#0B3D4C] to-[#155A6E] rounded-2xl p-6 mb-6">
               <h3 className="text-xl font-bold text-white flex items-center gap-3">
                 <span className="w-10 h-10 bg-[#C9A962] rounded-lg flex items-center justify-center">
                   <span className="text-[#0B3D4C] font-bold">I</span>
@@ -231,7 +231,7 @@ export function FAQ() {
                   >
                     <span className="font-medium text-[#0B3D4C] pr-4">{item.question}</span>
                     <ChevronDown
-                      className={`w-5 h-5 text-[#C9A962] flex-shrink-0 transition-transform duration-300 ${openImplantes === index ? 'rotate-180' : ''
+                      className={`w-5 h-5 text-[#C9A962] shrink-0 transition-transform duration-300 ${openImplantes === index ? 'rotate-180' : ''
                         }`}
                     />
                   </button>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -36,8 +37,8 @@ export function Header() {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-lg py-3'
-            : 'bg-transparent py-5'
+          ? 'bg-white/95 backdrop-blur-md shadow-lg py-3'
+          : 'bg-transparent py-5'
           }`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
@@ -47,10 +48,16 @@ export function Header() {
               onClick={() => scrollToSection('#inicio')}
               className="flex items-center gap-2"
             >
-              <div className={`text-2xl font-bold transition-colors duration-300 ${isScrolled ? 'text-[#0B3D4C]' : 'text-white'
-                }`}>
-                Dra. Aline <span className="text-[#C9A962]">Rech</span>
-              </div>
+              <Image
+                src="/logo-aline.png"
+                alt="Dra. Aline Rech"
+                width={300}
+                height={90}
+                className={`w-auto object-contain transition-all duration-300 transform origin-left ${isScrolled
+                  ? 'h-10 md:h-12'
+                  : 'h-16 md:h-20 brightness-0 invert'
+                  }`}
+              />
             </button>
 
             {/* Desktop Navigation */}
@@ -72,8 +79,8 @@ export function Header() {
               <Button
                 onClick={() => window.open('https://wa.me/5548996374030', '_blank')}
                 className={`font-semibold px-6 rounded-full transition-all duration-300 ${isScrolled
-                    ? 'bg-[#0B3D4C] hover:bg-[#155A6E] text-white'
-                    : 'bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm border border-white/30'
+                  ? 'bg-[#0B3D4C] hover:bg-[#155A6E] text-white'
+                  : 'bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm border border-white/30'
                   }`}
               >
                 <Phone className="w-4 h-4 mr-2" />
