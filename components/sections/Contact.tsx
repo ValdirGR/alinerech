@@ -96,13 +96,13 @@ export function Contact() {
     {
       icon: MapPin,
       title: 'Endereço',
-      content: 'Rua Altamiro Guimarães, 189 - Içara, SC',
+      content: 'R. Sete de Setembro, 501 - Centro, Içara - SC, 88820-000',
       link: 'https://maps.google.com'
     },
     {
       icon: Clock,
       title: 'Horário de Atendimento',
-      content: 'Seg - Sex: 8h às 18h | Sáb: 8h às 12h',
+      content: 'Seg - Sex: 08:30 às 12:00, 13:30 às 18:00 | Sáb - Dom: Fechado',
       link: null
     }
   ];

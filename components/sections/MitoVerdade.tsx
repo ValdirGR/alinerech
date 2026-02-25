@@ -63,7 +63,7 @@ export function MitoVerdade() {
 
   useEffect(() => {
     const triggers: ScrollTrigger[] = [];
-    
+
     const ctx = gsap.context(() => {
       const headerTrigger = ScrollTrigger.create({
         trigger: headerRef.current,
@@ -101,7 +101,7 @@ export function MitoVerdade() {
   }, []);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       id="mito-verdade"
       className="relative py-20 sm:py-28 lg:py-32 bg-gradient-to-br from-[#0B3D4C] via-[#0F4A5C] to-[#155A6E] overflow-hidden"
@@ -132,7 +132,7 @@ export function MitoVerdade() {
           </h2>
 
           <p className="text-white/70 text-lg">
-            Separamos os principais mitos e verdades sobre facetas e implantes 
+            Separamos os principais mitos e verdades sobre facetas e implantes
             para que você tenha informações claras e tome a melhor decisão.
           </p>
         </div>
@@ -140,25 +140,23 @@ export function MitoVerdade() {
         {/* Cards Grid */}
         <div ref={cardsRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {mitos.map((item, index) => (
-            <div 
+            <div
               key={index}
               className="group bg-white/5 backdrop-blur-sm hover:bg-white/10 border border-white/10 hover:border-[#C9A962]/30 rounded-2xl p-5 transition-all duration-500 hover:-translate-y-1"
             >
               {/* Category Badge */}
-              <span className={`inline-block text-xs font-medium px-3 py-1 rounded-full mb-4 ${
-                item.category === 'Facetas' 
-                  ? 'bg-[#C9A962]/20 text-[#C9A962]' 
+              <span className={`inline-block text-xs font-medium px-3 py-1 rounded-full mb-4 ${item.category === 'Facetas'
+                  ? 'bg-[#C9A962]/20 text-[#C9A962]'
                   : 'bg-blue-400/20 text-blue-300'
-              }`}>
+                }`}>
                 {item.category}
               </span>
 
               {/* Icon */}
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
-                item.type === 'mito' 
-                  ? 'bg-red-500/20' 
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${item.type === 'mito'
+                  ? 'bg-red-500/20'
                   : 'bg-green-500/20'
-              }`}>
+                }`}>
                 {item.type === 'mito' ? (
                   <X className="w-6 h-6 text-red-400" />
                 ) : (
@@ -185,7 +183,7 @@ export function MitoVerdade() {
         {/* Disclaimer */}
         <div className="mt-12 text-center">
           <p className="text-white/50 text-sm max-w-2xl mx-auto">
-            * As informações acima são baseadas em evidências científicas e experiência clínica. 
+            * As informações acima são baseadas em evidências científicas e experiência clínica.
             Cada caso é único e deve ser avaliado individualmente durante a consulta.
           </p>
         </div>

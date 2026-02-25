@@ -123,8 +123,8 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[#C9A962] shrink-0 mt-0.5" />
                 <span className="text-white/70 text-sm">
-                  Rua Altamiro Guimarães, 189<br />
-                  Içara, SC
+                  R. Sete de Setembro, 501 - Centro<br />
+                  Içara - SC, 88820-000
                 </span>
               </li>
               <li className="flex items-center gap-3">
@@ -139,8 +139,8 @@ export function Footer() {
               <li className="flex items-center gap-3">
                 <Clock className="w-5 h-5 text-[#C9A962] shrink-0" />
                 <span className="text-white/70 text-sm">
-                  Seg - Sex: 8h às 18h<br />
-                  Sáb: 8h às 12h
+                  Seg - Sex: 08:30 às 12:00, 13:30 às 18:00<br />
+                  Sáb - Dom: Fechado
                 </span>
               </li>
             </ul>
