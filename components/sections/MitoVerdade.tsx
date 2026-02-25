@@ -104,7 +104,7 @@ export function MitoVerdade() {
     <section
       ref={sectionRef}
       id="mito-verdade"
-      className="relative py-20 sm:py-28 lg:py-32 bg-gradient-to-br from-[#0B3D4C] via-[#0F4A5C] to-[#155A6E] overflow-hidden"
+      className="relative py-20 sm:py-28 lg:py-32 bg-gradient-to-br from-[#000000] via-[#0d0d0d] to-[#1a1a1a] overflow-hidden"
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">

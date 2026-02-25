@@ -10,7 +10,7 @@ export function FAQ() {
   const headerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [openFacetas, setOpenFacetas] = useState<number | null>(0);
-  const [openImplantes, setOpenImplantes] = useState<number | null>(null);
+
 
   const faqFacetas = [
     {
@@ -55,48 +55,7 @@ export function FAQ() {
     }
   ];
 
-  const faqImplantes = [
-    {
-      question: 'Implante dói? É uma cirurgia muito pesada?',
-      answer: 'Não! O implante dentário é feito com anestesia local, e o desconforto é controlável e, muitas vezes, menor do que o paciente imagina. A cirurgia é rápida e precisa. Após o procedimento, pode haver leve inchaço e desconforto, facilmente controlados com medicamentos indicados pelo dentista. A maioria dos pacientes relata que a experiência foi muito mais tranquila do que esperavam.'
-    },
-    {
-      question: 'Qual o tempo total do tratamento?',
-      answer: 'O tratamento completo geralmente leva de 3 a 6 meses. Isso inclui: avaliação e exames, cirurgia de instalação do implante, período de osseointegração ( quando o implante se fixa ao osso, geralmente 3-4 meses ) e colocação da coroa definitiva. Em casos selecionados com carga imediata, é possível ter o dente provisório no mesmo dia da cirurgia.'
-    },
-    {
-      question: 'Posso fazer implante na minha idade?',
-      answer: 'Não há idade máxima fixa para implantes! O que importa mais é a saúde geral do paciente e a qualidade óssea da mandíbula/maxila. Pacientes de 70, 80 anos podem fazer implantes com sucesso, desde que estejam saudáveis. A avaliação clínica e os exames de imagem determinarão se você é um bom candidato.'
-    },
-    {
-      question: 'O implante pode ser rejeitado?',
-      answer: 'O que chamamos de "rejeição" na prática é a falha de osseointegração, quando o implante não consegue se fixar adequadamente ao osso. Isso é raro e ocorre em cerca de 2-5% dos casos. Com bons exames pré-operatórios, planejamento adequado e cuidados pós-operatórios, o índice de sucesso é superior a 95%. Se houver falha, é possível realizar um novo implante após a cicatrização.'
-    },
-    {
-      question: 'Vou ficar sem dente durante o processo?',
-      answer: 'Não necessariamente! Existem várias opções de próteses provisórias que podem ser utilizadas durante o período de osseointegração. Em alguns casos selecionados, é possível fazer carga imediata, colocando uma coroa provisória no mesmo dia da cirurgia do implante. Vamos avaliar a melhor opção para o seu caso durante a consulta de planejamento.'
-    },
-    {
-      question: 'O que pode me impedir de fazer implante?',
-      answer: 'Algumas condições podem contraindicar ou adiar o tratamento: diabetes descompensada, osteoporose avançada sem controle, problemas de infecção bucal ativa, tabagismo excessivo, ou radioterapia recente na região da cabeça e pescoço. Porém, muitas dessas condições podem ser controladas ou tratadas previamente, permitindo o implante posteriormente.'
-    },
-    {
-      question: 'Se eu não tiver osso suficiente, acabou a chance?',
-      answer: 'Não! A falta de osso não é mais um impedimento. Existem técnicas avançadas de enxerto ósseo ( utilizando biomateriais ou osso do próprio paciente ) que podem reconstruir a área deficiente. Também existem implantes específicos para casos de baixa quantidade óssea. A avaliação com tomografia computadorizada permite planejar a melhor solução para cada caso.'
-    },
-    {
-      question: 'Como é feito o procedimento?',
-      answer: 'O tratamento em etapas: 1) Avaliação clínica e exames de imagem ( radiografia, tomografia ) para avaliar osso e saúde geral; 2) Cirurgia de instalação do implante com anestesia local; 3) Período de osseointegração ( 3-4 meses ) onde o implante se fixa ao osso; 4) Colocação da prótese definitiva e acompanhamento periódico. Todo o processo é realizado com planejamento digital para máxima precisão.'
-    },
-    {
-      question: 'Quais os benefícios do implante?',
-      answer: 'Os implantes recuperam completamente a função mastigatória, melhoram a fala e a estética do sorriso. Preservam o osso da mandíbula/maxila ( evitando a perda óssea que ocorre quando um dente é perdido ), não desgastam os dentes vizinhos como uma ponte convencional e oferecem uma solução de longo prazo, com durabilidade de décadas quando bem cuidados.'
-    },
-    {
-      question: 'Preciso de cuidados especiais após o implante?',
-      answer: 'Sim! A higiene bucal é fundamental para evitar a peri-implantite ( inflamação ao redor do implante ). Deve-se escovar os dentes e usar fio dental ou escovas interdentais diariamente. Consultas de manutenção periódicas são essenciais para avaliar a saúde do implante e fazer limpezas profissionais. Evitar fumar também aumenta significativamente a taxa de sucesso.'
-    }
-  ];
+
 
   useEffect(() => {
     const triggers: ScrollTrigger[] = [];
@@ -144,18 +103,18 @@ export function FAQ() {
       className="relative py-20 sm:py-28 lg:py-32 bg-white overflow-hidden"
     >
       {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-[#0B3D4C]/5 rounded-full blur-3xl" />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-[#000000]/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-0 w-72 h-72 bg-[#C9A962]/10 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         {/* Header */}
         <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 bg-[#0B3D4C]/10 rounded-full px-4 py-2 mb-6">
+          <div className="inline-flex items-center gap-2 bg-[#000000]/10 rounded-full px-4 py-2 mb-6">
             <HelpCircle className="w-4 h-4 text-[#C9A962]" />
-            <span className="text-[#0B3D4C] text-sm font-medium">Tire suas dúvidas</span>
+            <span className="text-[#000000] text-sm font-medium">Tire suas dúvidas</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0B3D4C] mb-6 leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#000000] mb-6 leading-tight">
             Perguntas{' '}
             <span className="text-[#C9A962]">Frequentes</span>
           </h2>
@@ -167,13 +126,13 @@ export function FAQ() {
         </div>
 
         {/* FAQ Content */}
-        <div ref={contentRef} className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+        <div ref={contentRef} className="max-w-3xl mx-auto">
           {/* Facetas FAQ */}
           <div>
-            <div className="bg-linear-to-r from-[#0B3D4C] to-[#155A6E] rounded-2xl p-6 mb-6">
+            <div className="bg-linear-to-r from-[#000000] to-[#1a1a1a] rounded-2xl p-6 mb-6">
               <h3 className="text-xl font-bold text-white flex items-center gap-3">
                 <span className="w-10 h-10 bg-[#C9A962] rounded-lg flex items-center justify-center">
-                  <span className="text-[#0B3D4C] font-bold">F</span>
+                  <span className="text-[#000000] font-bold">F</span>
                 </span>
                 Facetas em Resina
               </h3>
@@ -187,9 +146,9 @@ export function FAQ() {
                 >
                   <button
                     onClick={() => setOpenFacetas(openFacetas === index ? null : index)}
-                    className="w-full flex items-center justify-between p-4 text-left hover:bg-[#0B3D4C]/5 transition-colors"
+                    className="w-full flex items-center justify-between p-4 text-left hover:bg-[#000000]/5 transition-colors"
                   >
-                    <span className="font-medium text-[#0B3D4C] pr-4">{item.question}</span>
+                    <span className="font-medium text-[#000000] pr-4">{item.question}</span>
                     <ChevronDown
                       className={`w-5 h-5 text-[#C9A962] shrink-0 transition-transform duration-300 ${openFacetas === index ? 'rotate-180' : ''
                         }`}
@@ -208,45 +167,7 @@ export function FAQ() {
             </div>
           </div>
 
-          {/* Implantes FAQ */}
-          <div>
-            <div className="bg-linear-to-r from-[#0B3D4C] to-[#155A6E] rounded-2xl p-6 mb-6">
-              <h3 className="text-xl font-bold text-white flex items-center gap-3">
-                <span className="w-10 h-10 bg-[#C9A962] rounded-lg flex items-center justify-center">
-                  <span className="text-[#0B3D4C] font-bold">I</span>
-                </span>
-                Implantes Dentários
-              </h3>
-            </div>
 
-            <div className="space-y-3">
-              {faqImplantes.map((item, index) => (
-                <div
-                  key={index}
-                  className="bg-[#F8F9FA] rounded-xl overflow-hidden transition-all duration-300"
-                >
-                  <button
-                    onClick={() => setOpenImplantes(openImplantes === index ? null : index)}
-                    className="w-full flex items-center justify-between p-4 text-left hover:bg-[#0B3D4C]/5 transition-colors"
-                  >
-                    <span className="font-medium text-[#0B3D4C] pr-4">{item.question}</span>
-                    <ChevronDown
-                      className={`w-5 h-5 text-[#C9A962] shrink-0 transition-transform duration-300 ${openImplantes === index ? 'rotate-180' : ''
-                        }`}
-                    />
-                  </button>
-                  <div
-                    className={`overflow-hidden transition-all duration-300 ${openImplantes === index ? 'max-h-96' : 'max-h-0'
-                      }`}
-                  >
-                    <p className="px-4 pb-4 text-gray-600 text-sm leading-relaxed">
-                      {item.answer}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* CTA */}

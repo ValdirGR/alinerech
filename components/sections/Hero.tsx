@@ -67,7 +67,7 @@ export function Hero() {
     <section
       ref={heroRef}
       id="inicio"
-      className="relative min-h-screen w-full overflow-hidden bg-linear-to-br from-[#0B3D4C] via-[#0F4A5C] to-[#155A6E]"
+      className="relative min-h-screen w-full overflow-hidden bg-linear-to-br from-[#000000] via-[#0d0d0d] to-[#1a1a1a]"
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
@@ -99,7 +99,7 @@ export function Hero() {
             </h1>
 
             <p className="text-lg sm:text-xl text-white/80 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              Facetas em resina e implantes dentários com tecnologia de ponta.
+              Facetas em resina com tecnologia de ponta.
               Resultados naturais que vão além da estética — devolvem sua confiança.
             </p>
 
@@ -107,7 +107,7 @@ export function Hero() {
               <Button
                 size="lg"
                 onClick={() => scrollToSection('contato')}
-                className="bg-[#C9A962] hover:bg-[#D4BC7E] text-[#0B3D4C] font-semibold px-8 py-6 text-lg rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#C9A962]/30"
+                className="bg-[#C9A962] hover:bg-[#D4BC7E] text-[#000000] font-semibold px-8 py-6 text-lg rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#C9A962]/30"
               >
                 <Calendar className="w-5 h-5 mr-2" />
                 Agendar Consulta
@@ -151,7 +151,7 @@ export function Hero() {
                     className="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   {/* Overlay gradient */}
-                  <div className="absolute inset-0 bg-linear-to-t from-[#0B3D4C]/80 via-black/20 to-transparent transition-opacity duration-500 group-hover:bg-black/40" />
+                  <div className="absolute inset-0 bg-linear-to-t from-[#000000]/80 via-black/20 to-transparent transition-opacity duration-500 group-hover:bg-black/40" />
 
                   {/* Play Button Overlay */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center z-10 drop-shadow-2xl">
@@ -160,7 +160,7 @@ export function Hero() {
                     </p>
                     <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 transition-transform duration-300 group-hover:scale-110 shadow-2xl">
                       <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#C9A962] rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(201,169,98,0.5)]">
-                        <Play className="w-8 h-8 sm:w-10 sm:h-10 text-[#0B3D4C] ml-2" fill="currentColor" />
+                        <Play className="w-8 h-8 sm:w-10 sm:h-10 text-[#000000] ml-2" fill="currentColor" />
                       </div>
                     </div>
                   </div>
@@ -169,10 +169,10 @@ export function Hero() {
                   <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl z-20">
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 bg-[#C9A962] rounded-full flex items-center justify-center">
-                        <Sparkles className="w-6 h-6 text-[#0B3D4C]" />
+                        <Sparkles className="w-6 h-6 text-[#000000]" />
                       </div>
                       <div>
-                        <p className="font-semibold text-[#0B3D4C]">Dra. Aline Rech</p>
+                        <p className="font-semibold text-[#000000]">Dra. Aline Rech</p>
                         <p className="text-sm text-gray-600">Cirurgiã-Dentista | CRO-SC</p>
                       </div>
                       <ChevronRight className="w-5 h-5 text-[#C9A962] ml-auto transition-transform duration-300 group-hover:translate-x-1" />

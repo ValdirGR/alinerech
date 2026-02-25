@@ -66,7 +66,7 @@ export function Header() {
                 <button
                   key={index}
                   onClick={() => scrollToSection(link.href)}
-                  className={`text-sm font-medium transition-colors duration-300 hover:text-[#C9A962] ${isScrolled ? 'text-[#0B3D4C]' : 'text-white'
+                  className={`text-sm font-medium transition-colors duration-300 hover:text-[#C9A962] ${isScrolled ? 'text-[#000000]' : 'text-white'
                     }`}
                 >
                   {link.label}
@@ -79,7 +79,7 @@ export function Header() {
               <Button
                 onClick={() => window.open('https://wa.me/5548996374030', '_blank')}
                 className={`font-semibold px-6 rounded-full transition-all duration-300 ${isScrolled
-                  ? 'bg-[#0B3D4C] hover:bg-[#155A6E] text-white'
+                  ? 'bg-[#000000] hover:bg-[#1a1a1a] text-white'
                   : 'bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm border border-white/30'
                   }`}
               >
@@ -91,7 +91,7 @@ export function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`lg:hidden p-2 rounded-lg transition-colors ${isScrolled ? 'text-[#0B3D4C]' : 'text-white'
+              className={`lg:hidden p-2 rounded-lg transition-colors ${isScrolled ? 'text-[#000000]' : 'text-white'
                 }`}
             >
               {isMobileMenuOpen ? (
@@ -126,7 +126,7 @@ export function Header() {
                 <button
                   key={index}
                   onClick={() => scrollToSection(link.href)}
-                  className="block w-full text-left px-4 py-3 text-[#0B3D4C] font-medium hover:bg-[#F8F9FA] hover:text-[#C9A962] rounded-xl transition-colors"
+                  className="block w-full text-left px-4 py-3 text-[#000000] font-medium hover:bg-[#F8F9FA] hover:text-[#C9A962] rounded-xl transition-colors"
                 >
                   {link.label}
                 </button>
@@ -136,7 +136,7 @@ export function Header() {
             <div className="mt-8 pt-8 border-t border-gray-200">
               <Button
                 onClick={() => window.open('https://wa.me/5548996374030', '_blank')}
-                className="w-full bg-[#0B3D4C] hover:bg-[#155A6E] text-white font-semibold py-6 rounded-xl"
+                className="w-full bg-[#000000] hover:bg-[#1a1a1a] text-white font-semibold py-6 rounded-xl"
               >
                 <Phone className="w-5 h-5 mr-2" />
                 Agendar pelo WhatsApp

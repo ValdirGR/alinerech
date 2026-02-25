@@ -9,7 +9,7 @@ export function Process() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const facetasRef = useRef<HTMLDivElement>(null);
-  const implantesRef = useRef<HTMLDivElement>(null);
+
 
   const facetasSteps = [
     {
@@ -56,50 +56,7 @@ export function Process() {
     }
   ];
 
-  const implantesSteps = [
-    {
-      icon: Search,
-      step: '01',
-      title: 'Avaliação Completa',
-      description: 'Exame clínico, radiografias e tomografia computadorizada para avaliar osso e saúde geral.',
-      image: '/process-tomografia.jpg'
-    },
-    {
-      icon: ClipboardList,
-      step: '02',
-      title: 'Planejamento Digital',
-      description: 'Planejamento 3D preciso da posição do implante usando softwares de última geração.',
-      image: '/process-planejamento.jpg'
-    },
-    {
-      icon: Stethoscope,
-      step: '03',
-      title: 'Cirurgia de Instalação',
-      description: 'Procedimento com anestesia local, instalação do implante de titânio no osso. Duração média de 30-60 minutos.',
-      image: '/process-cirurgia.jpg'
-    },
-    {
-      icon: Settings,
-      step: '04',
-      title: 'Osseointegração',
-      description: 'Período de 3-4 meses onde o implante se integra ao osso. Prótese provisória pode ser utilizada.',
-      image: '/process-osseointegracao.jpg'
-    },
-    {
-      icon: Sparkles,
-      step: '05',
-      title: 'Colocação da Coroa',
-      description: 'Após a integração, é feita a moldagem e confecção da coroa definitiva personalizada.',
-      image: '/process-coroa.jpg'
-    },
-    {
-      icon: CalendarCheck,
-      step: '06',
-      title: 'Acompanhamento',
-      description: 'Consultas de retorno periódicas para avaliar a saúde do implante e manutenção da prótese.',
-      image: '/process-acompanhamento.jpg'
-    }
-  ];
+
 
   useEffect(() => {
     const triggers: ScrollTrigger[] = [];
@@ -133,19 +90,7 @@ export function Process() {
       });
       triggers.push(facetasTrigger);
 
-      const implantesTrigger = ScrollTrigger.create({
-        trigger: implantesRef.current,
-        start: 'top 75%',
-        onEnter: () => {
-          gsap.fromTo(
-            implantesRef.current?.querySelectorAll('.step-card') || [],
-            { opacity: 0, y: 40 },
-            { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out' }
-          );
-        },
-        once: true
-      });
-      triggers.push(implantesTrigger);
+
     }, sectionRef);
 
     return () => {
@@ -161,18 +106,18 @@ export function Process() {
       className="relative py-20 sm:py-28 lg:py-32 bg-[#F8F9FA] overflow-hidden"
     >
       {/* Decorative Elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-[#0B3D4C]/5 rounded-full blur-3xl" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#000000]/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#C9A962]/10 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         {/* Header */}
         <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 bg-[#0B3D4C]/10 rounded-full px-4 py-2 mb-6">
+          <div className="inline-flex items-center gap-2 bg-[#000000]/10 rounded-full px-4 py-2 mb-6">
             <Settings className="w-4 h-4 text-[#C9A962]" />
-            <span className="text-[#0B3D4C] text-sm font-medium">Como Funciona</span>
+            <span className="text-[#000000] text-sm font-medium">Como Funciona</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0B3D4C] mb-6 leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#000000] mb-6 leading-tight">
             O passo a passo do seu{' '}
             <span className="text-[#C9A962]">tratamento</span>
           </h2>
@@ -187,10 +132,10 @@ export function Process() {
         <div ref={facetasRef} className="mb-20">
           <div className="flex items-center gap-4 mb-8">
             <div className="w-12 h-12 bg-gradient-to-br from-[#C9A962] to-[#D4BC7E] rounded-xl flex items-center justify-center">
-              <Sparkles className="w-6 h-6 text-[#0B3D4C]" />
+              <Sparkles className="w-6 h-6 text-[#000000]" />
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-[#0B3D4C]">Facetas em Resina</h3>
+              <h3 className="text-2xl font-bold text-[#000000]">Facetas em Resina</h3>
               <p className="text-gray-500 text-sm">Procedimento completo em uma única consulta</p>
             </div>
           </div>
@@ -208,7 +153,7 @@ export function Process() {
                     alt={step.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B3D4C]/60 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/60 via-transparent to-transparent" />
                   
                   {/* Step Number */}
                   <div className="absolute bottom-3 left-3">
@@ -219,13 +164,13 @@ export function Process() {
                   
                   {/* Icon */}
                   <div className="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-lg flex items-center justify-center">
-                    <step.icon className="w-5 h-5 text-[#0B3D4C]" />
+                    <step.icon className="w-5 h-5 text-[#000000]" />
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="p-5">
-                  <h4 className="font-semibold text-[#0B3D4C] text-lg mb-2">
+                  <h4 className="font-semibold text-[#000000] text-lg mb-2">
                     {step.title}
                   </h4>
                   <p className="text-gray-600 text-sm leading-relaxed">
@@ -237,59 +182,7 @@ export function Process() {
           </div>
         </div>
 
-        {/* Implantes Process */}
-        <div ref={implantesRef}>
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-12 h-12 bg-gradient-to-br from-[#0B3D4C] to-[#155A6E] rounded-xl flex items-center justify-center">
-              <Stethoscope className="w-6 h-6 text-[#C9A962]" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-[#0B3D4C]">Implantes Dentários</h3>
-              <p className="text-gray-500 text-sm">Tratamento completo em aproximadamente 3-6 meses</p>
-            </div>
-          </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {implantesSteps.map((step, index) => (
-              <div 
-                key={index}
-                className="step-card group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2"
-              >
-                {/* Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={step.image}
-                    alt={step.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B3D4C]/60 via-transparent to-transparent" />
-                  
-                  {/* Step Number */}
-                  <div className="absolute bottom-3 left-3">
-                    <span className="text-4xl font-bold text-white/80">
-                      {step.step}
-                    </span>
-                  </div>
-                  
-                  {/* Icon */}
-                  <div className="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-lg flex items-center justify-center">
-                    <step.icon className="w-5 h-5 text-[#0B3D4C]" />
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-5">
-                  <h4 className="font-semibold text-[#0B3D4C] text-lg mb-2">
-                    {step.title}
-                  </h4>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
 
         {/* CTA */}
         <div className="mt-16 text-center">
@@ -302,7 +195,7 @@ export function Process() {
               e.preventDefault();
               document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="inline-flex items-center gap-2 bg-[#0B3D4C] hover:bg-[#155A6E] text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 hover:scale-105"
+            className="inline-flex items-center gap-2 bg-[#000000] hover:bg-[#1a1a1a] text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 hover:scale-105"
           >
             <CalendarCheck className="w-5 h-5" />
             Agendar Avaliação

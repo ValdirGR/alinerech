@@ -130,7 +130,7 @@ export function Features() {
     <section 
       ref={sectionRef}
       id="diferenciais"
-      className="relative py-20 sm:py-28 lg:py-32 bg-gradient-to-br from-[#0B3D4C] via-[#0F4A5C] to-[#155A6E] overflow-hidden"
+      className="relative py-20 sm:py-28 lg:py-32 bg-gradient-to-br from-[#000000] via-[#0d0d0d] to-[#1a1a1a] overflow-hidden"
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
@@ -171,7 +171,7 @@ export function Features() {
               className="group bg-white/5 backdrop-blur-sm hover:bg-white/10 border border-white/10 hover:border-[#C9A962]/30 rounded-2xl p-6 transition-all duration-500 hover:-translate-y-2"
             >
               <div className="w-14 h-14 bg-[#C9A962]/20 group-hover:bg-[#C9A962] rounded-xl flex items-center justify-center mb-4 transition-colors duration-500">
-                <feature.icon className="w-7 h-7 text-[#C9A962] group-hover:text-[#0B3D4C] transition-colors duration-500" />
+                <feature.icon className="w-7 h-7 text-[#C9A962] group-hover:text-[#000000] transition-colors duration-500" />
               </div>
               <h3 className="font-semibold text-white text-lg mb-2">
                 {feature.title}

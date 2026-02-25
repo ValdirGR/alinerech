@@ -23,7 +23,6 @@ export function Footer() {
 
   const services = [
     { label: 'Facetas em Resina', href: '#servicos' },
-    { label: 'Implantes Dentários', href: '#servicos' },
     { label: 'Odontologia Estética', href: '#servicos' },
     { label: 'Avaliação Gratuita', href: '#contato' },
   ];
@@ -36,7 +35,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-[#0B3D4C] text-white">
+    <footer className="bg-[#000000] text-white">
       {/* Main Footer */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">

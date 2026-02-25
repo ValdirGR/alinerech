@@ -11,7 +11,6 @@ export function Services() {
   const headerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
   const [expandedFacetas, setExpandedFacetas] = useState(false);
-  const [expandedImplantes, setExpandedImplantes] = useState(false);
 
   useEffect(() => {
     const triggers: ScrollTrigger[] = [];
@@ -68,18 +67,18 @@ export function Services() {
       className="relative py-20 sm:py-28 lg:py-32 bg-[#F8F9FA] overflow-hidden"
     >
       {/* Decorative Elements */}
-      <div className="absolute top-1/4 left-0 w-72 h-72 bg-[#0B3D4C]/5 rounded-full blur-3xl" />
+      <div className="absolute top-1/4 left-0 w-72 h-72 bg-[#000000]/5 rounded-full blur-3xl" />
       <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-[#C9A962]/10 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         {/* Header */}
         <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 bg-[#0B3D4C]/10 rounded-full px-4 py-2 mb-6">
+          <div className="inline-flex items-center gap-2 bg-[#000000]/10 rounded-full px-4 py-2 mb-6">
             <Sparkles className="w-4 h-4 text-[#C9A962]" />
-            <span className="text-[#0B3D4C] text-sm font-medium">Nossos Tratamentos</span>
+            <span className="text-[#000000] text-sm font-medium">Nossos Tratamentos</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0B3D4C] mb-6 leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#000000] mb-6 leading-tight">
             Especialidades que{' '}
             <span className="text-[#C9A962]">transformam vidas</span>
           </h2>
@@ -104,11 +103,11 @@ export function Services() {
                     className="w-full h-[350px] sm:h-[400px] object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B3D4C]/60 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/60 via-transparent to-transparent" />
                   
                   {/* Tag */}
                   <div className="absolute top-4 left-4">
-                    <span className="bg-[#C9A962] text-[#0B3D4C] text-sm font-semibold px-4 py-2 rounded-full">
+                    <span className="bg-[#C9A962] text-[#000000] text-sm font-semibold px-4 py-2 rounded-full">
                       Mais Popular
                     </span>
                   </div>
@@ -120,7 +119,7 @@ export function Services() {
 
               {/* Content */}
               <div className="p-6 lg:p-8 lg:pr-12">
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0B3D4C] mb-2">
+                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#000000] mb-2">
                   Facetas em Resina
                 </h3>
                 <p className="text-[#C9A962] font-medium text-lg mb-4">
@@ -143,7 +142,7 @@ export function Services() {
                   ].map((benefit, bIndex) => (
                     <div key={bIndex} className="flex items-start gap-3">
                       <div className="w-5 h-5 bg-[#C9A962] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Check className="w-3 h-3 text-[#0B3D4C]" />
+                        <Check className="w-3 h-3 text-[#000000]" />
                       </div>
                       <span className="text-gray-700 text-sm">{benefit}</span>
                     </div>
@@ -154,7 +153,7 @@ export function Services() {
                   <Button
                     size="lg"
                     onClick={scrollToContact}
-                    className="bg-[#0B3D4C] hover:bg-[#155A6E] text-white font-semibold px-6 py-5 rounded-full transition-all duration-300 hover:scale-105 group"
+                    className="bg-[#000000] hover:bg-[#1a1a1a] text-white font-semibold px-6 py-5 rounded-full transition-all duration-300 hover:scale-105 group"
                   >
                     Quero minhas facetas
                     <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
@@ -164,7 +163,7 @@ export function Services() {
                     variant="outline"
                     size="lg"
                     onClick={() => setExpandedFacetas(!expandedFacetas)}
-                    className="border-2 border-[#0B3D4C]/20 text-[#0B3D4C] hover:bg-[#0B3D4C]/5 font-semibold px-6 py-5 rounded-full transition-all duration-300"
+                    className="border-2 border-[#000000]/20 text-[#000000] hover:bg-[#000000]/5 font-semibold px-6 py-5 rounded-full transition-all duration-300"
                   >
                     Saiba mais
                     <ChevronDown className={`w-5 h-5 ml-2 transition-transform duration-300 ${expandedFacetas ? 'rotate-180' : ''}`} />
@@ -242,155 +241,7 @@ export function Services() {
             </div>
           </div>
 
-          {/* Implantes Dentários */}
-          <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
-            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-              {/* Content */}
-              <div className="p-6 lg:p-8 lg:pl-12 order-2 lg:order-1">
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0B3D4C] mb-2">
-                  Implantes Dentários
-                </h3>
-                <p className="text-[#C9A962] font-medium text-lg mb-4">
-                  Recupere sua autoestima para sempre
-                </p>
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  O implante dentário é um "parafuso" de titânio que substitui a raiz do dente perdido, 
-                  sobre o qual se fixa uma coroa ou prótese. É a solução definitiva para a substituição 
-                  de dentes perdidos, com tecnologia de ponta e alta taxa de sucesso.
-                </p>
 
-                {/* Benefits */}
-                <div className="space-y-3 mb-6">
-                  {[
-                    'Recupera função mastigatória, fala e estética completamente',
-                    'Preserva o osso e evita perda óssea (atrofia)',
-                    'Não desgasta dentes vizinhos como uma ponte convencional',
-                    'Solução de longo prazo com alta taxa de sucesso (95%+)',
-                    'Coroas com cor e formato integrados ao sorriso natural'
-                  ].map((benefit, bIndex) => (
-                    <div key={bIndex} className="flex items-start gap-3">
-                      <div className="w-5 h-5 bg-[#C9A962] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Check className="w-3 h-3 text-[#0B3D4C]" />
-                      </div>
-                      <span className="text-gray-700 text-sm">{benefit}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex flex-wrap gap-3">
-                  <Button
-                    size="lg"
-                    onClick={scrollToContact}
-                    className="bg-[#0B3D4C] hover:bg-[#155A6E] text-white font-semibold px-6 py-5 rounded-full transition-all duration-300 hover:scale-105 group"
-                  >
-                    Quero meus implantes
-                    <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                  
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    onClick={() => setExpandedImplantes(!expandedImplantes)}
-                    className="border-2 border-[#0B3D4C]/20 text-[#0B3D4C] hover:bg-[#0B3D4C]/5 font-semibold px-6 py-5 rounded-full transition-all duration-300"
-                  >
-                    Saiba mais
-                    <ChevronDown className={`w-5 h-5 ml-2 transition-transform duration-300 ${expandedImplantes ? 'rotate-180' : ''}`} />
-                  </Button>
-                </div>
-              </div>
-
-              {/* Image */}
-              <div className="relative order-1 lg:order-2">
-                <div className="relative rounded-2xl overflow-hidden shadow-lg group m-6 lg:m-8">
-                  <img
-                    src="/implantes.jpg"
-                    alt="Implantes Dentários"
-                    className="w-full h-[350px] sm:h-[400px] object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B3D4C]/60 via-transparent to-transparent" />
-                  
-                  {/* Tag */}
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-[#C9A962] text-[#0B3D4C] text-sm font-semibold px-4 py-2 rounded-full">
-                      Alta Tecnologia
-                    </span>
-                  </div>
-                </div>
-
-                {/* Decorative Elements */}
-                <div className="absolute -bottom-2 -left-2 w-20 h-20 border-4 border-[#C9A962]/30 rounded-full" />
-              </div>
-            </div>
-
-            {/* Expanded Content */}
-            <div className={`overflow-hidden transition-all duration-500 ${expandedImplantes ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}>
-              <div className="border-t border-gray-100 p-6 lg:p-8 bg-gray-50/50">
-                <div className="grid md:grid-cols-3 gap-6">
-                  {/* Limitations */}
-                  <div className="bg-amber-50 rounded-2xl p-5">
-                    <h4 className="font-semibold text-amber-700 mb-3 flex items-center gap-2">
-                      <AlertCircle className="w-5 h-5" />
-                      Considerações
-                    </h4>
-                    <ul className="space-y-2">
-                      {[
-                        'Processo completo leva 3-6 meses',
-                        'Requer saúde bucal adequada',
-                        'Contraindicação relativa em diabetes descompensada',
-                        'Necessidade de higiene rigorosa'
-                      ].map((item, i) => (
-                        <li key={i} className="flex items-start gap-2 text-amber-700 text-sm">
-                          <div className="w-1.5 h-1.5 bg-amber-400 rounded-full flex-shrink-0 mt-1.5" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Process */}
-                  <div className="bg-blue-50 rounded-2xl p-5">
-                    <h4 className="font-semibold text-blue-700 mb-3 flex items-center gap-2">
-                      <Clock className="w-5 h-5" />
-                      Como é o Processo
-                    </h4>
-                    <ul className="space-y-2">
-                      {[
-                        'Avaliação e exames (tomografia)',
-                        'Cirurgia com anestesia local',
-                        'Osseointegração (3-4 meses)',
-                        'Colocação da prótese definitiva',
-                        'Acompanhamento periódico'
-                      ].map((item, i) => (
-                        <li key={i} className="flex items-start gap-2 text-blue-700 text-sm">
-                          <span className="font-semibold text-blue-500">{i + 1}.</span>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Care */}
-                  <div className="bg-green-50 rounded-2xl p-5">
-                    <h4 className="font-semibold text-green-700 mb-3 flex items-center gap-2">
-                      <Shield className="w-5 h-5" />
-                      Cuidados Após
-                    </h4>
-                    <p className="text-green-700 text-sm leading-relaxed mb-3">
-                      Higiene bucal rigorosa com escovação e fio dental, consultas de manutenção 
-                      regulares e evitar o tabagismo para aumentar a taxa de sucesso.
-                    </p>
-                    <div className="pt-3 border-t border-green-200">
-                      <p className="text-green-600 text-xs">
-                        <strong>Importante:</strong> A peri-implantite pode ser evitada com 
-                        higiene adequada e consultas de manutenção regulares.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>

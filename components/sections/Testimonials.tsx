@@ -20,13 +20,7 @@ export function Testimonials() {
       text: 'Fiz facetas em resina com a Dra. Aline e o resultado superou todas as minhas expectativas. Meu sorriso ficou natural e lindo! O atendimento foi impecável do início ao fim. Recomendo de olhos fechados.',
       procedure: 'Facetas em Resina'
     },
-    {
-      name: 'Carlos Eduardo',
-      image: '/paciente-2.jpg',
-      rating: 5,
-      text: 'Depois de anos com medo de dentista, encontrei na Dra. Aline uma profissional que me transmitiu total confiança. Meus implantes ficaram perfeitos e recuperei minha autoestima.',
-      procedure: 'Implantes Dentários'
-    },
+
     {
       name: 'Ana Paula',
       image: '/paciente-3.jpg',
@@ -92,18 +86,18 @@ export function Testimonials() {
       className="relative py-20 sm:py-28 lg:py-32 bg-white overflow-hidden"
     >
       {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-[#0B3D4C]/5 rounded-full blur-3xl" />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-[#000000]/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-0 w-72 h-72 bg-[#C9A962]/10 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         {/* Header */}
         <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 bg-[#0B3D4C]/10 rounded-full px-4 py-2 mb-6">
+          <div className="inline-flex items-center gap-2 bg-[#000000]/10 rounded-full px-4 py-2 mb-6">
             <Star className="w-4 h-4 text-[#C9A962] fill-[#C9A962]" />
-            <span className="text-[#0B3D4C] text-sm font-medium">Depoimentos</span>
+            <span className="text-[#000000] text-sm font-medium">Depoimentos</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0B3D4C] mb-6 leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#000000] mb-6 leading-tight">
             O que nossos pacientes{' '}
             <span className="text-[#C9A962]">dizem</span>
           </h2>
@@ -120,7 +114,7 @@ export function Testimonials() {
           <div className="bg-[#F8F9FA] rounded-3xl p-8 sm:p-12 shadow-xl relative">
             {/* Quote Icon */}
             <div className="absolute -top-6 left-8 w-12 h-12 bg-[#C9A962] rounded-full flex items-center justify-center">
-              <Quote className="w-6 h-6 text-[#0B3D4C]" />
+              <Quote className="w-6 h-6 text-[#000000]" />
             </div>
 
             <div className="grid md:grid-cols-[200px,1fr] gap-8 items-center">
@@ -132,7 +126,7 @@ export function Testimonials() {
                     alt={testimonials[currentIndex].name}
                     className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-[#C9A962] shadow-lg mx-auto"
                   />
-                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-[#0B3D4C] text-white text-xs px-3 py-1 rounded-full">
+                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-[#000000] text-white text-xs px-3 py-1 rounded-full">
                     {testimonials[currentIndex].procedure}
                   </div>
                 </div>
@@ -153,7 +147,7 @@ export function Testimonials() {
                 </p>
 
                 {/* Name */}
-                <p className="font-semibold text-[#0B3D4C] text-lg">
+                <p className="font-semibold text-[#000000] text-lg">
                   {testimonials[currentIndex].name}
                 </p>
               </div>
@@ -166,7 +160,7 @@ export function Testimonials() {
               variant="outline"
               size="icon"
               onClick={prevSlide}
-              className="w-12 h-12 rounded-full border-2 border-[#0B3D4C]/20 hover:bg-[#0B3D4C] hover:text-white hover:border-[#0B3D4C] transition-all duration-300"
+              className="w-12 h-12 rounded-full border-2 border-[#000000]/20 hover:bg-[#000000] hover:text-white hover:border-[#000000] transition-all duration-300"
             >
               <ChevronLeft className="w-5 h-5" />
             </Button>
@@ -180,7 +174,7 @@ export function Testimonials() {
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     index === currentIndex 
                       ? 'bg-[#C9A962] w-8' 
-                      : 'bg-[#0B3D4C]/20 hover:bg-[#0B3D4C]/40'
+                      : 'bg-[#000000]/20 hover:bg-[#000000]/40'
                   }`}
                 />
               ))}
@@ -190,7 +184,7 @@ export function Testimonials() {
               variant="outline"
               size="icon"
               onClick={nextSlide}
-              className="w-12 h-12 rounded-full border-2 border-[#0B3D4C]/20 hover:bg-[#0B3D4C] hover:text-white hover:border-[#0B3D4C] transition-all duration-300"
+              className="w-12 h-12 rounded-full border-2 border-[#000000]/20 hover:bg-[#000000] hover:text-white hover:border-[#000000] transition-all duration-300"
             >
               <ChevronRight className="w-5 h-5" />
             </Button>
@@ -200,19 +194,19 @@ export function Testimonials() {
         {/* Trust Badges */}
         <div className="flex flex-wrap items-center justify-center gap-8 mt-16 pt-8 border-t border-gray-200">
           <div className="flex items-center gap-2 text-gray-500">
-            <div className="w-8 h-8 bg-[#0B3D4C] rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-[#000000] rounded-lg flex items-center justify-center">
               <Star className="w-4 h-4 text-[#C9A962] fill-[#C9A962]" />
             </div>
             <span className="text-sm">Avaliação 5.0 no Google</span>
           </div>
           <div className="flex items-center gap-2 text-gray-500">
-            <div className="w-8 h-8 bg-[#0B3D4C] rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-[#000000] rounded-lg flex items-center justify-center">
               <Star className="w-4 h-4 text-[#C9A962] fill-[#C9A962]" />
             </div>
             <span className="text-sm">+100 Depoimentos</span>
           </div>
           <div className="flex items-center gap-2 text-gray-500">
-            <div className="w-8 h-8 bg-[#0B3D4C] rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-[#000000] rounded-lg flex items-center justify-center">
               <Star className="w-4 h-4 text-[#C9A962] fill-[#C9A962]" />
             </div>
             <span className="text-sm">98% de Satisfação</span>

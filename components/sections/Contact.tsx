@@ -114,19 +114,19 @@ export function Contact() {
       className="relative py-20 sm:py-28 lg:py-32 bg-[#F8F9FA] overflow-hidden"
     >
       {/* Decorative Elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-[#0B3D4C]/5 rounded-full blur-3xl" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#000000]/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#C9A962]/10 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
           {/* Content */}
           <div ref={contentRef}>
-            <div className="inline-flex items-center gap-2 bg-[#0B3D4C]/10 rounded-full px-4 py-2 mb-6">
+            <div className="inline-flex items-center gap-2 bg-[#000000]/10 rounded-full px-4 py-2 mb-6">
               <Calendar className="w-4 h-4 text-[#C9A962]" />
-              <span className="text-[#0B3D4C] text-sm font-medium">Agende sua consulta</span>
+              <span className="text-[#000000] text-sm font-medium">Agende sua consulta</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0B3D4C] mb-6 leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#000000] mb-6 leading-tight">
               Pronto para ter o{' '}
               <span className="text-[#C9A962]">sorriso dos sonhos</span>?
             </h2>
@@ -144,11 +144,11 @@ export function Contact() {
                   key={index}
                   className="flex items-start gap-4 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-300"
                 >
-                  <div className="w-12 h-12 bg-[#0B3D4C] rounded-lg flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 bg-[#000000] rounded-lg flex items-center justify-center shrink-0">
                     <item.icon className="w-6 h-6 text-[#C9A962]" />
                   </div>
                   <div>
-                    <p className="font-semibold text-[#0B3D4C]">{item.title}</p>
+                    <p className="font-semibold text-[#000000]">{item.title}</p>
                     {item.link ? (
                       <a
                         href={item.link}
@@ -181,7 +181,7 @@ export function Contact() {
           {/* Form */}
           <div ref={formRef}>
             <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-xl">
-              <h3 className="text-2xl font-bold text-[#0B3D4C] mb-2">
+              <h3 className="text-2xl font-bold text-[#000000] mb-2">
                 Solicite um contato
               </h3>
               <p className="text-gray-600 mb-6">
@@ -191,9 +191,9 @@ export function Contact() {
               {isSubmitted ? (
                 <div className="text-center py-12">
                   <div className="w-20 h-20 bg-[#C9A962] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <CheckCircle className="w-10 h-10 text-[#0B3D4C]" />
+                    <CheckCircle className="w-10 h-10 text-[#000000]" />
                   </div>
-                  <h4 className="text-xl font-bold text-[#0B3D4C] mb-2">
+                  <h4 className="text-xl font-bold text-[#000000] mb-2">
                     Mensagem enviada!
                   </h4>
                   <p className="text-gray-600">
@@ -203,7 +203,7 @@ export function Contact() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div>
-                    <Label htmlFor="name" className="text-[#0B3D4C] font-medium">
+                    <Label htmlFor="name" className="text-[#000000] font-medium">
                       Nome completo
                     </Label>
                     <Input
@@ -220,7 +220,7 @@ export function Contact() {
 
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="phone" className="text-[#0B3D4C] font-medium">
+                      <Label htmlFor="phone" className="text-[#000000] font-medium">
                         Telefone
                       </Label>
                       <Input
@@ -235,7 +235,7 @@ export function Contact() {
                       />
                     </div>
                     <div>
-                      <Label htmlFor="email" className="text-[#0B3D4C] font-medium">
+                      <Label htmlFor="email" className="text-[#000000] font-medium">
                         E-mail
                       </Label>
                       <Input
@@ -251,7 +251,7 @@ export function Contact() {
                   </div>
 
                   <div>
-                    <Label htmlFor="message" className="text-[#0B3D4C] font-medium">
+                    <Label htmlFor="message" className="text-[#000000] font-medium">
                       Mensagem
                     </Label>
                     <Textarea
@@ -267,7 +267,7 @@ export function Contact() {
 
                   <Button
                     type="submit"
-                    className="w-full bg-[#0B3D4C] hover:bg-[#155A6E] text-white font-semibold py-6 rounded-xl transition-all duration-300 hover:scale-[1.02]"
+                    className="w-full bg-[#000000] hover:bg-[#1a1a1a] text-white font-semibold py-6 rounded-xl transition-all duration-300 hover:scale-[1.02]"
                   >
                     <Send className="w-5 h-5 mr-2" />
                     Enviar mensagem
