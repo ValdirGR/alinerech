@@ -112,6 +112,31 @@ export function Results() {
                                     (e.target as HTMLImageElement).src = 'https://placehold.co/600x600/eeeeee/cccccc?text=Foto+do+Resultado';
                                 }}
                             />
+
+                            {/* Tag ANTES - canto superior esquerdo */}
+                            <div className="absolute top-4 left-4 z-20 pointer-events-none">
+                                <div className="bg-[#000000]/70 backdrop-blur-sm rounded-xl px-4 py-2">
+                                    <span className="text-white font-bold text-sm sm:text-base tracking-wider uppercase block">
+                                        Antes
+                                    </span>
+                                    <span className="text-[#C9A962] text-[10px] sm:text-xs italic block leading-tight">
+                                        Situação Inicial
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Tag DEPOIS - canto inferior direito */}
+                            <div className="absolute bottom-4 right-4 z-20 pointer-events-none">
+                                <div className="bg-[#C9A962]/90 backdrop-blur-sm rounded-xl px-4 py-2">
+                                    <span className="text-white font-bold text-sm sm:text-base tracking-wider uppercase block text-right">
+                                        Depois
+                                    </span>
+                                    <span className="text-white/80 text-[10px] sm:text-xs italic block leading-tight text-right">
+                                        Resultado Final
+                                    </span>
+                                </div>
+                            </div>
+
                             {/* Overlay suave inferior */}
                             <div className="absolute inset-0 bg-linear-to-t from-[#000000]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
