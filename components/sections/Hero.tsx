@@ -206,7 +206,7 @@ export function Hero() {
           className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-8 border-t border-white/10"
         >
           {[
-            { number: '+10', label: 'Anos de Experiência' },
+            { number: '+9', label: 'Anos de Experiência' },
             { number: '+2.500', label: 'Pacientes Atendidos' },
             { number: '100%', label: 'Foco em Estética' },
             { number: '5.0', label: 'Avaliação dos Pacientes' },

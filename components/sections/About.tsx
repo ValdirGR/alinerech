@@ -116,7 +116,7 @@ export function About() {
 
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
-                A Dra. Aline Rech é cirurgiã-dentista com mais de 10 anos de experiência,
+                A Dra. Aline Rech é cirurgiã-dentista com mais de 9 anos de experiência,
                 especializada em odontologia estética e implantodontia. Sua trajetória é
                 marcada pelo compromisso incessante em proporcionar sorrisos naturais e
                 harmoniosos que transformam vidas.
@@ -169,7 +169,7 @@ export function About() {
 
             {/* Experience Badge */}
             <div className="absolute -bottom-6 -left-6 bg-[#000000] text-white rounded-2xl p-6 shadow-xl">
-              <p className="text-4xl font-bold text-[#C9A962]">+10</p>
+              <p className="text-4xl font-bold text-[#C9A962]">+9</p>
               <p className="text-sm text-white/80">Anos de<br />Experiência</p>
             </div>
 

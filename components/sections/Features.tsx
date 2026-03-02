@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { 
-  Microscope, 
-  Clock, 
-  Users, 
+import {
+  Microscope,
+  Clock,
+  Users,
   Stethoscope,
   Sparkles,
   ShieldCheck,
@@ -22,7 +22,7 @@ export function Features() {
 
   useEffect(() => {
     const triggers: ScrollTrigger[] = [];
-    
+
     const ctx = gsap.context(() => {
       // Animação do header
       const headerTrigger = ScrollTrigger.create({
@@ -121,13 +121,13 @@ export function Features() {
 
   const stats = [
     { value: '2.500+', label: 'Pacientes Atendidos' },
-    { value: '10+', label: 'Anos de Experiência' },
+    { value: '9+', label: 'Anos de Experiência' },
     { value: '5.0', label: 'Avaliação Média' },
     { value: '98%', label: 'Taxa de Satisfação' }
   ];
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       id="diferenciais"
       className="relative py-20 sm:py-28 lg:py-32 bg-gradient-to-br from-[#000000] via-[#0d0d0d] to-[#1a1a1a] overflow-hidden"
@@ -158,7 +158,7 @@ export function Features() {
           </h2>
 
           <p className="text-white/70 text-lg">
-            Compromisso com a excelência, tecnologia de ponta e um atendimento 
+            Compromisso com a excelência, tecnologia de ponta e um atendimento
             que coloca você no centro de tudo.
           </p>
         </div>
@@ -166,7 +166,7 @@ export function Features() {
         {/* Features Grid */}
         <div ref={gridRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {features.map((feature, index) => (
-            <div 
+            <div
               key={index}
               className="group bg-white/5 backdrop-blur-sm hover:bg-white/10 border border-white/10 hover:border-[#C9A962]/30 rounded-2xl p-6 transition-all duration-500 hover:-translate-y-2"
             >
@@ -184,7 +184,7 @@ export function Features() {
         </div>
 
         {/* Stats */}
-        <div 
+        <div
           ref={statsRef}
           className="grid grid-cols-2 md:grid-cols-4 gap-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8"
         >

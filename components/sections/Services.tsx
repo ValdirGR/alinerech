@@ -14,7 +14,7 @@ export function Services() {
 
   useEffect(() => {
     const triggers: ScrollTrigger[] = [];
-    
+
     const ctx = gsap.context(() => {
       // Animação do header
       const headerTrigger = ScrollTrigger.create({
@@ -61,7 +61,7 @@ export function Services() {
   };
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       id="servicos"
       className="relative py-20 sm:py-28 lg:py-32 bg-[#F8F9FA] overflow-hidden"
@@ -84,7 +84,7 @@ export function Services() {
           </h2>
 
           <p className="text-gray-600 text-lg">
-            Oferecemos tratamentos odontológicos de excelência com foco em estética e saúde. 
+            Oferecemos tratamentos odontológicos de excelência com foco em estética e saúde.
             Cada procedimento é personalizado para atender às suas necessidades específicas.
           </p>
         </div>
@@ -104,13 +104,8 @@ export function Services() {
                   />
                   {/* Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/60 via-transparent to-transparent" />
-                  
-                  {/* Tag */}
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-[#C9A962] text-[#000000] text-sm font-semibold px-4 py-2 rounded-full">
-                      Mais Popular
-                    </span>
-                  </div>
+
+
                 </div>
 
                 {/* Decorative Elements */}
@@ -126,8 +121,8 @@ export function Services() {
                   Transformação imediata do seu sorriso
                 </p>
                 <p className="text-gray-600 mb-6 leading-relaxed">
-                  As facetas em resina são laminados diretos de resina composta aplicados sobre a face do dente. 
-                  São a solução ideal para quem busca um sorriso perfeito de forma rápida e acessível, 
+                  As facetas em resina são laminados diretos de resina composta aplicados sobre a face do dente.
+                  São a solução ideal para quem busca um sorriso perfeito de forma rápida e acessível,
                   corrigindo imperfeições como manchas, espaços entre dentes, dentes desalinhados ou desgastados.
                 </p>
 
@@ -158,7 +153,7 @@ export function Services() {
                     Quero minhas facetas
                     <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
                   </Button>
-                  
+
                   <Button
                     variant="outline"
                     size="lg"
@@ -226,12 +221,12 @@ export function Services() {
                       Cuidados Após
                     </h4>
                     <p className="text-green-700 text-sm leading-relaxed mb-3">
-                      Evitar alimentos muito duros, não usar dentes como "abridor", 
+                      Evitar alimentos muito duros, não usar dentes como "abridor",
                       manter boa higiene bucal e fazer polimentos periódicos no consultório.
                     </p>
                     <div className="pt-3 border-t border-green-200">
                       <p className="text-green-600 text-xs">
-                        <strong>Dica:</strong> Reduza café, vinho tinto e refrigerantes de cola 
+                        <strong>Dica:</strong> Reduza café, vinho tinto e refrigerantes de cola
                         para manter o brilho por mais tempo.
                       </p>
                     </div>
