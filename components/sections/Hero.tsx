@@ -146,7 +146,7 @@ export function Hero() {
               <DialogTrigger asChild>
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl cursor-pointer group">
                   <img
-                    src="/alinevideo.jpg"
+                    src="/alinevideo02.jpg"
                     alt="Apresentação Dra Aline Rech"
                     className="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover transition-transform duration-700 group-hover:scale-105"
                   />
