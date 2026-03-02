@@ -159,7 +159,7 @@ export function About() {
           <div ref={imageRef} className="relative">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
               <img
-                src="/aline.jpg"
+                src="/aline02.jpg"
                 alt="Dra. Aline Rech"
                 className="w-full h-[500px] sm:h-[600px] object-cover"
               />
