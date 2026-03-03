@@ -130,7 +130,7 @@ export function Features() {
     <section
       ref={sectionRef}
       id="diferenciais"
-      className="relative py-20 sm:py-28 lg:py-32 bg-gradient-to-br from-[#000000] via-[#0d0d0d] to-[#1a1a1a] overflow-hidden"
+      className="relative py-20 sm:py-28 lg:py-32 bg-linear-to-br from-[#000000] via-[#0d0d0d] to-[#1a1a1a] overflow-hidden"
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">

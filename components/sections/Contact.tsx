@@ -111,27 +111,27 @@ export function Contact() {
     <section
       ref={sectionRef}
       id="contato"
-      className="relative py-20 sm:py-28 lg:py-32 bg-[#F8F9FA] overflow-hidden"
+      className="relative py-20 sm:py-28 lg:py-32 bg-[#0A0A0A] overflow-hidden"
     >
       {/* Decorative Elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-[#000000]/5 rounded-full blur-3xl" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#C9A962]/10 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
           {/* Content */}
           <div ref={contentRef}>
-            <div className="inline-flex items-center gap-2 bg-[#000000]/10 rounded-full px-4 py-2 mb-6">
+            <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 mb-6">
               <Calendar className="w-4 h-4 text-[#C9A962]" />
-              <span className="text-[#000000] text-sm font-medium">Agende sua consulta</span>
+              <span className="text-white text-sm font-medium">Agende sua consulta</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#000000] mb-6 leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
               Pronto para ter o{' '}
               <span className="text-[#C9A962]">sorriso dos sonhos</span>?
             </h2>
 
-            <p className="text-gray-600 text-lg mb-8 leading-relaxed">
+            <p className="text-white/70 text-lg mb-8 leading-relaxed">
               Entre em contato e agende sua avaliação gratuita. Vamos juntos
               planejar a transformação do seu sorriso com o cuidado e a
               excelência que você merece.
@@ -142,24 +142,24 @@ export function Contact() {
               {contactInfo.map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-start gap-4 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-300"
+                  className="flex items-start gap-4 bg-white/10 border border-white/10 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-300"
                 >
                   <div className="w-12 h-12 bg-[#000000] rounded-lg flex items-center justify-center shrink-0">
                     <item.icon className="w-6 h-6 text-[#C9A962]" />
                   </div>
                   <div>
-                    <p className="font-semibold text-[#000000]">{item.title}</p>
+                    <p className="font-semibold text-white">{item.title}</p>
                     {item.link ? (
                       <a
                         href={item.link}
                         target={item.link.startsWith('http') ? '_blank' : undefined}
                         rel={item.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        className="text-gray-600 hover:text-[#C9A962] transition-colors"
+                        className="text-white/60 hover:text-[#C9A962] transition-colors"
                       >
                         {item.content}
                       </a>
                     ) : (
-                      <p className="text-gray-600">{item.content}</p>
+                      <p className="text-white/60">{item.content}</p>
                     )}
                   </div>
                 </div>
@@ -180,11 +180,11 @@ export function Contact() {
 
           {/* Form */}
           <div ref={formRef}>
-            <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-xl">
-              <h3 className="text-2xl font-bold text-[#000000] mb-2">
+            <div className="bg-white/10 border border-white/10 rounded-3xl p-8 sm:p-10 shadow-xl backdrop-blur-sm">
+              <h3 className="text-2xl font-bold text-white mb-2">
                 Solicite um contato
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-white/60 mb-6">
                 Preencha o formulário e retornaremos em breve.
               </p>
 
@@ -193,17 +193,17 @@ export function Contact() {
                   <div className="w-20 h-20 bg-[#C9A962] rounded-full flex items-center justify-center mx-auto mb-4">
                     <CheckCircle className="w-10 h-10 text-[#000000]" />
                   </div>
-                  <h4 className="text-xl font-bold text-[#000000] mb-2">
+                  <h4 className="text-xl font-bold text-white mb-2">
                     Mensagem enviada!
                   </h4>
-                  <p className="text-gray-600">
+                  <p className="text-white/60">
                     Entraremos em contato em breve.
                   </p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div>
-                    <Label htmlFor="name" className="text-[#000000] font-medium">
+                    <Label htmlFor="name" className="text-white font-medium">
                       Nome completo
                     </Label>
                     <Input
@@ -214,13 +214,13 @@ export function Contact() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="mt-1 border-gray-200 focus:border-[#C9A962] focus:ring-[#C9A962] rounded-xl"
+                      className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-[#C9A962] focus:ring-[#C9A962] rounded-xl"
                     />
                   </div>
 
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="phone" className="text-[#000000] font-medium">
+                      <Label htmlFor="phone" className="text-white font-medium">
                         Telefone
                       </Label>
                       <Input
@@ -231,11 +231,11 @@ export function Contact() {
                         value={formData.phone}
                         onChange={handleChange}
                         required
-                        className="mt-1 border-gray-200 focus:border-[#C9A962] focus:ring-[#C9A962] rounded-xl"
+                        className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-[#C9A962] focus:ring-[#C9A962] rounded-xl"
                       />
                     </div>
                     <div>
-                      <Label htmlFor="email" className="text-[#000000] font-medium">
+                      <Label htmlFor="email" className="text-white font-medium">
                         E-mail
                       </Label>
                       <Input
@@ -245,13 +245,13 @@ export function Contact() {
                         placeholder="seu@email.com"
                         value={formData.email}
                         onChange={handleChange}
-                        className="mt-1 border-gray-200 focus:border-[#C9A962] focus:ring-[#C9A962] rounded-xl"
+                        className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-[#C9A962] focus:ring-[#C9A962] rounded-xl"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <Label htmlFor="message" className="text-[#000000] font-medium">
+                    <Label htmlFor="message" className="text-white font-medium">
                       Mensagem
                     </Label>
                     <Textarea
@@ -261,19 +261,19 @@ export function Contact() {
                       value={formData.message}
                       onChange={handleChange}
                       rows={4}
-                      className="mt-1 border-gray-200 focus:border-[#C9A962] focus:ring-[#C9A962] rounded-xl resize-none"
+                      className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-[#C9A962] focus:ring-[#C9A962] rounded-xl resize-none"
                     />
                   </div>
 
                   <Button
                     type="submit"
-                    className="w-full bg-[#000000] hover:bg-[#1a1a1a] text-white font-semibold py-6 rounded-xl transition-all duration-300 hover:scale-[1.02]"
+                    className="w-full bg-[#C9A962] hover:bg-[#b8993f] text-[#000000] font-semibold py-6 rounded-xl transition-all duration-300 hover:scale-[1.02]"
                   >
                     <Send className="w-5 h-5 mr-2" />
                     Enviar mensagem
                   </Button>
 
-                  <p className="text-xs text-gray-500 text-center">
+                  <p className="text-xs text-white/40 text-center">
                     Ao enviar, você concorda com nossa política de privacidade.
                   </p>
                 </form>

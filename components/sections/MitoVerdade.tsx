@@ -104,7 +104,7 @@ export function MitoVerdade() {
     <section
       ref={sectionRef}
       id="mito-verdade"
-      className="relative py-20 sm:py-28 lg:py-32 bg-gradient-to-br from-[#000000] via-[#0d0d0d] to-[#1a1a1a] overflow-hidden"
+      className="relative py-20 sm:py-28 lg:py-32 bg-linear-to-br from-[#000000] via-[#0d0d0d] to-[#1a1a1a] overflow-hidden"
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
@@ -146,16 +146,16 @@ export function MitoVerdade() {
             >
               {/* Category Badge */}
               <span className={`inline-block text-xs font-medium px-3 py-1 rounded-full mb-4 ${item.category === 'Facetas'
-                  ? 'bg-[#C9A962]/20 text-[#C9A962]'
-                  : 'bg-blue-400/20 text-blue-300'
+                ? 'bg-[#C9A962]/20 text-[#C9A962]'
+                : 'bg-blue-400/20 text-blue-300'
                 }`}>
                 {item.category}
               </span>
 
               {/* Icon */}
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${item.type === 'mito'
-                  ? 'bg-red-500/20'
-                  : 'bg-green-500/20'
+                ? 'bg-red-500/20'
+                : 'bg-green-500/20'
                 }`}>
                 {item.type === 'mito' ? (
                   <X className="w-6 h-6 text-red-400" />

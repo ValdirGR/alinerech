@@ -94,27 +94,27 @@ export function About() {
     <section
       ref={sectionRef}
       id="sobre"
-      className="relative py-20 sm:py-28 lg:py-32 bg-white overflow-hidden"
+      className="relative py-20 sm:py-28 lg:py-32 bg-[#0A0A0A] overflow-hidden"
     >
       {/* Decorative Elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-[#000000]/5 rounded-full blur-3xl" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#C9A962]/10 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-16">
           {/* Content */}
           <div ref={contentRef}>
-            <div className="inline-flex items-center gap-2 bg-[#000000]/10 rounded-full px-4 py-2 mb-6">
+            <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 mb-6">
               <span className="w-2 h-2 bg-[#C9A962] rounded-full" />
-              <span className="text-[#000000] text-sm font-medium">Conheça a Dra. Aline Rech</span>
+              <span className="text-white text-sm font-medium">Conheça a Dra. Aline Rech</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#000000] mb-6 leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
               Dedicação e excelência em{' '}
               <span className="text-[#C9A962]">cada sorriso</span>
             </h2>
 
-            <div className="space-y-4 text-gray-600 leading-relaxed">
+            <div className="space-y-4 text-white/70 leading-relaxed">
               <p>
                 A Dra. Aline Rech é cirurgiã-dentista com mais de 9 anos de experiência,
                 especializada em odontologia estética e implantodontia. Sua trajetória é
@@ -134,22 +134,22 @@ export function About() {
             </div>
 
             <div className="flex flex-wrap gap-4 mt-8">
-              <div className="flex items-center gap-3 bg-[#F8F9FA] rounded-xl px-5 py-3">
+              <div className="flex items-center gap-3 bg-white/10 rounded-xl px-5 py-3">
                 <div className="w-10 h-10 bg-[#000000] rounded-lg flex items-center justify-center">
                   <Award className="w-5 h-5 text-[#C9A962]" />
                 </div>
                 <div>
-                  <p className="font-semibold text-[#000000]">CRO-SC</p>
-                  <p className="text-xs text-gray-500">Registro Ativo</p>
+                  <p className="font-semibold text-white">CRO 15756-SC</p>
+                  <p className="text-xs text-white/60">Registro Ativo</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 bg-[#F8F9FA] rounded-xl px-5 py-3">
+              <div className="flex items-center gap-3 bg-white/10 rounded-xl px-5 py-3">
                 <div className="w-10 h-10 bg-[#000000] rounded-lg flex items-center justify-center">
                   <GraduationCap className="w-5 h-5 text-[#C9A962]" />
                 </div>
                 <div>
-                  <p className="font-semibold text-[#000000]">Especialista</p>
-                  <p className="text-xs text-gray-500">Estética & Implantes</p>
+                  <p className="font-semibold text-white">Especialista</p>
+                  <p className="text-xs text-white/60">Estética & Implantes</p>
                 </div>
               </div>
             </div>
@@ -161,7 +161,7 @@ export function About() {
               <img
                 src="/aline02.jpg"
                 alt="Dra. Aline Rech"
-                className="w-full h-[500px] sm:h-[600px] object-cover"
+                className="w-full h-[500px] sm:h-[600px] object-cover object-top"
               />
               {/* Overlay */}
               <div className="absolute inset-0 bg-linear-to-t from-[#000000]/40 via-transparent to-transparent" />
@@ -184,15 +184,15 @@ export function About() {
           {diferenciais.map((item, index) => (
             <div
               key={index}
-              className="group bg-[#F8F9FA] hover:bg-[#000000] rounded-2xl p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl"
+              className="group bg-white/10 hover:bg-[#C9A962]/20 rounded-2xl p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl border border-white/10 hover:border-[#C9A962]/30"
             >
-              <div className="w-14 h-14 bg-[#000000] group-hover:bg-[#C9A962] rounded-xl flex items-center justify-center mb-4 transition-colors duration-500">
+              <div className="w-14 h-14 bg-white/10 group-hover:bg-[#C9A962] rounded-xl flex items-center justify-center mb-4 transition-colors duration-500">
                 <item.icon className="w-7 h-7 text-[#C9A962] group-hover:text-[#000000] transition-colors duration-500" />
               </div>
-              <h3 className="font-semibold text-[#000000] group-hover:text-white text-lg mb-2 transition-colors duration-500">
+              <h3 className="font-semibold text-white group-hover:text-white text-lg mb-2 transition-colors duration-500">
                 {item.title}
               </h3>
-              <p className="text-gray-600 group-hover:text-white/80 text-sm transition-colors duration-500">
+              <p className="text-white/60 group-hover:text-white/80 text-sm transition-colors duration-500">
                 {item.description}
               </p>
             </div>

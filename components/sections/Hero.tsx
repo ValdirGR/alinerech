@@ -148,7 +148,7 @@ export function Hero() {
                   <img
                     src="/alinevideo02.jpg"
                     alt="Apresentação Dra Aline Rech"
-                    className="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover object-top transition-transform duration-700 group-hover:scale-105"
                   />
                   {/* Overlay gradient */}
                   <div className="absolute inset-0 bg-linear-to-t from-[#000000]/80 via-black/20 to-transparent transition-opacity duration-500 group-hover:bg-black/40" />
@@ -173,7 +173,7 @@ export function Hero() {
                       </div>
                       <div>
                         <p className="font-semibold text-[#000000]">Dra. Aline Rech</p>
-                        <p className="text-sm text-gray-600">Cirurgiã-Dentista | CRO-SC</p>
+                        <p className="text-sm text-gray-600">Cirurgiã-Dentista | CRO 15756-SC</p>
                       </div>
                       <ChevronRight className="w-5 h-5 text-[#C9A962] ml-auto transition-transform duration-300 group-hover:translate-x-1" />
                     </div>

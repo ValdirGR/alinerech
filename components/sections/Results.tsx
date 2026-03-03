@@ -69,26 +69,26 @@ export function Results() {
         <section
             ref={sectionRef}
             id="resultados"
-            className="relative py-20 sm:py-28 lg:py-32 bg-white overflow-hidden"
+            className="relative py-20 sm:py-28 lg:py-32 bg-[#0A0A0A] overflow-hidden"
         >
             {/* Elementos Decorativos de Fundo */}
-            <div className="absolute top-1/4 left-0 w-64 h-64 bg-[#C9A962]/5 rounded-full blur-3xl" />
-            <div className="absolute bottom-1/4 right-0 w-80 h-80 bg-[#000000]/5 rounded-full blur-3xl" />
+            <div className="absolute top-1/4 left-0 w-64 h-64 bg-[#C9A962]/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-1/4 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl" />
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
                 {/* Cabeçalho da Seção */}
                 <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-16">
-                    <div className="inline-flex items-center gap-2 bg-[#C9A962]/10 rounded-full px-4 py-2 mb-6">
+                    <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 mb-6">
                         <Camera className="w-4 h-4 text-[#C9A962]" />
-                        <span className="text-[#000000] text-sm font-medium">Casos Clínicos</span>
+                        <span className="text-white text-sm font-medium">Casos Clínicos</span>
                     </div>
 
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#000000] mb-6 leading-tight">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
                         Nossos{' '}
                         <span className="text-[#C9A962]">Resultados</span>
                     </h2>
 
-                    <p className="text-gray-600 text-lg">
+                    <p className="text-white/70 text-lg">
                         Veja algumas das incríveis transformações que já realizamos.
                         Sorrisos reais, vidas renovadas e a excelência estética em cada detalhe.
                     </p>
@@ -102,7 +102,7 @@ export function Results() {
                     {resultsData.map((item) => (
                         <div
                             key={item.id}
-                            className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 bg-gray-100 aspect-square"
+                            className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 bg-white/10 aspect-square"
                         >
                             <img
                                 src={item.image}
@@ -114,9 +114,9 @@ export function Results() {
                             />
 
                             {/* Tag ANTES - canto superior esquerdo */}
-                            <div className="absolute top-4 left-4 z-20 pointer-events-none">
-                                <div className="bg-[#000000]/70 backdrop-blur-sm rounded-xl px-4 py-2">
-                                    <span className="text-white font-bold text-sm sm:text-base tracking-wider uppercase block">
+                            <div className="absolute top-3 left-3 z-20 pointer-events-none">
+                                <div className="bg-[#000000]/70 backdrop-blur-sm rounded-xl px-3 py-1.5">
+                                    <span className="text-white font-bold text-xs sm:text-sm tracking-wider uppercase block">
                                         Antes
                                     </span>
                                     <span className="text-[#C9A962] text-[10px] sm:text-xs italic block leading-tight">
@@ -126,9 +126,9 @@ export function Results() {
                             </div>
 
                             {/* Tag DEPOIS - canto inferior direito */}
-                            <div className="absolute bottom-4 right-4 z-20 pointer-events-none">
-                                <div className="bg-[#C9A962]/90 backdrop-blur-sm rounded-xl px-4 py-2">
-                                    <span className="text-white font-bold text-sm sm:text-base tracking-wider uppercase block text-right">
+                            <div className="absolute bottom-3 right-3 z-20 pointer-events-none">
+                                <div className="bg-[#C9A962]/90 backdrop-blur-sm rounded-xl px-3 py-1.5">
+                                    <span className="text-white font-bold text-xs sm:text-sm tracking-wider uppercase block text-right">
                                         Depois
                                     </span>
                                     <span className="text-white/80 text-[10px] sm:text-xs italic block leading-tight text-right">
@@ -141,7 +141,7 @@ export function Results() {
                             <div className="absolute inset-0 bg-linear-to-t from-[#000000]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                             {/* Marca d'água */}
-                            <div className="absolute bottom-4 left-4 w-28 h-auto opacity-30 pointer-events-none z-10 mix-blend-overlay">
+                            <div className="absolute bottom-4 left-4 w-28 h-auto opacity-60 pointer-events-none z-10 mix-blend-overlay">
                                 <Image
                                     src="/logo-aline.png"
                                     alt="Marca d'água"

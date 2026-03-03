@@ -100,26 +100,26 @@ export function FAQ() {
     <section
       ref={sectionRef}
       id="faq"
-      className="relative py-20 sm:py-28 lg:py-32 bg-white overflow-hidden"
+      className="relative py-20 sm:py-28 lg:py-32 bg-[#0A0A0A] overflow-hidden"
     >
       {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-[#000000]/5 rounded-full blur-3xl" />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-0 w-72 h-72 bg-[#C9A962]/10 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         {/* Header */}
         <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 bg-[#000000]/10 rounded-full px-4 py-2 mb-6">
+          <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 mb-6">
             <HelpCircle className="w-4 h-4 text-[#C9A962]" />
-            <span className="text-[#000000] text-sm font-medium">Tire suas dúvidas</span>
+            <span className="text-white text-sm font-medium">Tire suas dúvidas</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#000000] mb-6 leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
             Perguntas{' '}
             <span className="text-[#C9A962]">Frequentes</span>
           </h2>
 
-          <p className="text-gray-600 text-lg">
+          <p className="text-white/70 text-lg">
             Esclarecemos as principais dúvidas sobre nossos tratamentos para que você
             tome a melhor decisão com segurança e confiança.
           </p>
@@ -142,13 +142,13 @@ export function FAQ() {
               {faqFacetas.map((item, index) => (
                 <div
                   key={index}
-                  className="bg-[#F8F9FA] rounded-xl overflow-hidden transition-all duration-300"
+                  className="bg-white/10 border border-white/10 rounded-xl overflow-hidden transition-all duration-300"
                 >
                   <button
                     onClick={() => setOpenFacetas(openFacetas === index ? null : index)}
-                    className="w-full flex items-center justify-between p-4 text-left hover:bg-[#000000]/5 transition-colors"
+                    className="w-full flex items-center justify-between p-4 text-left hover:bg-white/10 transition-colors"
                   >
-                    <span className="font-medium text-[#000000] pr-4">{item.question}</span>
+                    <span className="font-medium text-white pr-4">{item.question}</span>
                     <ChevronDown
                       className={`w-5 h-5 text-[#C9A962] shrink-0 transition-transform duration-300 ${openFacetas === index ? 'rotate-180' : ''
                         }`}
@@ -158,7 +158,7 @@ export function FAQ() {
                     className={`overflow-hidden transition-all duration-300 ${openFacetas === index ? 'max-h-96' : 'max-h-0'
                       }`}
                   >
-                    <p className="px-4 pb-4 text-gray-600 text-sm leading-relaxed">
+                    <p className="px-4 pb-4 text-white/60 text-sm leading-relaxed">
                       {item.answer}
                     </p>
                   </div>
@@ -172,7 +172,7 @@ export function FAQ() {
 
         {/* CTA */}
         <div className="mt-12 text-center">
-          <p className="text-gray-600 mb-4">
+          <p className="text-white/70 mb-4">
             Ainda tem dúvidas? Entre em contato diretamente pelo WhatsApp.
           </p>
           <a
