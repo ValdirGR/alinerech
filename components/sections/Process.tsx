@@ -133,7 +133,7 @@ export function Process() {
                 className="step-card group bg-white/10 border border-white/10 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2"
               >
                 {/* Image */}
-                <div className="relative h-[14.5rem] overflow-hidden">
+                <div className="relative h-[23rem] overflow-hidden">
                   <img
                     src={step.image}
                     alt={step.title}
