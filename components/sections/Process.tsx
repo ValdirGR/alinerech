@@ -31,14 +31,14 @@ export function Process() {
       step: '03',
       title: 'Aplicação da Resina',
       description: 'Escultura artística da resina composta dente a dente, camada por camada, com cura a luz.',
-      image: '/process-aplicacao.jpg'
+      image: '/process-aplicacao02.jpg'
     },
     {
       icon: CalendarCheck,
       step: '04',
       title: 'Acabamento e Polimento',
       description: 'Ajuste da mordida, polimento para brilho natural e instruções de cuidados pós-procedimento.',
-      image: '/process-acabamento.jpg'
+      image: '/process-acabamento02.jpg'
     }
   ];
 
