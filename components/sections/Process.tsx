@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Search, ClipboardList, Settings, Sparkles, CalendarCheck, Stethoscope } from 'lucide-react';
+import { Search, ClipboardList, Settings, Sparkles, CalendarCheck } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,39 +17,25 @@ export function Process() {
       step: '01',
       title: 'Avaliação Clínica',
       description: 'Exame detalhado da saúde bucal, análise do sorriso e discussão das expectativas do paciente.',
-      image: '/process-avaliacao.jpg'
+      image: '/process-avaliacao02.jpg'
     },
     {
       icon: ClipboardList,
       step: '02',
       title: 'Fotos e Planejamento',
       description: 'Registro fotográfico e planejamento estético digital para visualizar o resultado esperado.',
-      image: '/process-planejamento.jpg'
-    },
-    {
-      icon: Settings,
-      step: '03',
-      title: 'Mock-up (Opcional)',
-      description: 'Criação de um modelo provisório para o paciente visualizar como ficará o sorriso antes do procedimento.',
-      image: '/process-mockup.jpg'
-    },
-    {
-      icon: Stethoscope,
-      step: '04',
-      title: 'Preparo Mínimo',
-      description: 'Quando necessário, preparo superficial e conservador da superfície do dente.',
-      image: '/process-preparo.jpg'
+      image: '/process-planejamento02.jpg'
     },
     {
       icon: Sparkles,
-      step: '05',
+      step: '03',
       title: 'Aplicação da Resina',
       description: 'Escultura artística da resina composta dente a dente, camada por camada, com cura a luz.',
       image: '/process-aplicacao.jpg'
     },
     {
       icon: CalendarCheck,
-      step: '06',
+      step: '04',
       title: 'Acabamento e Polimento',
       description: 'Ajuste da mordida, polimento para brilho natural e instruções de cuidados pós-procedimento.',
       image: '/process-acabamento.jpg'
@@ -140,14 +126,14 @@ export function Process() {
             </div>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 gap-6 max-w-[80%] mx-auto">
             {facetasSteps.map((step, index) => (
               <div
                 key={index}
                 className="step-card group bg-white/10 border border-white/10 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2"
               >
                 {/* Image */}
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-[14.5rem] overflow-hidden">
                   <img
                     src={step.image}
                     alt={step.title}
