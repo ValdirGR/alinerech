@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useDeferredValue, useEffect, useMemo, useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -12,6 +12,9 @@ import { Input } from '@/components/ui/input'
 import { createClient } from '@/utils/supabase/client'
 import { MediaLibraryGrid } from '@/components/admin/media-library-grid'
 import type { MediaAssetRecord } from '@/lib/content/types'
+
+const INITIAL_PAGE_SIZE = 12
+const PAGE_SIZE = 12
 
 type MediaLibraryBrowserProps = {
   open: boolean
@@ -31,6 +34,8 @@ export function MediaLibraryBrowser({
   const [items, setItems] = useState<MediaAssetRecord[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [search, setSearch] = useState('')
+  const [visibleCount, setVisibleCount] = useState(INITIAL_PAGE_SIZE)
+  const deferredSearch = useDeferredValue(search)
 
   useEffect(() => {
     if (!open) {
@@ -71,6 +76,7 @@ export function MediaLibraryBrowser({
           usedIn: [],
         }))
       )
+      setVisibleCount(INITIAL_PAGE_SIZE)
       setIsLoading(false)
     }
 
@@ -81,20 +87,33 @@ export function MediaLibraryBrowser({
     }
   }, [bucketName, open])
 
-  const filteredItems = items.filter((item) => {
-    const normalizedSearch = search.trim().toLowerCase()
+  useEffect(() => {
+    setVisibleCount(INITIAL_PAGE_SIZE)
+  }, [deferredSearch])
+
+  const filteredItems = useMemo(() => {
+    const normalizedSearch = deferredSearch.trim().toLowerCase()
 
     if (!normalizedSearch) {
-      return true
+      return items
     }
 
-    return (
-      item.filePath.toLowerCase().includes(normalizedSearch) ||
-      item.module.toLowerCase().includes(normalizedSearch) ||
-      item.publicUrl.toLowerCase().includes(normalizedSearch) ||
-      (item.altText ?? '').toLowerCase().includes(normalizedSearch)
-    )
-  })
+    return items.filter((item) => {
+      return (
+        item.filePath.toLowerCase().includes(normalizedSearch) ||
+        item.module.toLowerCase().includes(normalizedSearch) ||
+        item.publicUrl.toLowerCase().includes(normalizedSearch) ||
+        (item.altText ?? '').toLowerCase().includes(normalizedSearch)
+      )
+    })
+  }, [deferredSearch, items])
+
+  const visibleItems = useMemo(
+    () => filteredItems.slice(0, visibleCount),
+    [filteredItems, visibleCount]
+  )
+
+  const hasMoreItems = visibleItems.length < filteredItems.length
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -120,15 +139,33 @@ export function MediaLibraryBrowser({
               Carregando imagens...
             </div>
           ) : (
-            <MediaLibraryGrid
-              items={filteredItems}
-              selectable
-              selectedUrl={selectedUrl}
-              onSelect={(asset) => {
-                onSelect(asset)
-                onOpenChange(false)
-              }}
-            />
+            <div className="space-y-4">
+              <p className="text-sm text-gray-500">
+                Mostrando {visibleItems.length} de {filteredItems.length} imagem(ns).
+              </p>
+
+              <MediaLibraryGrid
+                items={visibleItems}
+                selectable
+                selectedUrl={selectedUrl}
+                onSelect={(asset) => {
+                  onSelect(asset)
+                  onOpenChange(false)
+                }}
+              />
+
+              {hasMoreItems ? (
+                <div className="flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() => setVisibleCount((currentCount) => currentCount + PAGE_SIZE)}
+                    className="rounded-md border border-input px-4 py-2 text-sm font-medium text-[#0B3D4C] transition-colors hover:bg-gray-50"
+                  >
+                    Carregar mais 12 imagens
+                  </button>
+                </div>
+              ) : null}
+            </div>
           )}
         </div>
       </DialogContent>
