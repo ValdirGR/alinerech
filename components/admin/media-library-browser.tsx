@@ -68,6 +68,7 @@ export function MediaLibraryBrowser({
           publicUrl: item.public_url,
           altText: item.alt_text,
           createdAt: item.created_at,
+          usedIn: [],
         }))
       )
       setIsLoading(false)
