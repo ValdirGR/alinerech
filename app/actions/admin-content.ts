@@ -12,6 +12,7 @@ import type {
   ProcessContent,
   ResultsContent,
   ServicesContent,
+  TestimonialsContent,
 } from '@/lib/content/types'
 
 const heroSchema = z.object({
@@ -172,6 +173,27 @@ const processSchema = z.object({
     .max(4),
   ctaText: z.string().trim().min(1, 'Informe o texto do CTA.'),
   ctaLabel: z.string().trim().min(1, 'Informe o botão do CTA.'),
+})
+
+const testimonialsSchema = z.object({
+  badgeText: z.string().trim().min(1, 'Informe o selo superior.'),
+  titleLead: z.string().trim().min(1, 'Informe a primeira parte do titulo.'),
+  titleHighlight: z.string().trim().min(1, 'Informe o destaque do titulo.'),
+  description: z.string().trim().min(1, 'Informe a descricao da seção.'),
+  items: z
+    .array(
+      z.object({
+        name: z.string().trim().min(1),
+        imageUrl: z.string().trim().min(1),
+        imageAlt: z.string().trim().min(1),
+        rating: z.number().int().min(1).max(5),
+        text: z.string().trim().min(1),
+        procedure: z.string().trim().min(1),
+      })
+    )
+    .min(2)
+    .max(2),
+  trustBadges: z.array(z.string().trim().min(1)).min(3).max(3),
 })
 
 const getHeroContentFromFormData = (formData: FormData): HeroContent => {
@@ -336,6 +358,30 @@ const getProcessContentFromFormData = (formData: FormData): ProcessContent => {
     steps,
     ctaText: formData.get('ctaText'),
     ctaLabel: formData.get('ctaLabel'),
+  })
+}
+
+const getTestimonialsContentFromFormData = (formData: FormData): TestimonialsContent => {
+  const items = Array.from({ length: 2 }, (_, index) => ({
+    name: String(formData.get(`testimonialName${index}`) ?? ''),
+    imageUrl: String(formData.get(`testimonialImage${index}`) ?? ''),
+    imageAlt: String(formData.get(`testimonialImageAlt${index}`) ?? ''),
+    rating: Number(formData.get(`testimonialRating${index}`) ?? 0),
+    text: String(formData.get(`testimonialText${index}`) ?? ''),
+    procedure: String(formData.get(`testimonialProcedure${index}`) ?? ''),
+  }))
+
+  const trustBadges = Array.from({ length: 3 }, (_, index) =>
+    String(formData.get(`testimonialBadge${index}`) ?? '')
+  )
+
+  return testimonialsSchema.parse({
+    badgeText: formData.get('badgeText'),
+    titleLead: formData.get('titleLead'),
+    titleHighlight: formData.get('titleHighlight'),
+    description: formData.get('description'),
+    items,
+    trustBadges,
   })
 }
 
@@ -684,6 +730,55 @@ export async function publishProcess(): Promise<ActionResult> {
     return {
       success: true,
       message: 'Como Funciona publicado com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function saveTestimonialsDraft(formData: FormData): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+    const content = getTestimonialsContentFromFormData(formData)
+
+    await upsertSectionDraft({
+      sectionKey: 'testimonials',
+      content,
+      userId: user.id,
+    })
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/testimonials')
+
+    return {
+      success: true,
+      message: 'Rascunho de Depoimentos salvo com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function publishTestimonials(): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+
+    await publishSectionDraft('testimonials', user.id)
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/testimonials')
+
+    return {
+      success: true,
+      message: 'Depoimentos publicado com sucesso.',
     }
   } catch (error) {
     return {

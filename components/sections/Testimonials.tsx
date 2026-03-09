@@ -3,6 +3,8 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { defaultTestimonialsContent, normalizeTestimonialsContent } from '@/lib/content/defaults';
+import { usePublishedSection } from '@/lib/content/use-published-section';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,24 +13,21 @@ export function Testimonials() {
   const headerRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { content } = usePublishedSection({
+    sectionKey: 'testimonials',
+    fallback: defaultTestimonialsContent,
+    normalize: normalizeTestimonialsContent,
+  });
 
-  const testimonials = [
-    {
-      name: 'Mariana Silva',
-      image: '/paciente-1.jpg',
-      rating: 5,
-      text: 'Fiz facetas em resina com a Dra. Aline e o resultado superou todas as minhas expectativas. Meu sorriso ficou natural e lindo! O atendimento foi impecável do início ao fim. Recomendo de olhos fechados.',
-      procedure: 'Facetas em Resina'
-    },
+  useEffect(() => {
+    setCurrentIndex((previousIndex) => {
+      if (content.items.length === 0) {
+        return 0;
+      }
 
-    {
-      name: 'Ana Paula',
-      image: '/paciente-3.jpg',
-      rating: 5,
-      text: 'A Dra. Aline tem mãos de fada! Minhas facetas ficaram exatamente como eu sonhava. O consultório é maravilhoso, a equipe é super atenciosa e o resultado é incrível.',
-      procedure: 'Facetas em Resina'
-    }
-  ];
+      return previousIndex >= content.items.length ? 0 : previousIndex;
+    });
+  }, [content.items.length]);
 
   useEffect(() => {
     const triggers: ScrollTrigger[] = [];
@@ -72,12 +71,14 @@ export function Testimonials() {
   }, []);
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    setCurrentIndex((prev) => (prev + 1) % content.items.length);
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setCurrentIndex((prev) => (prev - 1 + content.items.length) % content.items.length);
   };
+
+  const currentItem = content.items[currentIndex] ?? content.items[0];
 
   return (
     <section
@@ -94,17 +95,16 @@ export function Testimonials() {
         <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 mb-6">
             <Star className="w-4 h-4 text-[#C9A962] fill-[#C9A962]" />
-            <span className="text-white text-sm font-medium">Depoimentos</span>
+            <span className="text-white text-sm font-medium">{content.badgeText}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-            O que nossos pacientes{' '}
-            <span className="text-[#C9A962]">dizem</span>
+            {content.titleLead}{' '}
+            <span className="text-[#C9A962]">{content.titleHighlight}</span>
           </h2>
 
           <p className="text-white/70 text-lg">
-            A satisfação dos nossos pacientes é o nosso maior orgulho.
-            Conheça histórias reais de transformação.
+            {content.description}
           </p>
         </div>
 
@@ -122,12 +122,12 @@ export function Testimonials() {
               <div className="text-center">
                 <div className="relative inline-block">
                   <img
-                    src={testimonials[currentIndex].image}
-                    alt={testimonials[currentIndex].name}
+                    src={currentItem.imageUrl}
+                    alt={currentItem.imageAlt}
                     className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-[#C9A962] shadow-lg mx-auto"
                   />
                   <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-[#000000] text-white text-xs px-3 py-1 rounded-full">
-                    {testimonials[currentIndex].procedure}
+                    {currentItem.procedure}
                   </div>
                 </div>
               </div>
@@ -136,19 +136,19 @@ export function Testimonials() {
               <div>
                 {/* Rating */}
                 <div className="flex gap-1 mb-4">
-                  {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
+                  {[...Array(currentItem.rating)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 text-[#C9A962] fill-[#C9A962]" />
                   ))}
                 </div>
 
                 {/* Text */}
                 <p className="text-white/80 text-lg leading-relaxed mb-6 italic">
-                  "{testimonials[currentIndex].text}"
+                  "{currentItem.text}"
                 </p>
 
                 {/* Name */}
                 <p className="font-semibold text-white text-lg">
-                  {testimonials[currentIndex].name}
+                  {currentItem.name}
                 </p>
               </div>
             </div>
@@ -167,7 +167,7 @@ export function Testimonials() {
 
             {/* Dots */}
             <div className="flex gap-2">
-              {testimonials.map((_, index) => (
+              {content.items.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
@@ -192,24 +192,14 @@ export function Testimonials() {
 
         {/* Trust Badges */}
         <div className="flex flex-wrap items-center justify-center gap-8 mt-16 pt-8 border-t border-white/10">
-          <div className="flex items-center gap-2 text-white/60">
-            <div className="w-8 h-8 bg-[#000000] rounded-lg flex items-center justify-center">
-              <Star className="w-4 h-4 text-[#C9A962] fill-[#C9A962]" />
+          {content.trustBadges.map((badge) => (
+            <div key={badge} className="flex items-center gap-2 text-white/60">
+              <div className="w-8 h-8 bg-[#000000] rounded-lg flex items-center justify-center">
+                <Star className="w-4 h-4 text-[#C9A962] fill-[#C9A962]" />
+              </div>
+              <span className="text-sm">{badge}</span>
             </div>
-            <span className="text-sm">Avaliação 5.0 no Google</span>
-          </div>
-          <div className="flex items-center gap-2 text-white/60">
-            <div className="w-8 h-8 bg-[#000000] rounded-lg flex items-center justify-center">
-              <Star className="w-4 h-4 text-[#C9A962] fill-[#C9A962]" />
-            </div>
-            <span className="text-sm">+100 Depoimentos</span>
-          </div>
-          <div className="flex items-center gap-2 text-white/60">
-            <div className="w-8 h-8 bg-[#000000] rounded-lg flex items-center justify-center">
-              <Star className="w-4 h-4 text-[#C9A962] fill-[#C9A962]" />
-            </div>
-            <span className="text-sm">98% de Satisfação</span>
-          </div>
+          ))}
         </div>
       </div>
     </section>

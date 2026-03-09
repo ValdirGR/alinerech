@@ -8,6 +8,7 @@ import type {
   ResultsContent,
   SectionKey,
   ServicesContent,
+  TestimonialsContent,
 } from '@/lib/content/types';
 
 const normalizeStringArray = (value: unknown, fallback: string[]) => {
@@ -67,6 +68,12 @@ export const adminModules: AdminModuleDefinition[] = [
     key: 'contact',
     label: 'Contato',
     description: 'Informações de contato, CTA e textos do formulário.',
+    implemented: true,
+  },
+  {
+    key: 'testimonials',
+    label: 'Depoimentos',
+    description: 'Carrossel de depoimentos, avaliações e selos de confiança.',
     implemented: true,
   },
   {
@@ -345,6 +352,33 @@ export const defaultProcessContent: ProcessContent = {
   ctaLabel: 'Agendar Avaliação',
 };
 
+export const defaultTestimonialsContent: TestimonialsContent = {
+  badgeText: 'Depoimentos',
+  titleLead: 'O que nossos pacientes',
+  titleHighlight: 'dizem',
+  description:
+    'A satisfação dos nossos pacientes é o nosso maior orgulho. Conheça histórias reais de transformação.',
+  items: [
+    {
+      name: 'Mariana Silva',
+      imageUrl: '/paciente-1.jpg',
+      imageAlt: 'Mariana Silva',
+      rating: 5,
+      text: 'Fiz facetas em resina com a Dra. Aline e o resultado superou todas as minhas expectativas. Meu sorriso ficou natural e lindo! O atendimento foi impecável do início ao fim. Recomendo de olhos fechados.',
+      procedure: 'Facetas em Resina',
+    },
+    {
+      name: 'Ana Paula',
+      imageUrl: '/paciente-3.jpg',
+      imageAlt: 'Ana Paula',
+      rating: 5,
+      text: 'A Dra. Aline tem mãos de fada! Minhas facetas ficaram exatamente como eu sonhava. O consultório é maravilhoso, a equipe é super atenciosa e o resultado é incrível.',
+      procedure: 'Facetas em Resina',
+    },
+  ],
+  trustBadges: ['Avaliação 5.0 no Google', '+100 Depoimentos', '98% de Satisfação'],
+};
+
 export const sectionLabels: Record<SectionKey, string> = adminModules.reduce(
   (accumulator, moduleItem) => {
     accumulator[moduleItem.key] = moduleItem.label;
@@ -554,5 +588,42 @@ export const normalizeProcessContent = (value: unknown): ProcessContent => {
           })
           .filter((item): item is ProcessContent['steps'][number] => item !== null)
       : defaultProcessContent.steps,
+  };
+};
+
+export const normalizeTestimonialsContent = (value: unknown): TestimonialsContent => {
+  if (!isRecord(value)) {
+    return defaultTestimonialsContent;
+  }
+
+  return {
+    ...defaultTestimonialsContent,
+    ...value,
+    items: Array.isArray(value.items)
+      ? value.items
+          .map((item) => {
+            if (!isRecord(item)) {
+              return null;
+            }
+
+            const name = typeof item.name === 'string' ? item.name.trim() : '';
+            const imageUrl = typeof item.imageUrl === 'string' ? item.imageUrl.trim() : '';
+            const imageAlt = typeof item.imageAlt === 'string' ? item.imageAlt.trim() : '';
+            const procedure = typeof item.procedure === 'string' ? item.procedure.trim() : '';
+            const text = typeof item.text === 'string' ? item.text.trim() : '';
+            const rating =
+              typeof item.rating === 'number' && Number.isInteger(item.rating) && item.rating >= 1 && item.rating <= 5
+                ? item.rating
+                : null;
+
+            if (!name || !imageUrl || !imageAlt || !procedure || !text || rating === null) {
+              return null;
+            }
+
+            return { name, imageUrl, imageAlt, procedure, text, rating };
+          })
+          .filter((item): item is TestimonialsContent['items'][number] => item !== null)
+      : defaultTestimonialsContent.items,
+    trustBadges: normalizeStringArray(value.trustBadges, defaultTestimonialsContent.trustBadges),
   };
 };

@@ -6,6 +6,7 @@ export type SectionKey =
   | 'process'
   | 'faq'
   | 'contact'
+  | 'testimonials'
   | 'gallery';
 
 export type SectionStatus = 'draft' | 'published';
@@ -151,6 +152,24 @@ export interface ProcessContent {
   steps: ProcessStep[];
   ctaText: string;
   ctaLabel: string;
+}
+
+export interface TestimonialItem {
+  name: string;
+  imageUrl: string;
+  imageAlt: string;
+  rating: number;
+  text: string;
+  procedure: string;
+}
+
+export interface TestimonialsContent {
+  badgeText: string;
+  titleLead: string;
+  titleHighlight: string;
+  description: string;
+  items: TestimonialItem[];
+  trustBadges: string[];
 }
 
 export interface MediaAssetRecord {
