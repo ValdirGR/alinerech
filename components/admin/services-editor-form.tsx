@@ -140,6 +140,7 @@ export function ServicesEditorForm({ snapshot }: ServicesEditorFormProps) {
                 bucketName="site-images"
                 module="services"
                 defaultValue={current.imageUrl}
+                altFieldName="imageAlt"
               />
             </div>
             <div className="space-y-2">

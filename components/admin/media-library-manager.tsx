@@ -81,6 +81,12 @@ export function MediaLibraryManager({ initialItems }: MediaLibraryManagerProps) 
   }
 
   const deleteAsset = (asset: MediaAssetRecord) => {
+    if (asset.usedIn.length > 0) {
+      setIsError(true)
+      setMessage(`A mídia está em uso: ${asset.usedIn.join(', ')}. Remova a referência antes de excluir.`)
+      return
+    }
+
     const confirmed = window.confirm('Excluir esta mídia da biblioteca e do storage?')
 
     if (!confirmed) {
@@ -220,11 +226,11 @@ export function MediaLibraryManager({ initialItems }: MediaLibraryManagerProps) 
               type="button"
               variant="outline"
               className="w-full border-red-200 text-red-700 hover:bg-red-50 hover:text-red-800"
-              disabled={isPending}
+              disabled={isPending || asset.usedIn.length > 0}
               onClick={() => deleteAsset(asset)}
             >
               <Trash2 className="h-4 w-4" />
-              Excluir mídia
+              {asset.usedIn.length > 0 ? 'Mídia em uso' : 'Excluir mídia'}
             </Button>
           </div>
         )}

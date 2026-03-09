@@ -14,6 +14,7 @@ type AdminImageFieldProps = {
   bucketName: 'site-images' | 'results-images'
   module: string
   defaultValue: string
+  altFieldName?: string
   helperText?: string
 }
 
@@ -25,6 +26,7 @@ export function AdminImageField({
   bucketName,
   module,
   defaultValue,
+  altFieldName,
   helperText,
 }: AdminImageFieldProps) {
   const [value, setValue] = useState(defaultValue)
@@ -33,6 +35,23 @@ export function AdminImageField({
   const [isError, setIsError] = useState(false)
   const [isLibraryOpen, setIsLibraryOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
+
+  const syncAltField = (altText: string | null) => {
+    if (!altFieldName || !altText || !inputRef.current?.form) {
+      return
+    }
+
+    const altInput = inputRef.current.form.querySelector<HTMLInputElement | HTMLTextAreaElement>(
+      `[name="${altFieldName}"]`
+    )
+
+    if (!altInput) {
+      return
+    }
+
+    altInput.value = altText
+    altInput.dispatchEvent(new Event('input', { bubbles: true }))
+  }
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -146,6 +165,7 @@ export function AdminImageField({
         selectedUrl={value}
         onSelect={(asset) => {
           setValue(asset.publicUrl)
+          syncAltField(asset.altText)
           setMessage('Imagem selecionada da biblioteca.')
           setIsError(false)
         }}

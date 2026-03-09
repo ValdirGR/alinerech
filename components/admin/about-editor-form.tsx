@@ -148,6 +148,7 @@ export function AboutEditorForm({ snapshot }: AboutEditorFormProps) {
                 bucketName="site-images"
                 module="about"
                 defaultValue={current.imageUrl}
+                altFieldName="imageAlt"
               />
             </div>
             <div className="space-y-2">

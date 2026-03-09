@@ -61,6 +61,18 @@ export function MediaLibraryGrid({
                   Alt: {item.altText?.trim() ? item.altText : 'não definido'}
                 </p>
               ) : null}
+              {item.usedIn.length > 0 ? (
+                <div className="flex flex-wrap gap-1">
+                  {item.usedIn.map((usage) => (
+                    <span
+                      key={usage}
+                      className="rounded-full bg-amber-100 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-amber-700"
+                    >
+                      Em uso: {usage}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
               <p className="text-xs text-gray-500">
                 {new Date(item.createdAt).toLocaleString('pt-BR')}
               </p>

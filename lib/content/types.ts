@@ -161,6 +161,7 @@ export interface MediaAssetRecord {
   publicUrl: string;
   altText: string | null;
   createdAt: string;
+  usedIn: string[];
 }
 
 export interface SiteSectionRecord<TContent> {

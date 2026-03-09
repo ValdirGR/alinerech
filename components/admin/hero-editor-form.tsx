@@ -167,6 +167,7 @@ export function HeroEditorForm({ snapshot }: HeroEditorFormProps) {
                 bucketName="site-images"
                 module="hero"
                 defaultValue={current.imageUrl}
+                altFieldName="imageAlt"
               />
             </div>
             <div className="space-y-2">

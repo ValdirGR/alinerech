@@ -23,6 +23,24 @@ type RawSectionRow = {
   updated_at: string;
 };
 
+const collectStringValues = (value: unknown, results: string[] = []): string[] => {
+  if (typeof value === 'string') {
+    results.push(value);
+    return results;
+  }
+
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectStringValues(item, results));
+    return results;
+  }
+
+  if (typeof value === 'object' && value !== null) {
+    Object.values(value).forEach((item) => collectStringValues(item, results));
+  }
+
+  return results;
+};
+
 const toSectionRecord = <TContent>(
   row: RawSectionRow,
   normalize: (value: unknown) => TContent
@@ -337,6 +355,20 @@ export async function getMediaAssets(params?: {
     return [];
   }
 
+  const { data: sectionRows, error: sectionError } = await supabase
+    .from('site_sections')
+    .select('section_key, status, content')
+    .eq('is_current', true);
+
+  if (sectionError && !isMissingTableError(sectionError)) {
+    console.error('Error loading section usage:', sectionError.message);
+  }
+
+  const usageEntries = (sectionRows ?? []).map((row) => ({
+    label: `${row.section_key} (${row.status})`,
+    values: new Set(collectStringValues(row.content)),
+  }));
+
   return (data ?? []).map((item) => ({
     id: item.id,
     module: item.module,
@@ -345,5 +377,8 @@ export async function getMediaAssets(params?: {
     publicUrl: item.public_url,
     altText: item.alt_text,
     createdAt: item.created_at,
+    usedIn: usageEntries
+      .filter((entry) => entry.values.has(item.public_url))
+      .map((entry) => entry.label),
   }));
 }

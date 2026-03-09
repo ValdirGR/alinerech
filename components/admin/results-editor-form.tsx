@@ -133,6 +133,7 @@ export function ResultsEditorForm({ snapshot }: ResultsEditorFormProps) {
                   bucketName="results-images"
                   module="results"
                   defaultValue={item.imageUrl}
+                  altFieldName={`resultAlt${index}`}
                 />
                 <div className="space-y-2">
                   <Label htmlFor={`resultAlt${index}`}>Alt {index + 1}</Label>
