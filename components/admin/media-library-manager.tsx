@@ -18,6 +18,7 @@ export function MediaLibraryManager({ initialItems }: MediaLibraryManagerProps) 
   const [search, setSearch] = useState('')
   const [bucketFilter, setBucketFilter] = useState<'all' | 'site-images' | 'results-images'>('all')
   const [moduleFilter, setModuleFilter] = useState<'all' | string>('all')
+  const [usageFilter, setUsageFilter] = useState<'all' | 'unused' | 'draft' | 'published' | 'in-use'>('all')
   const [message, setMessage] = useState<string | null>(null)
   const [isError, setIsError] = useState(false)
   const [isPending, startTransition] = useTransition()
@@ -36,6 +37,12 @@ export function MediaLibraryManager({ initialItems }: MediaLibraryManagerProps) 
     return items.filter((item) => {
       const matchesBucket = bucketFilter === 'all' || item.bucketName === bucketFilter
       const matchesModule = moduleFilter === 'all' || item.module === moduleFilter
+      const matchesUsage =
+        usageFilter === 'all' ||
+        (usageFilter === 'unused' && item.usedIn.length === 0) ||
+        (usageFilter === 'in-use' && item.usedIn.length > 0) ||
+        (usageFilter === 'draft' && item.usedIn.some((usage) => usage.status === 'draft')) ||
+        (usageFilter === 'published' && item.usedIn.some((usage) => usage.status === 'published'))
       const matchesSearch =
         !normalizedSearch ||
         item.filePath.toLowerCase().includes(normalizedSearch) ||
@@ -43,9 +50,9 @@ export function MediaLibraryManager({ initialItems }: MediaLibraryManagerProps) 
         item.publicUrl.toLowerCase().includes(normalizedSearch) ||
         (item.altText ?? '').toLowerCase().includes(normalizedSearch)
 
-      return matchesBucket && matchesModule && matchesSearch
+      return matchesBucket && matchesModule && matchesUsage && matchesSearch
     })
-  }, [bucketFilter, items, moduleFilter, search])
+  }, [bucketFilter, items, moduleFilter, search, usageFilter])
 
   const updateAltText = (assetId: string, altText: string) => {
     startTransition(async () => {
@@ -83,7 +90,9 @@ export function MediaLibraryManager({ initialItems }: MediaLibraryManagerProps) 
   const deleteAsset = (asset: MediaAssetRecord) => {
     if (asset.usedIn.length > 0) {
       setIsError(true)
-      setMessage(`A mídia está em uso: ${asset.usedIn.join(', ')}. Remova a referência antes de excluir.`)
+      setMessage(
+        `A mídia está em uso: ${asset.usedIn.map((usage) => usage.label).join(', ')}. Remova a referência antes de excluir.`
+      )
       return
     }
 
@@ -122,7 +131,7 @@ export function MediaLibraryManager({ initialItems }: MediaLibraryManagerProps) 
 
   return (
     <div className="space-y-8">
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
         <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
           <h3 className="text-lg font-semibold text-gray-700">Total de mídias</h3>
           <p className="mt-2 text-3xl font-bold text-[#0B3D4C]">{items.length}</p>
@@ -144,10 +153,18 @@ export function MediaLibraryManager({ initialItems }: MediaLibraryManagerProps) 
           </p>
           <p className="mt-1 text-sm text-gray-500">Imagens da galeria de resultados.</p>
         </div>
+
+        <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+          <h3 className="text-lg font-semibold text-gray-700">Mídias em uso</h3>
+          <p className="mt-2 text-3xl font-bold text-[#0B3D4C]">
+            {items.filter((item) => item.usedIn.length > 0).length}
+          </p>
+          <p className="mt-1 text-sm text-gray-500">Com referência em rascunho ou publicado.</p>
+        </div>
       </div>
 
       <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-4">
           <div className="space-y-2">
             <Label htmlFor="mediaSearch">Buscar</Label>
             <Input
@@ -186,6 +203,22 @@ export function MediaLibraryManager({ initialItems }: MediaLibraryManagerProps) 
                   {moduleItem}
                 </option>
               ))}
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="mediaUsage">Uso</Label>
+            <select
+              id="mediaUsage"
+              value={usageFilter}
+              onChange={(event) => setUsageFilter(event.target.value as typeof usageFilter)}
+              className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs"
+            >
+              <option value="all">Todos</option>
+              <option value="in-use">Em uso</option>
+              <option value="published">Publicado</option>
+              <option value="draft">Rascunho</option>
+              <option value="unused">Sem uso</option>
             </select>
           </div>
         </div>

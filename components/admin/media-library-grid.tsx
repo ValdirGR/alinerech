@@ -65,10 +65,14 @@ export function MediaLibraryGrid({
                 <div className="flex flex-wrap gap-1">
                   {item.usedIn.map((usage) => (
                     <span
-                      key={usage}
-                      className="rounded-full bg-amber-100 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-amber-700"
+                      key={usage.label}
+                      className={`rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-wide ${
+                        usage.status === 'published'
+                          ? 'bg-emerald-100 text-emerald-700'
+                          : 'bg-amber-100 text-amber-700'
+                      }`}
                     >
-                      Em uso: {usage}
+                      {usage.status === 'published' ? 'Publicado' : 'Rascunho'}: {usage.sectionKey}
                     </span>
                   ))}
                 </div>

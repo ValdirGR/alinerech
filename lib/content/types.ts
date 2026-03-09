@@ -161,7 +161,13 @@ export interface MediaAssetRecord {
   publicUrl: string;
   altText: string | null;
   createdAt: string;
-  usedIn: string[];
+  usedIn: MediaAssetUsage[];
+}
+
+export interface MediaAssetUsage {
+  sectionKey: SectionKey;
+  status: SectionStatus;
+  label: string;
 }
 
 export interface SiteSectionRecord<TContent> {

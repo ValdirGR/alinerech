@@ -365,6 +365,8 @@ export async function getMediaAssets(params?: {
   }
 
   const usageEntries = (sectionRows ?? []).map((row) => ({
+    sectionKey: row.section_key as SectionKey,
+    status: row.status as SectionStatus,
     label: `${row.section_key} (${row.status})`,
     values: new Set(collectStringValues(row.content)),
   }));
@@ -379,6 +381,10 @@ export async function getMediaAssets(params?: {
     createdAt: item.created_at,
     usedIn: usageEntries
       .filter((entry) => entry.values.has(item.public_url))
-      .map((entry) => entry.label),
+      .map((entry) => ({
+        sectionKey: entry.sectionKey,
+        status: entry.status,
+        label: entry.label,
+      })),
   }));
 }
