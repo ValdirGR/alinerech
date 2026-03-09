@@ -3,7 +3,14 @@
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { publishSectionDraft, requireAdminAccess, upsertSectionDraft } from '@/lib/content/server'
-import type { ActionResult, HeroContent } from '@/lib/content/types'
+import type {
+  AboutContent,
+  ActionResult,
+  ContactContent,
+  FAQContent,
+  HeroContent,
+  ServicesContent,
+} from '@/lib/content/types'
 
 const heroSchema = z.object({
   badgeText: z.string().trim().min(1, 'Informe o selo superior.'),
@@ -28,6 +35,103 @@ const heroSchema = z.object({
       value: z.string().trim().min(1),
     })
   ).min(4).max(4),
+})
+
+const aboutCardIconSchema = z.enum(['graduation-cap', 'award', 'heart', 'shield'])
+
+const aboutSchema = z.object({
+  badgeText: z.string().trim().min(1, 'Informe o selo superior.'),
+  titleLead: z.string().trim().min(1, 'Informe a primeira parte do titulo.'),
+  titleHighlight: z.string().trim().min(1, 'Informe o destaque do titulo.'),
+  paragraphs: z.array(z.string().trim().min(1)).min(3).max(3),
+  imageUrl: z.string().trim().min(1, 'Informe a imagem principal.'),
+  imageAlt: z.string().trim().min(1, 'Informe o alt da imagem.'),
+  croTitle: z.string().trim().min(1, 'Informe o titulo do CRO.'),
+  croCaption: z.string().trim().min(1, 'Informe a legenda do CRO.'),
+  specialtyTitle: z.string().trim().min(1, 'Informe o titulo da especialidade.'),
+  specialtyCaption: z.string().trim().min(1, 'Informe a legenda da especialidade.'),
+  experienceValue: z.string().trim().min(1, 'Informe o destaque de experiencia.'),
+  experienceLabel: z.string().trim().min(1, 'Informe a legenda de experiencia.'),
+  cards: z
+    .array(
+      z.object({
+        title: z.string().trim().min(1),
+        description: z.string().trim().min(1),
+        iconKey: aboutCardIconSchema,
+      })
+    )
+    .min(4)
+    .max(4),
+})
+
+const contactInfoIconSchema = z.enum(['phone', 'map-pin', 'clock'])
+
+const contactSchema = z.object({
+  badgeText: z.string().trim().min(1, 'Informe o selo superior.'),
+  titleLead: z.string().trim().min(1, 'Informe a primeira parte do titulo.'),
+  titleHighlight: z.string().trim().min(1, 'Informe o destaque do titulo.'),
+  description: z.string().trim().min(1, 'Informe a descricao.'),
+  whatsappLabel: z.string().trim().min(1, 'Informe o texto do WhatsApp.'),
+  whatsappLink: z.string().trim().min(1, 'Informe o link do WhatsApp.'),
+  formTitle: z.string().trim().min(1, 'Informe o titulo do formulario.'),
+  formDescription: z.string().trim().min(1, 'Informe a descricao do formulario.'),
+  successTitle: z.string().trim().min(1, 'Informe o titulo de sucesso.'),
+  successDescription: z.string().trim().min(1, 'Informe a descricao de sucesso.'),
+  privacyText: z.string().trim().min(1, 'Informe o texto de privacidade.'),
+  infoItems: z
+    .array(
+      z.object({
+        title: z.string().trim().min(1),
+        content: z.string().trim().min(1),
+        link: z.string().trim().nullable(),
+        iconKey: contactInfoIconSchema,
+      })
+    )
+    .min(3)
+    .max(3),
+})
+
+const servicesSchema = z.object({
+  badgeText: z.string().trim().min(1, 'Informe o selo superior.'),
+  titleLead: z.string().trim().min(1, 'Informe a primeira parte do titulo.'),
+  titleHighlight: z.string().trim().min(1, 'Informe o destaque do titulo.'),
+  description: z.string().trim().min(1, 'Informe a descricao da seção.'),
+  serviceTitle: z.string().trim().min(1, 'Informe o titulo do serviço.'),
+  serviceSubtitle: z.string().trim().min(1, 'Informe o subtitulo do serviço.'),
+  serviceDescription: z.string().trim().min(1, 'Informe a descrição do serviço.'),
+  imageUrl: z.string().trim().min(1, 'Informe a imagem do serviço.'),
+  imageAlt: z.string().trim().min(1, 'Informe o alt da imagem.'),
+  benefits: z.array(z.string().trim().min(1)).min(5).max(5),
+  primaryCtaLabel: z.string().trim().min(1, 'Informe o CTA principal.'),
+  secondaryCtaLabel: z.string().trim().min(1, 'Informe o CTA secundário.'),
+  limitationsTitle: z.string().trim().min(1, 'Informe o título de limitações.'),
+  limitations: z.array(z.string().trim().min(1)).min(4).max(4),
+  processTitle: z.string().trim().min(1, 'Informe o título do processo.'),
+  processSteps: z.array(z.string().trim().min(1)).min(5).max(5),
+  careTitle: z.string().trim().min(1, 'Informe o título dos cuidados.'),
+  careDescription: z.string().trim().min(1, 'Informe a descrição dos cuidados.'),
+  careTip: z.string().trim().min(1, 'Informe a dica final.'),
+})
+
+const faqSchema = z.object({
+  badgeText: z.string().trim().min(1, 'Informe o selo superior.'),
+  titleLead: z.string().trim().min(1, 'Informe a primeira parte do titulo.'),
+  titleHighlight: z.string().trim().min(1, 'Informe o destaque do titulo.'),
+  description: z.string().trim().min(1, 'Informe a descricao da seção.'),
+  categoryTitle: z.string().trim().min(1, 'Informe o título da categoria.'),
+  categoryBadge: z.string().trim().min(1, 'Informe o badge da categoria.').max(2),
+  items: z
+    .array(
+      z.object({
+        question: z.string().trim().min(1),
+        answer: z.string().trim().min(1),
+      })
+    )
+    .min(10)
+    .max(10),
+  ctaText: z.string().trim().min(1, 'Informe o texto do CTA.'),
+  ctaLabel: z.string().trim().min(1, 'Informe o botão do CTA.'),
+  ctaLink: z.string().trim().min(1, 'Informe o link do CTA.'),
 })
 
 const getHeroContentFromFormData = (formData: FormData): HeroContent => {
@@ -55,6 +159,107 @@ const getHeroContentFromFormData = (formData: FormData): HeroContent => {
     professionalSubtitle: formData.get('professionalSubtitle'),
     trustItems,
     stats,
+  })
+}
+
+const getAboutContentFromFormData = (formData: FormData): AboutContent => {
+  const paragraphs = [0, 1, 2].map((index) => String(formData.get(`paragraph${index}`) ?? ''))
+  const cards = [0, 1, 2, 3].map((index) => ({
+    title: String(formData.get(`cardTitle${index}`) ?? ''),
+    description: String(formData.get(`cardDescription${index}`) ?? ''),
+    iconKey: String(formData.get(`cardIcon${index}`) ?? ''),
+  }))
+
+  return aboutSchema.parse({
+    badgeText: formData.get('badgeText'),
+    titleLead: formData.get('titleLead'),
+    titleHighlight: formData.get('titleHighlight'),
+    paragraphs,
+    imageUrl: formData.get('imageUrl'),
+    imageAlt: formData.get('imageAlt'),
+    croTitle: formData.get('croTitle'),
+    croCaption: formData.get('croCaption'),
+    specialtyTitle: formData.get('specialtyTitle'),
+    specialtyCaption: formData.get('specialtyCaption'),
+    experienceValue: formData.get('experienceValue'),
+    experienceLabel: formData.get('experienceLabel'),
+    cards,
+  })
+}
+
+const getContactContentFromFormData = (formData: FormData): ContactContent => {
+  const infoItems = [0, 1, 2].map((index) => {
+    const rawLink = String(formData.get(`infoLink${index}`) ?? '').trim()
+
+    return {
+      title: String(formData.get(`infoTitle${index}`) ?? ''),
+      content: String(formData.get(`infoContent${index}`) ?? ''),
+      link: rawLink || null,
+      iconKey: String(formData.get(`infoIcon${index}`) ?? ''),
+    }
+  })
+
+  return contactSchema.parse({
+    badgeText: formData.get('badgeText'),
+    titleLead: formData.get('titleLead'),
+    titleHighlight: formData.get('titleHighlight'),
+    description: formData.get('description'),
+    whatsappLabel: formData.get('whatsappLabel'),
+    whatsappLink: formData.get('whatsappLink'),
+    formTitle: formData.get('formTitle'),
+    formDescription: formData.get('formDescription'),
+    successTitle: formData.get('successTitle'),
+    successDescription: formData.get('successDescription'),
+    privacyText: formData.get('privacyText'),
+    infoItems,
+  })
+}
+
+const getServicesContentFromFormData = (formData: FormData): ServicesContent => {
+  const benefits = [0, 1, 2, 3, 4].map((index) => String(formData.get(`benefit${index}`) ?? ''))
+  const limitations = [0, 1, 2, 3].map((index) => String(formData.get(`limitation${index}`) ?? ''))
+  const processSteps = [0, 1, 2, 3, 4].map((index) => String(formData.get(`processStep${index}`) ?? ''))
+
+  return servicesSchema.parse({
+    badgeText: formData.get('badgeText'),
+    titleLead: formData.get('titleLead'),
+    titleHighlight: formData.get('titleHighlight'),
+    description: formData.get('description'),
+    serviceTitle: formData.get('serviceTitle'),
+    serviceSubtitle: formData.get('serviceSubtitle'),
+    serviceDescription: formData.get('serviceDescription'),
+    imageUrl: formData.get('imageUrl'),
+    imageAlt: formData.get('imageAlt'),
+    benefits,
+    primaryCtaLabel: formData.get('primaryCtaLabel'),
+    secondaryCtaLabel: formData.get('secondaryCtaLabel'),
+    limitationsTitle: formData.get('limitationsTitle'),
+    limitations,
+    processTitle: formData.get('processTitle'),
+    processSteps,
+    careTitle: formData.get('careTitle'),
+    careDescription: formData.get('careDescription'),
+    careTip: formData.get('careTip'),
+  })
+}
+
+const getFaqContentFromFormData = (formData: FormData): FAQContent => {
+  const items = Array.from({ length: 10 }, (_, index) => ({
+    question: String(formData.get(`faqQuestion${index}`) ?? ''),
+    answer: String(formData.get(`faqAnswer${index}`) ?? ''),
+  }))
+
+  return faqSchema.parse({
+    badgeText: formData.get('badgeText'),
+    titleLead: formData.get('titleLead'),
+    titleHighlight: formData.get('titleHighlight'),
+    description: formData.get('description'),
+    categoryTitle: formData.get('categoryTitle'),
+    categoryBadge: formData.get('categoryBadge'),
+    items,
+    ctaText: formData.get('ctaText'),
+    ctaLabel: formData.get('ctaLabel'),
+    ctaLink: formData.get('ctaLink'),
   })
 }
 
@@ -109,6 +314,202 @@ export async function publishHero(): Promise<ActionResult> {
     return {
       success: true,
       message: 'Hero publicado com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function saveAboutDraft(formData: FormData): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+    const content = getAboutContentFromFormData(formData)
+
+    await upsertSectionDraft({
+      sectionKey: 'about',
+      content,
+      userId: user.id,
+    })
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/about')
+
+    return {
+      success: true,
+      message: 'Rascunho do Sobre salvo com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function publishAbout(): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+
+    await publishSectionDraft('about', user.id)
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/about')
+
+    return {
+      success: true,
+      message: 'Sobre publicado com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function saveContactDraft(formData: FormData): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+    const content = getContactContentFromFormData(formData)
+
+    await upsertSectionDraft({
+      sectionKey: 'contact',
+      content,
+      userId: user.id,
+    })
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/contact')
+
+    return {
+      success: true,
+      message: 'Rascunho do Contato salvo com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function publishContact(): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+
+    await publishSectionDraft('contact', user.id)
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/contact')
+
+    return {
+      success: true,
+      message: 'Contato publicado com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function saveServicesDraft(formData: FormData): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+    const content = getServicesContentFromFormData(formData)
+
+    await upsertSectionDraft({
+      sectionKey: 'services',
+      content,
+      userId: user.id,
+    })
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/services')
+
+    return {
+      success: true,
+      message: 'Rascunho de Serviços salvo com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function publishServices(): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+
+    await publishSectionDraft('services', user.id)
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/services')
+
+    return {
+      success: true,
+      message: 'Serviços publicado com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function saveFaqDraft(formData: FormData): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+    const content = getFaqContentFromFormData(formData)
+
+    await upsertSectionDraft({
+      sectionKey: 'faq',
+      content,
+      userId: user.id,
+    })
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/faq')
+
+    return {
+      success: true,
+      message: 'Rascunho do FAQ salvo com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function publishFaq(): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+
+    await publishSectionDraft('faq', user.id)
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/faq')
+
+    return {
+      success: true,
+      message: 'FAQ publicado com sucesso.',
     }
   } catch (error) {
     return {

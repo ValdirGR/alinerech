@@ -2,8 +2,10 @@ import type {
   AboutContent,
   AdminModuleDefinition,
   ContactContent,
+  FAQContent,
   HeroContent,
   SectionKey,
+  ServicesContent,
 } from '@/lib/content/types';
 
 const normalizeStringArray = (value: unknown, fallback: string[]) => {
@@ -33,13 +35,13 @@ export const adminModules: AdminModuleDefinition[] = [
     key: 'about',
     label: 'Sobre',
     description: 'Texto institucional, imagem e cards de diferenciais.',
-    implemented: false,
+    implemented: true,
   },
   {
     key: 'services',
     label: 'Serviços',
     description: 'Serviço principal com benefícios, blocos e CTA.',
-    implemented: false,
+    implemented: true,
   },
   {
     key: 'results',
@@ -57,13 +59,13 @@ export const adminModules: AdminModuleDefinition[] = [
     key: 'faq',
     label: 'FAQ',
     description: 'Perguntas e respostas com ordenação e ativação.',
-    implemented: false,
+    implemented: true,
   },
   {
     key: 'contact',
     label: 'Contato',
     description: 'Informações de contato, CTA e textos do formulário.',
-    implemented: false,
+    implemented: true,
   },
   {
     key: 'gallery',
@@ -176,6 +178,114 @@ export const defaultContactContent: ContactContent = {
   ],
 };
 
+export const defaultServicesContent: ServicesContent = {
+  badgeText: 'Nossos Tratamentos',
+  titleLead: 'Especialidades que',
+  titleHighlight: 'transformam vidas',
+  description:
+    'Oferecemos tratamentos odontológicos de excelência com foco em estética e saúde. Cada procedimento é personalizado para atender às suas necessidades específicas.',
+  serviceTitle: 'Facetas em Resina',
+  serviceSubtitle: 'Transformação imediata do seu sorriso',
+  serviceDescription:
+    'As facetas em resina são laminados diretos de resina composta aplicados sobre a face do dente. São a solução ideal para quem busca um sorriso perfeito de forma rápida e acessível, corrigindo imperfeições como manchas, espaços entre dentes, dentes desalinhados ou desgastados.',
+  imageUrl: '/facetas-resina.jpg',
+  imageAlt: 'Facetas em Resina',
+  benefits: [
+    'Resultado estético rápido, muitas vezes em uma única consulta',
+    'Menor desgaste de dente em relação a outras técnicas',
+    'Custo mais acessível que facetas cerâmicas',
+    'Reparos e ajustes feitos diretamente no consultório',
+    'Procedimento minimamente invasivo e reversível',
+  ],
+  primaryCtaLabel: 'Quero minhas facetas',
+  secondaryCtaLabel: 'Saiba mais',
+  limitationsTitle: 'Limitações',
+  limitations: [
+    'Durabilidade média de 5-7 anos',
+    'Suscetíveis a manchas e perda de brilho',
+    'Contraindicação em bruxismo severo',
+    'Não indicado para dentes muito escurecidos',
+  ],
+  processTitle: 'Como é o Processo',
+  processSteps: [
+    'Avaliação clínica e planejamento estético',
+    'Fotos e possível mock-up',
+    'Preparo mínimo (quando necessário)',
+    'Escultura da resina dente a dente',
+    'Acabamento e polimento final',
+  ],
+  careTitle: 'Cuidados Após',
+  careDescription:
+    'Evitar alimentos muito duros, não usar dentes como abridor, manter boa higiene bucal e fazer polimentos periódicos no consultório.',
+  careTip:
+    'Reduza café, vinho tinto e refrigerantes de cola para manter o brilho por mais tempo.',
+};
+
+export const defaultFaqContent: FAQContent = {
+  badgeText: 'Tire suas dúvidas',
+  titleLead: 'Perguntas',
+  titleHighlight: 'Frequentes',
+  description:
+    'Esclarecemos as principais dúvidas sobre nossos tratamentos para que você tome a melhor decisão com segurança e confiança.',
+  categoryTitle: 'Facetas em Resina',
+  categoryBadge: 'F',
+  items: [
+    {
+      question: 'O que são facetas de resina?',
+      answer:
+        'Facetas de resina são laminados diretos de resina composta aplicados sobre a face do dente. São utilizadas para corrigir cor, pequenas fraturas, leves desalinhamentos e formato dos dentes, proporcionando um sorriso mais harmonioso e bonito de forma rápida e acessível.',
+    },
+    {
+      question: 'Quanto tempo dura?',
+      answer:
+        'A durabilidade média das facetas em resina é de 5 a 7 anos, dependendo dos hábitos do paciente. Fatores como higiene bucal, alimentação, bruxismo e hábitos como roer unhas podem influenciar diretamente na longevidade do tratamento. Com cuidados adequados e manutenção periódica, é possível prolongar bastante a vida útil das facetas.',
+    },
+    {
+      question: 'Vai estragar meus dentes?',
+      answer:
+        'Não. Na maioria dos casos, o desgaste é mínimo e planejado para preservar o máximo de estrutura dental saudável. As facetas em resina exigem pouquíssimo preparo do dente, mantendo sua integridade.',
+    },
+    {
+      question: 'Fica artificial?',
+      answer:
+        'Quando feitas por um profissional experiente, as facetas em resina ficam extremamente naturais. A resina composta permite personalização da cor, transparência e formato, imitando a aparência dos dentes naturais.',
+    },
+    {
+      question: 'Quais são os cuidados depois?',
+      answer:
+        'Os cuidados incluem evitar alimentos muito duros ou pegajosos, não usar os dentes como abridor, manter higiene bucal rigorosa, fazer polimentos periódicos e evitar hábitos como roer unhas ou objetos.',
+    },
+    {
+      question: 'Posso fazer se tenho bruxismo?',
+      answer:
+        'O bruxismo é uma contraindicação relativa. Em casos leves a moderados, é possível realizar o procedimento com uso de placa de proteção noturna. Em casos severos, pode ser recomendada outra abordagem estética.',
+    },
+    {
+      question: 'Mancha ou fica amarelo com o tempo?',
+      answer:
+        'Sim, a resina pode perder brilho e pigmentar com o tempo, especialmente com consumo frequente de alimentos e bebidas pigmentantes. Isso pode ser minimizado com higiene adequada e manutenção regular.',
+    },
+    {
+      question: 'Dói para fazer?',
+      answer:
+        'Geralmente é um procedimento pouco invasivo e praticamente indolor. Na maioria dos casos, não é necessária anestesia, pois o preparo do dente é mínimo ou inexistente.',
+    },
+    {
+      question: 'Qual a diferença para lente de contato ou porcelana?',
+      answer:
+        'A resina é mais acessível, o procedimento é mais rápido, muitas vezes em uma única consulta, e permite reparos diretos. Já as facetas de porcelana têm maior durabilidade e resistência a manchas, mas exigem mais investimento.',
+    },
+    {
+      question: 'Serve para qualquer caso?',
+      answer:
+        'Não. Dentes muito escurecidos, desgastes intensos, bruxismo severo ou casos que exigem grandes alterações de posição podem necessitar de outras abordagens. A avaliação clínica é fundamental para indicar o melhor tratamento.',
+    },
+  ],
+  ctaText: 'Ainda tem dúvidas? Entre em contato diretamente pelo WhatsApp.',
+  ctaLabel: 'Falar no WhatsApp',
+  ctaLink: 'https://wa.me/5548996374030',
+};
+
 export const sectionLabels: Record<SectionKey, string> = adminModules.reduce(
   (accumulator, moduleItem) => {
     accumulator[moduleItem.key] = moduleItem.label;
@@ -282,5 +392,48 @@ export const normalizeContactContent = (value: unknown): ContactContent => {
           })
           .filter((item): item is ContactContent['infoItems'][number] => item !== null)
       : defaultContactContent.infoItems,
+  };
+};
+
+export const normalizeServicesContent = (value: unknown): ServicesContent => {
+  if (!isRecord(value)) {
+    return defaultServicesContent;
+  }
+
+  return {
+    ...defaultServicesContent,
+    ...value,
+    benefits: normalizeStringArray(value.benefits, defaultServicesContent.benefits),
+    limitations: normalizeStringArray(value.limitations, defaultServicesContent.limitations),
+    processSteps: normalizeStringArray(value.processSteps, defaultServicesContent.processSteps),
+  };
+};
+
+export const normalizeFaqContent = (value: unknown): FAQContent => {
+  if (!isRecord(value)) {
+    return defaultFaqContent;
+  }
+
+  return {
+    ...defaultFaqContent,
+    ...value,
+    items: Array.isArray(value.items)
+      ? value.items
+          .map((item) => {
+            if (!isRecord(item)) {
+              return null;
+            }
+
+            const question = typeof item.question === 'string' ? item.question.trim() : '';
+            const answer = typeof item.answer === 'string' ? item.answer.trim() : '';
+
+            if (!question || !answer) {
+              return null;
+            }
+
+            return { question, answer };
+          })
+          .filter((item): item is FAQContent['items'][number] => item !== null)
+      : defaultFaqContent.items,
   };
 };

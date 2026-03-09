@@ -81,6 +81,46 @@ export interface ContactContent {
   infoItems: ContactInfoItem[];
 }
 
+export interface ServicesContent {
+  badgeText: string;
+  titleLead: string;
+  titleHighlight: string;
+  description: string;
+  serviceTitle: string;
+  serviceSubtitle: string;
+  serviceDescription: string;
+  imageUrl: string;
+  imageAlt: string;
+  benefits: string[];
+  primaryCtaLabel: string;
+  secondaryCtaLabel: string;
+  limitationsTitle: string;
+  limitations: string[];
+  processTitle: string;
+  processSteps: string[];
+  careTitle: string;
+  careDescription: string;
+  careTip: string;
+}
+
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export interface FAQContent {
+  badgeText: string;
+  titleLead: string;
+  titleHighlight: string;
+  description: string;
+  categoryTitle: string;
+  categoryBadge: string;
+  items: FAQItem[];
+  ctaText: string;
+  ctaLabel: string;
+  ctaLink: string;
+}
+
 export interface SiteSectionRecord<TContent> {
   id: string;
   sectionKey: SectionKey;
