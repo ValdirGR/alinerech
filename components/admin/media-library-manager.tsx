@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState, useTransition } from 'react'
+import { useDeferredValue, useEffect, useMemo, useState, useTransition } from 'react'
 import { Trash2 } from 'lucide-react'
 import { MediaLibraryGrid } from '@/components/admin/media-library-grid'
 import { Button } from '@/components/ui/button'
@@ -8,6 +8,9 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { createClient } from '@/utils/supabase/client'
 import type { MediaAssetRecord } from '@/lib/content/types'
+
+const INITIAL_PAGE_SIZE = 12
+const PAGE_SIZE = 12
 
 type MediaLibraryManagerProps = {
   initialItems: MediaAssetRecord[]
@@ -19,9 +22,11 @@ export function MediaLibraryManager({ initialItems }: MediaLibraryManagerProps) 
   const [bucketFilter, setBucketFilter] = useState<'all' | 'site-images' | 'results-images'>('all')
   const [moduleFilter, setModuleFilter] = useState<'all' | string>('all')
   const [usageFilter, setUsageFilter] = useState<'all' | 'unused' | 'draft' | 'published' | 'in-use'>('all')
+  const [visibleCount, setVisibleCount] = useState(INITIAL_PAGE_SIZE)
   const [message, setMessage] = useState<string | null>(null)
   const [isError, setIsError] = useState(false)
   const [isPending, startTransition] = useTransition()
+  const deferredSearch = useDeferredValue(search)
 
   const moduleOptions = useMemo(() => {
     const modules = Array.from(new Set(items.map((item) => item.module))).sort((left, right) =>
@@ -32,7 +37,7 @@ export function MediaLibraryManager({ initialItems }: MediaLibraryManagerProps) 
   }, [items])
 
   const filteredItems = useMemo(() => {
-    const normalizedSearch = search.trim().toLowerCase()
+    const normalizedSearch = deferredSearch.trim().toLowerCase()
 
     return items.filter((item) => {
       const matchesBucket = bucketFilter === 'all' || item.bucketName === bucketFilter
@@ -52,7 +57,18 @@ export function MediaLibraryManager({ initialItems }: MediaLibraryManagerProps) 
 
       return matchesBucket && matchesModule && matchesUsage && matchesSearch
     })
-  }, [bucketFilter, items, moduleFilter, search, usageFilter])
+  }, [bucketFilter, deferredSearch, items, moduleFilter, usageFilter])
+
+  useEffect(() => {
+    setVisibleCount(INITIAL_PAGE_SIZE)
+  }, [deferredSearch, bucketFilter, moduleFilter, usageFilter])
+
+  const visibleItems = useMemo(
+    () => filteredItems.slice(0, visibleCount),
+    [filteredItems, visibleCount]
+  )
+
+  const hasMoreItems = visibleItems.length < filteredItems.length
 
   const updateAltText = (assetId: string, altText: string) => {
     startTransition(async () => {
@@ -224,7 +240,7 @@ export function MediaLibraryManager({ initialItems }: MediaLibraryManagerProps) 
         </div>
 
         <p className="mt-4 text-sm text-gray-500">
-          {filteredItems.length} mídia(s) encontrada(s) com os filtros atuais.
+          Mostrando {visibleItems.length} de {filteredItems.length} mídia(s) com os filtros atuais.
         </p>
       </div>
 
@@ -241,7 +257,7 @@ export function MediaLibraryManager({ initialItems }: MediaLibraryManagerProps) 
       ) : null}
 
       <MediaLibraryGrid
-        items={filteredItems}
+        items={visibleItems}
         showAltText
         actionSlot={(asset) => (
           <div className="space-y-3">
@@ -268,6 +284,18 @@ export function MediaLibraryManager({ initialItems }: MediaLibraryManagerProps) 
           </div>
         )}
       />
+
+      {hasMoreItems ? (
+        <div className="flex justify-center">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => setVisibleCount((currentCount) => currentCount + PAGE_SIZE)}
+          >
+            Carregar mais 12 imagens
+          </Button>
+        </div>
+      ) : null}
     </div>
   )
 }
