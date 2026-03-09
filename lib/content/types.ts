@@ -153,6 +153,16 @@ export interface ProcessContent {
   ctaLabel: string;
 }
 
+export interface MediaAssetRecord {
+  id: string;
+  module: string;
+  bucketName: string;
+  filePath: string;
+  publicUrl: string;
+  altText: string | null;
+  createdAt: string;
+}
+
 export interface SiteSectionRecord<TContent> {
   id: string;
   sectionKey: SectionKey;

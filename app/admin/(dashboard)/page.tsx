@@ -35,6 +35,23 @@ export default async function AdminDashboardPage() {
                 </div>
             </div>
 
+            <div className="rounded-2xl border border-[#C9A962]/30 bg-[#FFFCF4] p-6 shadow-sm">
+                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                    <div>
+                        <h2 className="text-lg font-semibold text-[#0B3D4C]">Biblioteca de mídia</h2>
+                        <p className="mt-1 text-sm text-[#8A6B2F]">
+                            Imagens enviadas agora podem ser reutilizadas nos formulários do painel.
+                        </p>
+                    </div>
+                    <Link
+                        href="/admin/gallery"
+                        className="inline-flex items-center justify-center rounded-full bg-[#0B3D4C] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#155A6E]"
+                    >
+                        Abrir Galeria
+                    </Link>
+                </div>
+            </div>
+
             <div className="rounded-2xl border border-gray-100 bg-white shadow-sm">
                 <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
                     <div>

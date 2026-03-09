@@ -5,6 +5,7 @@ import type {
   DashboardModuleSummary,
   LeadInput,
   LeadRecord,
+  MediaAssetRecord,
   SectionKey,
   SectionSnapshot,
   SectionStatus,
@@ -304,5 +305,45 @@ export async function getLeads(): Promise<LeadRecord[]> {
     source: lead.source,
     status: lead.status,
     createdAt: lead.created_at,
+  }));
+}
+
+export async function getMediaAssets(params?: {
+  bucketName?: 'site-images' | 'results-images';
+  module?: string;
+}): Promise<MediaAssetRecord[]> {
+  const supabase = await createClient();
+
+  let query = supabase
+    .from('media_assets')
+    .select('id, module, bucket_name, file_path, public_url, alt_text, created_at')
+    .order('created_at', { ascending: false });
+
+  if (params?.bucketName) {
+    query = query.eq('bucket_name', params.bucketName);
+  }
+
+  if (params?.module) {
+    query = query.eq('module', params.module);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    if (!isMissingTableError(error)) {
+      console.error('Error loading media assets:', error.message);
+    }
+
+    return [];
+  }
+
+  return (data ?? []).map((item) => ({
+    id: item.id,
+    module: item.module,
+    bucketName: item.bucket_name,
+    filePath: item.file_path,
+    publicUrl: item.public_url,
+    altText: item.alt_text,
+    createdAt: item.created_at,
   }));
 }

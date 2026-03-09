@@ -73,7 +73,7 @@ export const adminModules: AdminModuleDefinition[] = [
     key: 'gallery',
     label: 'Galeria',
     description: 'Biblioteca de imagens para reutilização no site.',
-    implemented: false,
+    implemented: true,
   },
 ];
 

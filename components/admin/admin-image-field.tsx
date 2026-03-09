@@ -1,7 +1,8 @@
 'use client'
 
 import { ChangeEvent, useRef, useState } from 'react'
-import { ImagePlus, Loader2, Upload } from 'lucide-react'
+import { ImagePlus, Images, Loader2, Upload } from 'lucide-react'
+import { MediaLibraryBrowser } from '@/components/admin/media-library-browser'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -30,6 +31,7 @@ export function AdminImageField({
   const [isUploading, setIsUploading] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const [isError, setIsError] = useState(false)
+  const [isLibraryOpen, setIsLibraryOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -119,6 +121,10 @@ export function AdminImageField({
             {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
             {isUploading ? 'Enviando...' : 'Enviar imagem'}
           </Button>
+          <Button type="button" variant="outline" disabled={isUploading} onClick={() => setIsLibraryOpen(true)}>
+            <Images className="h-4 w-4" />
+            Escolher da biblioteca
+          </Button>
           <span className="text-xs text-gray-500">Bucket: {bucketName}</span>
         </div>
 
@@ -132,6 +138,18 @@ export function AdminImageField({
           </div>
         ) : null}
       </div>
+
+      <MediaLibraryBrowser
+        open={isLibraryOpen}
+        onOpenChange={setIsLibraryOpen}
+        bucketName={bucketName}
+        selectedUrl={value}
+        onSelect={(asset) => {
+          setValue(asset.publicUrl)
+          setMessage('Imagem selecionada da biblioteca.')
+          setIsError(false)
+        }}
+      />
     </div>
   )
 }
