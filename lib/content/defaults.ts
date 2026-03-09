@@ -4,6 +4,7 @@ import type {
   ContactContent,
   FAQContent,
   HeroContent,
+  MythsContent,
   ProcessContent,
   ResultsContent,
   SectionKey,
@@ -56,6 +57,12 @@ export const adminModules: AdminModuleDefinition[] = [
     key: 'process',
     label: 'Como Funciona',
     description: 'Passo a passo do tratamento com ordem e imagens.',
+    implemented: true,
+  },
+  {
+    key: 'myths',
+    label: 'Mito ou Verdade',
+    description: 'Cards de objeções, verdades e nota explicativa da seção.',
     implemented: true,
   },
   {
@@ -352,6 +359,66 @@ export const defaultProcessContent: ProcessContent = {
   ctaLabel: 'Agendar Avaliação',
 };
 
+export const defaultMythsContent: MythsContent = {
+  badgeText: 'Desvendando Mitos',
+  titleLead: 'Mito ou',
+  titleHighlight: 'Verdade?',
+  description:
+    'Separamos os principais mitos e verdades sobre facetas e implantes para que você tenha informações claras e tome a melhor decisão.',
+  items: [
+    {
+      type: 'mito',
+      statement: 'Facetas em resina estragam os dentes',
+      truth: 'FALSO! O desgaste é mínimo e planejado para preservar a estrutura dental. Na maioria dos casos, o preparo é conservador ou até inexistente.',
+      category: 'Facetas',
+    },
+    {
+      type: 'mito',
+      statement: 'Implante dentário dói muito',
+      truth: 'FALSO! A cirurgia é feita com anestesia local e o desconforto pós-operatório é controlável com medicamentos. A maioria dos pacientes se surpreende com a tranquilidade do procedimento.',
+      category: 'Implantes',
+    },
+    {
+      type: 'mito',
+      statement: 'Facetas de resina duram para sempre',
+      truth: 'FALSO! A durabilidade média é de 5-7 anos. Manutenção periódica e bons hábitos são essenciais para prolongar a vida útil.',
+      category: 'Facetas',
+    },
+    {
+      type: 'mito',
+      statement: 'Implante pode ser rejeitado pelo corpo',
+      truth: 'FALSO! O titânio é biocompatível. O que ocorre é falha de osseointegração em raros casos (2-5%), que pode ser corrigida com novo planejamento.',
+      category: 'Implantes',
+    },
+    {
+      type: 'mito',
+      statement: 'Não posso fazer implante se não tenho osso suficiente',
+      truth: 'FALSO! Técnicas modernas de enxerto ósseo e implantes especiais permitem tratamento mesmo em casos de perda óssea avançada.',
+      category: 'Implantes',
+    },
+    {
+      type: 'verdade',
+      statement: 'Facetas de resina podem manchar com o tempo',
+      truth: 'VERDADE! A resina pode pigmentar com alimentos e bebidas. Polimentos periódicos e higiene adequada ajudam a manter a estética.',
+      category: 'Facetas',
+    },
+    {
+      type: 'verdade',
+      statement: 'Higiene é fundamental para a saúde do implante',
+      truth: 'VERDADE! A peri-implantite (inflamação ao redor do implante) pode ser evitada com escovação adequada e consultas de manutenção regulares.',
+      category: 'Implantes',
+    },
+    {
+      type: 'verdade',
+      statement: 'Bruxismo pode prejudicar facetas em resina',
+      truth: 'VERDADE! Ranger os dentes pode danificar as facetas. O uso de placa de proteção noturna é essencial para pacientes com bruxismo.',
+      category: 'Facetas',
+    },
+  ],
+  disclaimer:
+    '* As informações acima são baseadas em evidências científicas e experiência clínica. Cada caso é único e deve ser avaliado individualmente durante a consulta.',
+};
+
 export const defaultTestimonialsContent: TestimonialsContent = {
   badgeText: 'Depoimentos',
   titleLead: 'O que nossos pacientes',
@@ -588,6 +655,37 @@ export const normalizeProcessContent = (value: unknown): ProcessContent => {
           })
           .filter((item): item is ProcessContent['steps'][number] => item !== null)
       : defaultProcessContent.steps,
+  };
+};
+
+export const normalizeMythsContent = (value: unknown): MythsContent => {
+  if (!isRecord(value)) {
+    return defaultMythsContent;
+  }
+
+  return {
+    ...defaultMythsContent,
+    ...value,
+    items: Array.isArray(value.items)
+      ? value.items
+          .map((item) => {
+            if (!isRecord(item)) {
+              return null;
+            }
+
+            const type = item.type === 'mito' || item.type === 'verdade' ? item.type : null;
+            const category = item.category === 'Facetas' || item.category === 'Implantes' ? item.category : null;
+            const statement = typeof item.statement === 'string' ? item.statement.trim() : '';
+            const truth = typeof item.truth === 'string' ? item.truth.trim() : '';
+
+            if (!type || !category || !statement || !truth) {
+              return null;
+            }
+
+            return { type, category, statement, truth };
+          })
+          .filter((item): item is MythsContent['items'][number] => item !== null)
+      : defaultMythsContent.items,
   };
 };
 

@@ -9,6 +9,7 @@ import type {
   ContactContent,
   FAQContent,
   HeroContent,
+  MythsContent,
   ProcessContent,
   ResultsContent,
   ServicesContent,
@@ -173,6 +174,22 @@ const processSchema = z.object({
     .max(4),
   ctaText: z.string().trim().min(1, 'Informe o texto do CTA.'),
   ctaLabel: z.string().trim().min(1, 'Informe o botão do CTA.'),
+})
+
+const mythItemSchema = z.object({
+  type: z.enum(['mito', 'verdade']),
+  statement: z.string().trim().min(1),
+  truth: z.string().trim().min(1),
+  category: z.enum(['Facetas', 'Implantes']),
+})
+
+const mythsSchema = z.object({
+  badgeText: z.string().trim().min(1, 'Informe o selo superior.'),
+  titleLead: z.string().trim().min(1, 'Informe a primeira parte do titulo.'),
+  titleHighlight: z.string().trim().min(1, 'Informe o destaque do titulo.'),
+  description: z.string().trim().min(1, 'Informe a descricao da seção.'),
+  items: z.array(mythItemSchema).min(8).max(8),
+  disclaimer: z.string().trim().min(1, 'Informe a observação final.'),
 })
 
 const testimonialsSchema = z.object({
@@ -358,6 +375,24 @@ const getProcessContentFromFormData = (formData: FormData): ProcessContent => {
     steps,
     ctaText: formData.get('ctaText'),
     ctaLabel: formData.get('ctaLabel'),
+  })
+}
+
+const getMythsContentFromFormData = (formData: FormData): MythsContent => {
+  const items = Array.from({ length: 8 }, (_, index) => ({
+    type: String(formData.get(`mythType${index}`) ?? ''),
+    statement: String(formData.get(`mythStatement${index}`) ?? ''),
+    truth: String(formData.get(`mythTruth${index}`) ?? ''),
+    category: String(formData.get(`mythCategory${index}`) ?? ''),
+  }))
+
+  return mythsSchema.parse({
+    badgeText: formData.get('badgeText'),
+    titleLead: formData.get('titleLead'),
+    titleHighlight: formData.get('titleHighlight'),
+    description: formData.get('description'),
+    items,
+    disclaimer: formData.get('disclaimer'),
   })
 }
 
@@ -730,6 +765,55 @@ export async function publishProcess(): Promise<ActionResult> {
     return {
       success: true,
       message: 'Como Funciona publicado com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function saveMythsDraft(formData: FormData): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+    const content = getMythsContentFromFormData(formData)
+
+    await upsertSectionDraft({
+      sectionKey: 'myths',
+      content,
+      userId: user.id,
+    })
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/myths')
+
+    return {
+      success: true,
+      message: 'Rascunho de Mito ou Verdade salvo com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function publishMyths(): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+
+    await publishSectionDraft('myths', user.id)
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/myths')
+
+    return {
+      success: true,
+      message: 'Mito ou Verdade publicado com sucesso.',
     }
   } catch (error) {
     return {

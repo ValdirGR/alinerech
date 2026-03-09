@@ -4,6 +4,7 @@ export type SectionKey =
   | 'services'
   | 'results'
   | 'process'
+  | 'myths'
   | 'faq'
   | 'contact'
   | 'testimonials'
@@ -152,6 +153,22 @@ export interface ProcessContent {
   steps: ProcessStep[];
   ctaText: string;
   ctaLabel: string;
+}
+
+export interface MythItem {
+  type: 'mito' | 'verdade';
+  statement: string;
+  truth: string;
+  category: 'Facetas' | 'Implantes';
+}
+
+export interface MythsContent {
+  badgeText: string;
+  titleLead: string;
+  titleHighlight: string;
+  description: string;
+  items: MythItem[];
+  disclaimer: string;
 }
 
 export interface TestimonialItem {

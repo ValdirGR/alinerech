@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { X, Check, AlertTriangle } from 'lucide-react';
+import { defaultMythsContent, normalizeMythsContent } from '@/lib/content/defaults';
+import { usePublishedSection } from '@/lib/content/use-published-section';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,57 +11,11 @@ export function MitoVerdade() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
-
-  const mitos = [
-    {
-      type: 'mito',
-      statement: 'Facetas em resina estragam os dentes',
-      truth: 'FALSO! O desgaste é mínimo e planejado para preservar a estrutura dental. Na maioria dos casos, o preparo é conservador ou até inexistente.',
-      category: 'Facetas'
-    },
-    {
-      type: 'mito',
-      statement: 'Implante dentário dói muito',
-      truth: 'FALSO! A cirurgia é feita com anestesia local e o desconforto pós-operatório é controlável com medicamentos. A maioria dos pacientes se surpreende com a tranquilidade do procedimento.',
-      category: 'Implantes'
-    },
-    {
-      type: 'mito',
-      statement: 'Facetas de resina duram para sempre',
-      truth: 'FALSO! A durabilidade média é de 5-7 anos. Manutenção periódica e bons hábitos são essenciais para prolongar a vida útil.',
-      category: 'Facetas'
-    },
-    {
-      type: 'mito',
-      statement: 'Implante pode ser rejeitado pelo corpo',
-      truth: 'FALSO! O titânio é biocompatível. O que ocorre é falha de osseointegração em raros casos (2-5%), que pode ser corrigida com novo planejamento.',
-      category: 'Implantes'
-    },
-    {
-      type: 'mito',
-      statement: 'Não posso fazer implante se não tenho osso suficiente',
-      truth: 'FALSO! Técnicas modernas de enxerto ósseo e implantes especiais permitem tratamento mesmo em casos de perda óssea avançada.',
-      category: 'Implantes'
-    },
-    {
-      type: 'verdade',
-      statement: 'Facetas de resina podem manchar com o tempo',
-      truth: 'VERDADE! A resina pode pigmentar com alimentos e bebidas. Polimentos periódicos e higiene adequada ajudam a manter a estética.',
-      category: 'Facetas'
-    },
-    {
-      type: 'verdade',
-      statement: 'Higiene é fundamental para a saúde do implante',
-      truth: 'VERDADE! A peri-implantite (inflamação ao redor do implante) pode ser evitada com escovação adequada e consultas de manutenção regulares.',
-      category: 'Implantes'
-    },
-    {
-      type: 'verdade',
-      statement: 'Bruxismo pode prejudicar facetas em resina',
-      truth: 'VERDADE! Ranger os dentes pode danificar as facetas. O uso de placa de proteção noturna é essencial para pacientes com bruxismo.',
-      category: 'Facetas'
-    }
-  ];
+  const { content } = usePublishedSection({
+    sectionKey: 'myths',
+    fallback: defaultMythsContent,
+    normalize: normalizeMythsContent,
+  });
 
   useEffect(() => {
     const triggers: ScrollTrigger[] = [];
@@ -123,23 +79,22 @@ export function MitoVerdade() {
         <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-white/20">
             <AlertTriangle className="w-4 h-4 text-[#C9A962]" />
-            <span className="text-white/90 text-sm font-medium">Desvendando Mitos</span>
+            <span className="text-white/90 text-sm font-medium">{content.badgeText}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-            Mito ou{' '}
-            <span className="text-[#C9A962]">Verdade</span>?
+            {content.titleLead}{' '}
+            <span className="text-[#C9A962]">{content.titleHighlight}</span>
           </h2>
 
           <p className="text-white/70 text-lg">
-            Separamos os principais mitos e verdades sobre facetas e implantes
-            para que você tenha informações claras e tome a melhor decisão.
+            {content.description}
           </p>
         </div>
 
         {/* Cards Grid */}
         <div ref={cardsRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {mitos.map((item, index) => (
+          {content.items.map((item, index) => (
             <div
               key={index}
               className="group bg-white/5 backdrop-blur-sm hover:bg-white/10 border border-white/10 hover:border-[#C9A962]/30 rounded-2xl p-5 transition-all duration-500 hover:-translate-y-1"
@@ -183,8 +138,7 @@ export function MitoVerdade() {
         {/* Disclaimer */}
         <div className="mt-12 text-center">
           <p className="text-white/50 text-sm max-w-2xl mx-auto">
-            * As informações acima são baseadas em evidências científicas e experiência clínica.
-            Cada caso é único e deve ser avaliado individualmente durante a consulta.
+            {content.disclaimer}
           </p>
         </div>
       </div>
