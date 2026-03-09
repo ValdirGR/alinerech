@@ -38,7 +38,7 @@ export function Process() {
       step: '04',
       title: 'Acabamento e Polimento',
       description: 'Ajuste da mordida, polimento para brilho natural e instruções de cuidados pós-procedimento.',
-      image: '/process-acabamento02.jpg'
+      image: '/process-acabamento03.jpg'
     }
   ];
 
