@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
 import { createClient } from '@/utils/supabase/client'
 import { MediaLibraryGrid } from '@/components/admin/media-library-grid'
 import type { MediaAssetRecord } from '@/lib/content/types'
@@ -29,6 +30,7 @@ export function MediaLibraryBrowser({
 }: MediaLibraryBrowserProps) {
   const [items, setItems] = useState<MediaAssetRecord[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     if (!open) {
@@ -78,6 +80,21 @@ export function MediaLibraryBrowser({
     }
   }, [bucketName, open])
 
+  const filteredItems = items.filter((item) => {
+    const normalizedSearch = search.trim().toLowerCase()
+
+    if (!normalizedSearch) {
+      return true
+    }
+
+    return (
+      item.filePath.toLowerCase().includes(normalizedSearch) ||
+      item.module.toLowerCase().includes(normalizedSearch) ||
+      item.publicUrl.toLowerCase().includes(normalizedSearch) ||
+      (item.altText ?? '').toLowerCase().includes(normalizedSearch)
+    )
+  })
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[85vh] max-w-5xl overflow-hidden">
@@ -89,13 +106,21 @@ export function MediaLibraryBrowser({
         </DialogHeader>
 
         <div className="overflow-y-auto pr-1">
+          <div className="mb-4">
+            <Input
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder="Buscar por arquivo, módulo ou alt"
+            />
+          </div>
+
           {isLoading ? (
             <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 p-8 text-center text-sm text-gray-500">
               Carregando imagens...
             </div>
           ) : (
             <MediaLibraryGrid
-              items={items}
+              items={filteredItems}
               selectable
               selectedUrl={selectedUrl}
               onSelect={(asset) => {

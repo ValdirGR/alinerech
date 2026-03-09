@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import type { MediaAssetRecord } from '@/lib/content/types'
 
 type MediaLibraryGridProps = {
@@ -5,6 +6,8 @@ type MediaLibraryGridProps = {
   selectable?: boolean
   selectedUrl?: string | null
   onSelect?: (asset: MediaAssetRecord) => void
+  showAltText?: boolean
+  actionSlot?: (asset: MediaAssetRecord) => ReactNode
 }
 
 export function MediaLibraryGrid({
@@ -12,6 +15,8 @@ export function MediaLibraryGrid({
   selectable = false,
   selectedUrl = null,
   onSelect,
+  showAltText = false,
+  actionSlot,
 }: MediaLibraryGridProps) {
   if (items.length === 0) {
     return (
@@ -51,9 +56,15 @@ export function MediaLibraryGrid({
                 <span className="text-[10px] uppercase tracking-wide text-gray-400">{item.bucketName}</span>
               </div>
               <p className="line-clamp-2 text-sm font-medium text-[#0B3D4C]">{item.filePath}</p>
+              {showAltText ? (
+                <p className="line-clamp-2 text-xs text-gray-500">
+                  Alt: {item.altText?.trim() ? item.altText : 'não definido'}
+                </p>
+              ) : null}
               <p className="text-xs text-gray-500">
                 {new Date(item.createdAt).toLocaleString('pt-BR')}
               </p>
+              {actionSlot ? <div className="pt-1">{actionSlot(item)}</div> : null}
             </div>
           </button>
         )
