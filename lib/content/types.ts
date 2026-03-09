@@ -121,6 +121,38 @@ export interface FAQContent {
   ctaLink: string;
 }
 
+export interface ResultItem {
+  imageUrl: string;
+  alt: string;
+}
+
+export interface ResultsContent {
+  badgeText: string;
+  titleLead: string;
+  titleHighlight: string;
+  description: string;
+  items: ResultItem[];
+}
+
+export interface ProcessStep {
+  step: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+}
+
+export interface ProcessContent {
+  badgeText: string;
+  titleLead: string;
+  titleHighlight: string;
+  description: string;
+  procedureTitle: string;
+  procedureSubtitle: string;
+  steps: ProcessStep[];
+  ctaText: string;
+  ctaLabel: string;
+}
+
 export interface SiteSectionRecord<TContent> {
   id: string;
   sectionKey: SectionKey;

@@ -4,6 +4,8 @@ import type {
   ContactContent,
   FAQContent,
   HeroContent,
+  ProcessContent,
+  ResultsContent,
   SectionKey,
   ServicesContent,
 } from '@/lib/content/types';
@@ -47,13 +49,13 @@ export const adminModules: AdminModuleDefinition[] = [
     key: 'results',
     label: 'Resultados',
     description: 'Galeria de imagens publicadas na seção de resultados.',
-    implemented: false,
+    implemented: true,
   },
   {
     key: 'process',
     label: 'Como Funciona',
     description: 'Passo a passo do tratamento com ordem e imagens.',
-    implemented: false,
+    implemented: true,
   },
   {
     key: 'faq',
@@ -286,6 +288,63 @@ export const defaultFaqContent: FAQContent = {
   ctaLink: 'https://wa.me/5548996374030',
 };
 
+export const defaultResultsContent: ResultsContent = {
+  badgeText: 'Casos Clínicos',
+  titleLead: 'Nossos',
+  titleHighlight: 'Resultados',
+  description:
+    'Veja algumas das incríveis transformações que já realizamos. Sorrisos reais, vidas renovadas e a excelência estética em cada detalhe.',
+  items: [
+    { imageUrl: '/results/foto01.jpeg', alt: 'Antes e Depois 1' },
+    { imageUrl: '/results/foto02.jpeg', alt: 'Antes e Depois 2' },
+    { imageUrl: '/results/foto03.jpeg', alt: 'Antes e Depois 3' },
+    { imageUrl: '/results/foto04.jpeg', alt: 'Antes e Depois 4' },
+    { imageUrl: '/results/foto05.jpeg', alt: 'Antes e Depois 5' },
+    { imageUrl: '/results/foto06.jpeg', alt: 'Antes e Depois 6' },
+    { imageUrl: '/results/foto07.jpeg', alt: 'Antes e Depois 7' },
+    { imageUrl: '/results/foto09.jpeg', alt: 'Antes e Depois 8' },
+    { imageUrl: '/results/foto10.jpeg', alt: 'Antes e Depois 9' },
+  ],
+};
+
+export const defaultProcessContent: ProcessContent = {
+  badgeText: 'Como Funciona',
+  titleLead: 'O passo a passo do seu',
+  titleHighlight: 'tratamento',
+  description:
+    'Conheça cada etapa dos nossos procedimentos. Transparência e clareza para você se sentir seguro em cada momento.',
+  procedureTitle: 'Facetas em Resina',
+  procedureSubtitle: 'Procedimento completo em uma única consulta',
+  steps: [
+    {
+      step: '01',
+      title: 'Avaliação Clínica',
+      description: 'Exame detalhado da saúde bucal, análise do sorriso e discussão das expectativas do paciente.',
+      imageUrl: '/process-avaliacao02.jpg',
+    },
+    {
+      step: '02',
+      title: 'Fotos e Planejamento',
+      description: 'Registro fotográfico e planejamento estético digital para visualizar o resultado esperado.',
+      imageUrl: '/process-planejamento02.jpg',
+    },
+    {
+      step: '03',
+      title: 'Aplicação da Resina',
+      description: 'Escultura artística da resina composta dente a dente, camada por camada, com cura a luz.',
+      imageUrl: '/process-aplicacao02.jpg',
+    },
+    {
+      step: '04',
+      title: 'Acabamento e Polimento',
+      description: 'Ajuste da mordida, polimento para brilho natural e instruções de cuidados pós-procedimento.',
+      imageUrl: '/process-acabamento03.jpg',
+    },
+  ],
+  ctaText: 'Quer saber mais detalhes sobre o seu caso específico?',
+  ctaLabel: 'Agendar Avaliação',
+};
+
 export const sectionLabels: Record<SectionKey, string> = adminModules.reduce(
   (accumulator, moduleItem) => {
     accumulator[moduleItem.key] = moduleItem.label;
@@ -435,5 +494,65 @@ export const normalizeFaqContent = (value: unknown): FAQContent => {
           })
           .filter((item): item is FAQContent['items'][number] => item !== null)
       : defaultFaqContent.items,
+  };
+};
+
+export const normalizeResultsContent = (value: unknown): ResultsContent => {
+  if (!isRecord(value)) {
+    return defaultResultsContent;
+  }
+
+  return {
+    ...defaultResultsContent,
+    ...value,
+    items: Array.isArray(value.items)
+      ? value.items
+          .map((item) => {
+            if (!isRecord(item)) {
+              return null;
+            }
+
+            const imageUrl = typeof item.imageUrl === 'string' ? item.imageUrl.trim() : '';
+            const alt = typeof item.alt === 'string' ? item.alt.trim() : '';
+
+            if (!imageUrl || !alt) {
+              return null;
+            }
+
+            return { imageUrl, alt };
+          })
+          .filter((item): item is ResultsContent['items'][number] => item !== null)
+      : defaultResultsContent.items,
+  };
+};
+
+export const normalizeProcessContent = (value: unknown): ProcessContent => {
+  if (!isRecord(value)) {
+    return defaultProcessContent;
+  }
+
+  return {
+    ...defaultProcessContent,
+    ...value,
+    steps: Array.isArray(value.steps)
+      ? value.steps
+          .map((item) => {
+            if (!isRecord(item)) {
+              return null;
+            }
+
+            const step = typeof item.step === 'string' ? item.step.trim() : '';
+            const title = typeof item.title === 'string' ? item.title.trim() : '';
+            const description = typeof item.description === 'string' ? item.description.trim() : '';
+            const imageUrl = typeof item.imageUrl === 'string' ? item.imageUrl.trim() : '';
+
+            if (!step || !title || !description || !imageUrl) {
+              return null;
+            }
+
+            return { step, title, description, imageUrl };
+          })
+          .filter((item): item is ProcessContent['steps'][number] => item !== null)
+      : defaultProcessContent.steps,
   };
 };

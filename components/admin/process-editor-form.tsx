@@ -3,26 +3,19 @@
 import { useRef, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
-import { publishAbout, saveAboutDraft } from '@/app/actions/admin-content'
+import { publishProcess, saveProcessDraft } from '@/app/actions/admin-content'
 import { AdminImageField } from '@/components/admin/admin-image-field'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import type { AboutContent, SectionSnapshot } from '@/lib/content/types'
+import type { ProcessContent, SectionSnapshot } from '@/lib/content/types'
 
-type AboutEditorFormProps = {
-  snapshot: SectionSnapshot<AboutContent>
+type ProcessEditorFormProps = {
+  snapshot: SectionSnapshot<ProcessContent>
 }
 
-const aboutCardIcons = [
-  { value: 'graduation-cap', label: 'Graduation Cap' },
-  { value: 'award', label: 'Award' },
-  { value: 'heart', label: 'Heart' },
-  { value: 'shield', label: 'Shield' },
-] as const
-
-export function AboutEditorForm({ snapshot }: AboutEditorFormProps) {
+export function ProcessEditorForm({ snapshot }: ProcessEditorFormProps) {
   const router = useRouter()
   const formRef = useRef<HTMLFormElement>(null)
   const [isPending, startTransition] = useTransition()
@@ -39,7 +32,7 @@ export function AboutEditorForm({ snapshot }: AboutEditorFormProps) {
     const formData = new FormData(formRef.current)
 
     startTransition(async () => {
-      const result = actionType === 'draft' ? await saveAboutDraft(formData) : await publishAbout()
+      const result = actionType === 'draft' ? await saveProcessDraft(formData) : await publishProcess()
 
       setMessage(result.message)
       setIsError(!result.success)
@@ -101,8 +94,8 @@ export function AboutEditorForm({ snapshot }: AboutEditorFormProps) {
       <form ref={formRef} className="space-y-8">
         <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
           <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Textos principais</h2>
-            <p className="text-sm text-gray-500">Controle a narrativa institucional da seção Sobre.</p>
+            <h2 className="text-lg font-semibold text-[#0B3D4C]">Header e CTA</h2>
+            <p className="text-sm text-gray-500">Edite a apresentação da seção e a chamada final.</p>
           </div>
 
           <div className="grid gap-5 md:grid-cols-2">
@@ -110,7 +103,6 @@ export function AboutEditorForm({ snapshot }: AboutEditorFormProps) {
               <Label htmlFor="badgeText">Selo superior</Label>
               <Input id="badgeText" name="badgeText" defaultValue={current.badgeText} />
             </div>
-
             <div className="space-y-2">
               <Label htmlFor="titleLead">Título base</Label>
               <Input id="titleLead" name="titleLead" defaultValue={current.titleLead} />
@@ -119,114 +111,62 @@ export function AboutEditorForm({ snapshot }: AboutEditorFormProps) {
               <Label htmlFor="titleHighlight">Destaque do título</Label>
               <Input id="titleHighlight" name="titleHighlight" defaultValue={current.titleHighlight} />
             </div>
-
-            {current.paragraphs.map((paragraph, index) => (
-              <div key={`paragraph-${index}`} className="space-y-2 md:col-span-2">
-                <Label htmlFor={`paragraph${index}`}>Parágrafo {index + 1}</Label>
-                <Textarea
-                  id={`paragraph${index}`}
-                  name={`paragraph${index}`}
-                  rows={4}
-                  defaultValue={paragraph}
-                />
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Imagem e credenciais</h2>
-            <p className="text-sm text-gray-500">Gerencie a foto principal e os destaques profissionais.</p>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
-              <AdminImageField
-                name="imageUrl"
-                label="Imagem principal"
-                bucketName="site-images"
-                module="about"
-                defaultValue={current.imageUrl}
-              />
+              <Label htmlFor="description">Descrição</Label>
+              <Textarea id="description" name="description" rows={4} defaultValue={current.description} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="imageAlt">Alt da imagem</Label>
-              <Input id="imageAlt" name="imageAlt" defaultValue={current.imageAlt} />
+              <Label htmlFor="procedureTitle">Título do procedimento</Label>
+              <Input id="procedureTitle" name="procedureTitle" defaultValue={current.procedureTitle} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="croTitle">Título do CRO</Label>
-              <Input id="croTitle" name="croTitle" defaultValue={current.croTitle} />
+              <Label htmlFor="procedureSubtitle">Subtítulo do procedimento</Label>
+              <Input id="procedureSubtitle" name="procedureSubtitle" defaultValue={current.procedureSubtitle} />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="croCaption">Legenda do CRO</Label>
-              <Input id="croCaption" name="croCaption" defaultValue={current.croCaption} />
+            <div className="space-y-2 md:col-span-2">
+              <Label htmlFor="ctaText">Texto do CTA</Label>
+              <Input id="ctaText" name="ctaText" defaultValue={current.ctaText} />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="specialtyTitle">Título da especialidade</Label>
-              <Input id="specialtyTitle" name="specialtyTitle" defaultValue={current.specialtyTitle} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="specialtyCaption">Legenda da especialidade</Label>
-              <Input
-                id="specialtyCaption"
-                name="specialtyCaption"
-                defaultValue={current.specialtyCaption}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="experienceValue">Destaque de experiência</Label>
-              <Input id="experienceValue" name="experienceValue" defaultValue={current.experienceValue} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="experienceLabel">Legenda de experiência</Label>
-              <Textarea
-                id="experienceLabel"
-                name="experienceLabel"
-                rows={3}
-                defaultValue={current.experienceLabel}
-              />
+            <div className="space-y-2 md:col-span-2">
+              <Label htmlFor="ctaLabel">Botão do CTA</Label>
+              <Input id="ctaLabel" name="ctaLabel" defaultValue={current.ctaLabel} />
             </div>
           </div>
         </section>
 
         <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
           <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Cards de diferenciais</h2>
-            <p className="text-sm text-gray-500">Mantenha os quatro cards exibidos na seção.</p>
+            <h2 className="text-lg font-semibold text-[#0B3D4C]">Etapas do processo</h2>
+            <p className="text-sm text-gray-500">Edite as quatro etapas exibidas no passo a passo.</p>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
-            {current.cards.map((card, index) => (
-              <div key={`card-${index}`} className="space-y-4 rounded-xl border border-gray-200 p-4">
+            {current.steps.map((step, index) => (
+              <div key={`step-${index}`} className="space-y-4 rounded-xl border border-gray-200 p-4">
                 <div className="space-y-2">
-                  <Label htmlFor={`cardTitle${index}`}>Título {index + 1}</Label>
-                  <Input id={`cardTitle${index}`} name={`cardTitle${index}`} defaultValue={card.title} />
+                  <Label htmlFor={`processNumber${index}`}>Número {index + 1}</Label>
+                  <Input id={`processNumber${index}`} name={`processNumber${index}`} defaultValue={step.step} />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor={`cardDescription${index}`}>Descrição {index + 1}</Label>
+                  <Label htmlFor={`processTitle${index}`}>Título {index + 1}</Label>
+                  <Input id={`processTitle${index}`} name={`processTitle${index}`} defaultValue={step.title} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor={`processDescription${index}`}>Descrição {index + 1}</Label>
                   <Textarea
-                    id={`cardDescription${index}`}
-                    name={`cardDescription${index}`}
-                    rows={3}
-                    defaultValue={card.description}
+                    id={`processDescription${index}`}
+                    name={`processDescription${index}`}
+                    rows={4}
+                    defaultValue={step.description}
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor={`cardIcon${index}`}>Ícone {index + 1}</Label>
-                  <select
-                    id={`cardIcon${index}`}
-                    name={`cardIcon${index}`}
-                    defaultValue={card.iconKey}
-                    className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs"
-                  >
-                    {aboutCardIcons.map((icon) => (
-                      <option key={icon.value} value={icon.value}>
-                        {icon.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <AdminImageField
+                  name={`processImage${index}`}
+                  label={`Imagem ${index + 1}`}
+                  bucketName="site-images"
+                  module="process"
+                  defaultValue={step.imageUrl}
+                />
               </div>
             ))}
           </div>
@@ -244,7 +184,7 @@ export function AboutEditorForm({ snapshot }: AboutEditorFormProps) {
             onClick={() => runAction('publish')}
           >
             <Send className="h-4 w-4" />
-            {isPending ? 'Publicando...' : 'Publicar Sobre'}
+            {isPending ? 'Publicando...' : 'Publicar Como Funciona'}
           </Button>
         </div>
       </form>

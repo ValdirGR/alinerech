@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Search, ClipboardList, Settings, Sparkles, CalendarCheck } from 'lucide-react';
+import { defaultProcessContent, normalizeProcessContent } from '@/lib/content/defaults';
+import { usePublishedSection } from '@/lib/content/use-published-section';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,40 +11,13 @@ export function Process() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const facetasRef = useRef<HTMLDivElement>(null);
+  const { content } = usePublishedSection({
+    sectionKey: 'process',
+    fallback: defaultProcessContent,
+    normalize: normalizeProcessContent,
+  });
 
-
-  const facetasSteps = [
-    {
-      icon: Search,
-      step: '01',
-      title: 'Avaliação Clínica',
-      description: 'Exame detalhado da saúde bucal, análise do sorriso e discussão das expectativas do paciente.',
-      image: '/process-avaliacao02.jpg'
-    },
-    {
-      icon: ClipboardList,
-      step: '02',
-      title: 'Fotos e Planejamento',
-      description: 'Registro fotográfico e planejamento estético digital para visualizar o resultado esperado.',
-      image: '/process-planejamento02.jpg'
-    },
-    {
-      icon: Sparkles,
-      step: '03',
-      title: 'Aplicação da Resina',
-      description: 'Escultura artística da resina composta dente a dente, camada por camada, com cura a luz.',
-      image: '/process-aplicacao02.jpg'
-    },
-    {
-      icon: CalendarCheck,
-      step: '04',
-      title: 'Acabamento e Polimento',
-      description: 'Ajuste da mordida, polimento para brilho natural e instruções de cuidados pós-procedimento.',
-      image: '/process-acabamento03.jpg'
-    }
-  ];
-
-
+  const stepIcons = [Search, ClipboardList, Sparkles, CalendarCheck] as const;
 
   useEffect(() => {
     const triggers: ScrollTrigger[] = [];
@@ -100,17 +75,16 @@ export function Process() {
         <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 mb-6">
             <Settings className="w-4 h-4 text-[#C9A962]" />
-            <span className="text-white text-sm font-medium">Como Funciona</span>
+            <span className="text-white text-sm font-medium">{content.badgeText}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-            O passo a passo do seu{' '}
-            <span className="text-[#C9A962]">tratamento</span>
+            {content.titleLead}{' '}
+            <span className="text-[#C9A962]">{content.titleHighlight}</span>
           </h2>
 
           <p className="text-white/70 text-lg">
-            Conheça cada etapa dos nossos procedimentos. Transparência e clareza
-            para você se sentir seguro em cada momento.
+            {content.description}
           </p>
         </div>
 
@@ -121,21 +95,23 @@ export function Process() {
               <Sparkles className="w-6 h-6 text-[#000000]" />
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-white">Facetas em Resina</h3>
-              <p className="text-white/60 text-sm">Procedimento completo em uma única consulta</p>
+              <h3 className="text-2xl font-bold text-white">{content.procedureTitle}</h3>
+              <p className="text-white/60 text-sm">{content.procedureSubtitle}</p>
             </div>
           </div>
 
           <div className="grid sm:grid-cols-2 gap-6 max-w-[80%] mx-auto">
-            {facetasSteps.map((step, index) => (
-              <div
-                key={index}
+            {content.steps.map((step, index) => {
+              const Icon = stepIcons[index] ?? Sparkles
+
+              return <div
+                key={`${step.step}-${index}`}
                 className="step-card group bg-white/10 border border-white/10 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2"
               >
                 {/* Image */}
                 <div className="relative h-[23rem] overflow-hidden">
                   <img
-                    src={step.image}
+                    src={step.imageUrl}
                     alt={step.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
@@ -150,7 +126,7 @@ export function Process() {
 
                   {/* Icon */}
                   <div className="absolute top-3 right-3 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
-                    <step.icon className="w-5 h-5 text-white" />
+                    <Icon className="w-5 h-5 text-white" />
                   </div>
                 </div>
 
@@ -164,7 +140,7 @@ export function Process() {
                   </p>
                 </div>
               </div>
-            ))}
+            })}
           </div>
         </div>
 
@@ -173,7 +149,7 @@ export function Process() {
         {/* CTA */}
         <div className="mt-16 text-center">
           <p className="text-white/70 mb-4">
-            Quer saber mais detalhes sobre o seu caso específico?
+            {content.ctaText}
           </p>
           <a
             href="#contato"
@@ -184,7 +160,7 @@ export function Process() {
             className="inline-flex items-center gap-2 bg-[#C9A962] hover:bg-[#b8993f] text-[#000000] font-semibold px-8 py-4 rounded-full transition-all duration-300 hover:scale-105"
           >
             <CalendarCheck className="w-5 h-5" />
-            Agendar Avaliação
+            {content.ctaLabel}
           </a>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { useRef, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishHero, saveHeroDraft } from '@/app/actions/admin-content'
+import { AdminImageField } from '@/components/admin/admin-image-field'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -159,9 +160,14 @@ export function HeroEditorForm({ snapshot }: HeroEditorFormProps) {
               <Label htmlFor="videoUrl">URL do vídeo embed</Label>
               <Input id="videoUrl" name="videoUrl" defaultValue={current.videoUrl} />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="imageUrl">Imagem principal</Label>
-              <Input id="imageUrl" name="imageUrl" defaultValue={current.imageUrl} />
+            <div className="space-y-2 md:col-span-2">
+              <AdminImageField
+                name="imageUrl"
+                label="Imagem principal"
+                bucketName="site-images"
+                module="hero"
+                defaultValue={current.imageUrl}
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="imageAlt">Alt da imagem</Label>

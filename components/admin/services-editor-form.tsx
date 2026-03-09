@@ -4,6 +4,7 @@ import { useRef, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishServices, saveServicesDraft } from '@/app/actions/admin-content'
+import { AdminImageField } from '@/components/admin/admin-image-field'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -132,9 +133,14 @@ export function ServicesEditorForm({ snapshot }: ServicesEditorFormProps) {
                 defaultValue={current.serviceDescription}
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="imageUrl">Imagem principal</Label>
-              <Input id="imageUrl" name="imageUrl" defaultValue={current.imageUrl} />
+            <div className="space-y-2 md:col-span-2">
+              <AdminImageField
+                name="imageUrl"
+                label="Imagem principal"
+                bucketName="site-images"
+                module="services"
+                defaultValue={current.imageUrl}
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="imageAlt">Alt da imagem</Label>

@@ -3,26 +3,20 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Camera, Sparkles } from 'lucide-react';
 import Image from 'next/image';
+import { defaultResultsContent, normalizeResultsContent } from '@/lib/content/defaults';
+import { usePublishedSection } from '@/lib/content/use-published-section';
 
 gsap.registerPlugin(ScrollTrigger);
-
-// Array com os caminhos reais para as 9 imagens de resultados fornecidas pelo usuário
-const resultsData = [
-    { id: 1, image: '/results/foto01.jpeg', alt: 'Antes e Depois 1' },
-    { id: 2, image: '/results/foto02.jpeg', alt: 'Antes e Depois 2' },
-    { id: 3, image: '/results/foto03.jpeg', alt: 'Antes e Depois 3' },
-    { id: 4, image: '/results/foto04.jpeg', alt: 'Antes e Depois 4' },
-    { id: 5, image: '/results/foto05.jpeg', alt: 'Antes e Depois 5' },
-    { id: 6, image: '/results/foto06.jpeg', alt: 'Antes e Depois 6' },
-    { id: 7, image: '/results/foto07.jpeg', alt: 'Antes e Depois 7' },
-    { id: 8, image: '/results/foto09.jpeg', alt: 'Antes e Depois 8' },
-    { id: 9, image: '/results/foto10.jpeg', alt: 'Antes e Depois 9' },
-];
 
 export function Results() {
     const sectionRef = useRef<HTMLDivElement>(null);
     const headerRef = useRef<HTMLDivElement>(null);
     const gridRef = useRef<HTMLDivElement>(null);
+    const { content } = usePublishedSection({
+        sectionKey: 'results',
+        fallback: defaultResultsContent,
+        normalize: normalizeResultsContent,
+    });
 
     useEffect(() => {
         const triggers: ScrollTrigger[] = [];
@@ -80,17 +74,16 @@ export function Results() {
                 <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-16">
                     <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 mb-6">
                         <Camera className="w-4 h-4 text-[#C9A962]" />
-                        <span className="text-white text-sm font-medium">Casos Clínicos</span>
+                        <span className="text-white text-sm font-medium">{content.badgeText}</span>
                     </div>
 
                     <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-                        Nossos{' '}
-                        <span className="text-[#C9A962]">Resultados</span>
+                        {content.titleLead}{' '}
+                        <span className="text-[#C9A962]">{content.titleHighlight}</span>
                     </h2>
 
                     <p className="text-white/70 text-lg">
-                        Veja algumas das incríveis transformações que já realizamos.
-                        Sorrisos reais, vidas renovadas e a excelência estética em cada detalhe.
+                        {content.description}
                     </p>
                 </div>
 
@@ -99,13 +92,13 @@ export function Results() {
                     ref={gridRef}
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
                 >
-                    {resultsData.map((item) => (
+                    {content.items.map((item, index) => (
                         <div
-                            key={item.id}
+                            key={`${item.imageUrl}-${index}`}
                             className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 bg-white/10 aspect-square"
                         >
                             <img
-                                src={item.image}
+                                src={item.imageUrl}
                                 alt={item.alt}
                                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 onError={(e) => {

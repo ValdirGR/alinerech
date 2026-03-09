@@ -9,6 +9,8 @@ import type {
   ContactContent,
   FAQContent,
   HeroContent,
+  ProcessContent,
+  ResultsContent,
   ServicesContent,
 } from '@/lib/content/types'
 
@@ -132,6 +134,44 @@ const faqSchema = z.object({
   ctaText: z.string().trim().min(1, 'Informe o texto do CTA.'),
   ctaLabel: z.string().trim().min(1, 'Informe o botão do CTA.'),
   ctaLink: z.string().trim().min(1, 'Informe o link do CTA.'),
+})
+
+const resultsSchema = z.object({
+  badgeText: z.string().trim().min(1, 'Informe o selo superior.'),
+  titleLead: z.string().trim().min(1, 'Informe a primeira parte do titulo.'),
+  titleHighlight: z.string().trim().min(1, 'Informe o destaque do titulo.'),
+  description: z.string().trim().min(1, 'Informe a descricao da seção.'),
+  items: z
+    .array(
+      z.object({
+        imageUrl: z.string().trim().min(1),
+        alt: z.string().trim().min(1),
+      })
+    )
+    .min(9)
+    .max(9),
+})
+
+const processSchema = z.object({
+  badgeText: z.string().trim().min(1, 'Informe o selo superior.'),
+  titleLead: z.string().trim().min(1, 'Informe a primeira parte do titulo.'),
+  titleHighlight: z.string().trim().min(1, 'Informe o destaque do titulo.'),
+  description: z.string().trim().min(1, 'Informe a descricao da seção.'),
+  procedureTitle: z.string().trim().min(1, 'Informe o título do procedimento.'),
+  procedureSubtitle: z.string().trim().min(1, 'Informe o subtítulo do procedimento.'),
+  steps: z
+    .array(
+      z.object({
+        step: z.string().trim().min(1),
+        title: z.string().trim().min(1),
+        description: z.string().trim().min(1),
+        imageUrl: z.string().trim().min(1),
+      })
+    )
+    .min(4)
+    .max(4),
+  ctaText: z.string().trim().min(1, 'Informe o texto do CTA.'),
+  ctaLabel: z.string().trim().min(1, 'Informe o botão do CTA.'),
 })
 
 const getHeroContentFromFormData = (formData: FormData): HeroContent => {
@@ -260,6 +300,42 @@ const getFaqContentFromFormData = (formData: FormData): FAQContent => {
     ctaText: formData.get('ctaText'),
     ctaLabel: formData.get('ctaLabel'),
     ctaLink: formData.get('ctaLink'),
+  })
+}
+
+const getResultsContentFromFormData = (formData: FormData): ResultsContent => {
+  const items = Array.from({ length: 9 }, (_, index) => ({
+    imageUrl: String(formData.get(`resultImage${index}`) ?? ''),
+    alt: String(formData.get(`resultAlt${index}`) ?? ''),
+  }))
+
+  return resultsSchema.parse({
+    badgeText: formData.get('badgeText'),
+    titleLead: formData.get('titleLead'),
+    titleHighlight: formData.get('titleHighlight'),
+    description: formData.get('description'),
+    items,
+  })
+}
+
+const getProcessContentFromFormData = (formData: FormData): ProcessContent => {
+  const steps = Array.from({ length: 4 }, (_, index) => ({
+    step: String(formData.get(`processNumber${index}`) ?? ''),
+    title: String(formData.get(`processTitle${index}`) ?? ''),
+    description: String(formData.get(`processDescription${index}`) ?? ''),
+    imageUrl: String(formData.get(`processImage${index}`) ?? ''),
+  }))
+
+  return processSchema.parse({
+    badgeText: formData.get('badgeText'),
+    titleLead: formData.get('titleLead'),
+    titleHighlight: formData.get('titleHighlight'),
+    description: formData.get('description'),
+    procedureTitle: formData.get('procedureTitle'),
+    procedureSubtitle: formData.get('procedureSubtitle'),
+    steps,
+    ctaText: formData.get('ctaText'),
+    ctaLabel: formData.get('ctaLabel'),
   })
 }
 
@@ -510,6 +586,104 @@ export async function publishFaq(): Promise<ActionResult> {
     return {
       success: true,
       message: 'FAQ publicado com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function saveResultsDraft(formData: FormData): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+    const content = getResultsContentFromFormData(formData)
+
+    await upsertSectionDraft({
+      sectionKey: 'results',
+      content,
+      userId: user.id,
+    })
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/results')
+
+    return {
+      success: true,
+      message: 'Rascunho de Resultados salvo com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function publishResults(): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+
+    await publishSectionDraft('results', user.id)
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/results')
+
+    return {
+      success: true,
+      message: 'Resultados publicado com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function saveProcessDraft(formData: FormData): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+    const content = getProcessContentFromFormData(formData)
+
+    await upsertSectionDraft({
+      sectionKey: 'process',
+      content,
+      userId: user.id,
+    })
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/process')
+
+    return {
+      success: true,
+      message: 'Rascunho de Como Funciona salvo com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function publishProcess(): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+
+    await publishSectionDraft('process', user.id)
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/process')
+
+    return {
+      success: true,
+      message: 'Como Funciona publicado com sucesso.',
     }
   } catch (error) {
     return {
