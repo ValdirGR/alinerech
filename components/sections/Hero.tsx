@@ -3,12 +3,19 @@ import { gsap } from 'gsap';
 import { Phone, Calendar, ChevronRight, Sparkles, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
+import { defaultHeroContent, normalizeHeroContent } from '@/lib/content/defaults';
+import { usePublishedSection } from '@/lib/content/use-published-section';
 
 export function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
+  const { content } = usePublishedSection({
+    sectionKey: 'hero',
+    fallback: defaultHeroContent,
+    normalize: normalizeHeroContent,
+  });
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -63,6 +70,15 @@ export function Hero() {
     }
   };
 
+  const handleAction = (link: string) => {
+    if (link.startsWith('#')) {
+      scrollToSection(link.replace('#', ''));
+      return;
+    }
+
+    window.open(link, '_blank');
+  };
+
   return (
     <section
       ref={heroRef}
@@ -87,56 +103,49 @@ export function Hero() {
           <div ref={contentRef} className="text-center lg:text-left order-2 lg:order-1">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-white/20">
               <Sparkles className="w-4 h-4 text-[#C9A962]" />
-              <span className="text-white/90 text-sm font-medium">Especialista em Odontologia Estética</span>
+              <span className="text-white/90 text-sm font-medium">{content.badgeText}</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-none tracking-tight mb-8">
-              Transforme seu{' '}
-              <span className="text-[#C9A962]">sorriso</span>
+              {content.titleLead}{' '}
+              <span className="text-[#C9A962]">{content.titleHighlight}</span>
               <br />
-              Transforme sua{' '}
-              <span className="text-[#C9A962]">vida</span>
+              {content.titleSecondLead}{' '}
+              <span className="text-[#C9A962]">{content.titleSecondHighlight}</span>
             </h1>
 
             <p className="text-lg sm:text-xl text-white/80 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              Facetas em resina com tecnologia de ponta.
-              Resultados naturais que vão além da estética — devolvem sua confiança.
+              {content.description}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
               <Button
                 size="lg"
-                onClick={() => scrollToSection('contato')}
+                onClick={() => handleAction(content.primaryCtaLink)}
                 className="bg-[#C9A962] hover:bg-[#D4BC7E] text-[#000000] font-semibold px-8 py-6 text-lg rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#C9A962]/30"
               >
                 <Calendar className="w-5 h-5 mr-2" />
-                Agendar Consulta
+                {content.primaryCtaLabel}
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                onClick={() => window.open('https://wa.me/5548996374030', '_blank')}
+                onClick={() => handleAction(content.secondaryCtaLink)}
                 className="border-2 border-white/30 text-white hover:bg-white/10 font-semibold px-8 py-6 text-lg rounded-full transition-all duration-300"
               >
                 <Phone className="w-5 h-5 mr-2" />
-                Falar no WhatsApp
+                {content.secondaryCtaLabel}
               </Button>
             </div>
 
             {/* Trust Badges */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-white/70 text-sm">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#C9A962] rounded-full" />
-                <span>Atendimento Humanizado</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#C9A962] rounded-full" />
-                <span>Tecnologia de Ponta</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#C9A962] rounded-full" />
-                <span>Resultados Garantidos</span>
-              </div>
+              {content.trustItems.map((item, index) => (
+                <div key={`${item}-${index}`} className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-[#C9A962] rounded-full" />
+                  <span>{item}</span>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -146,8 +155,8 @@ export function Hero() {
               <DialogTrigger asChild>
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl cursor-pointer group">
                   <img
-                    src="/alinevideo02.jpg"
-                    alt="Apresentação Dra Aline Rech"
+                    src={content.imageUrl}
+                    alt={content.imageAlt}
                     className="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover object-top transition-transform duration-700 group-hover:scale-105"
                   />
                   {/* Overlay gradient */}
@@ -172,8 +181,8 @@ export function Hero() {
                         <Sparkles className="w-6 h-6 text-[#000000]" />
                       </div>
                       <div>
-                        <p className="font-semibold text-[#000000]">Dra. Aline Rech</p>
-                        <p className="text-sm text-gray-600">Cirurgiã-Dentista | CRO 15756-SC</p>
+                        <p className="font-semibold text-[#000000]">{content.professionalName}</p>
+                        <p className="text-sm text-gray-600">{content.professionalSubtitle}</p>
                       </div>
                       <ChevronRight className="w-5 h-5 text-[#C9A962] ml-auto transition-transform duration-300 group-hover:translate-x-1" />
                     </div>
@@ -184,7 +193,7 @@ export function Hero() {
                 <DialogTitle className="sr-only">Vídeo de Apresentação</DialogTitle>
                 <div className="aspect-video w-full rounded-xl overflow-hidden bg-black shadow-2xl">
                   <iframe
-                    src="https://iframe.mediadelivery.net/embed/604126/2353cb85-56c0-40cc-8ea4-c6944d44cf99?autoplay=1"
+                    src={content.videoUrl}
                     loading="lazy"
                     className="border-0 w-full h-full"
                     allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
@@ -205,14 +214,9 @@ export function Hero() {
           ref={statsRef}
           className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-8 border-t border-white/10"
         >
-          {[
-            { number: '+9', label: 'Anos de Experiência' },
-            { number: '+2.500', label: 'Pacientes Atendidos' },
-            { number: '100%', label: 'Foco em Estética' },
-            { number: '5.0', label: 'Avaliação dos Pacientes' },
-          ].map((stat, index) => (
+          {content.stats.map((stat, index) => (
             <div key={index} className="text-center">
-              <p className="text-3xl sm:text-4xl font-bold text-[#C9A962] mb-1">{stat.number}</p>
+              <p className="text-3xl sm:text-4xl font-bold text-[#C9A962] mb-1">{stat.value}</p>
               <p className="text-white/70 text-sm">{stat.label}</p>
             </div>
           ))}

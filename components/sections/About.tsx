@@ -2,15 +2,28 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Award, GraduationCap, Heart, Shield } from 'lucide-react';
+import { defaultAboutContent, normalizeAboutContent } from '@/lib/content/defaults';
+import { usePublishedSection } from '@/lib/content/use-published-section';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const iconMap = {
+  'graduation-cap': GraduationCap,
+  award: Award,
+  heart: Heart,
+  shield: Shield,
+};
 
 export function About() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
-
+  const { content } = usePublishedSection({
+    sectionKey: 'about',
+    fallback: defaultAboutContent,
+    normalize: normalizeAboutContent,
+  });
   useEffect(() => {
     const triggers: ScrollTrigger[] = [];
 
@@ -66,30 +79,6 @@ export function About() {
       ctx.revert();
     };
   }, []);
-
-  const diferenciais = [
-    {
-      icon: GraduationCap,
-      title: 'Formação Especializada',
-      description: 'Especialização em Odontologia Estética e Implantodontia'
-    },
-    {
-      icon: Award,
-      title: 'Tecnologia Avançada',
-      description: 'Equipamentos de última geração para tratamentos precisos'
-    },
-    {
-      icon: Heart,
-      title: 'Atendimento Humanizado',
-      description: 'Cuidado individualizado para cada paciente'
-    },
-    {
-      icon: Shield,
-      title: 'Garantia de Resultado',
-      description: 'Compromisso com a excelência e satisfação'
-    }
-  ];
-
   return (
     <section
       ref={sectionRef}
@@ -106,31 +95,18 @@ export function About() {
           <div ref={contentRef}>
             <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 mb-6">
               <span className="w-2 h-2 bg-[#C9A962] rounded-full" />
-              <span className="text-white text-sm font-medium">Conheça a Dra. Aline Rech</span>
+              <span className="text-white text-sm font-medium">{content.badgeText}</span>
             </div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-              Dedicação e excelência em{' '}
-              <span className="text-[#C9A962]">cada sorriso</span>
+              {content.titleLead}{' '}
+              <span className="text-[#C9A962]">{content.titleHighlight}</span>
             </h2>
 
             <div className="space-y-4 text-white/70 leading-relaxed">
-              <p>
-                A Dra. Aline Rech é cirurgiã-dentista com mais de 9 anos de experiência,
-                especializada em odontologia estética e implantodontia. Sua trajetória é
-                marcada pelo compromisso incessante em proporcionar sorrisos naturais e
-                harmoniosos que transformam vidas.
-              </p>
-              <p>
-                Formada por instituições renomadas, a Dra. Aline constantemente se atualiza
-                através de cursos e congressos nacionais e internacionais, trazendo para
-                Içara as técnicas mais modernas e inovadoras do mercado odontológico.
-              </p>
-              <p>
-                Seu consultório foi projetado para oferecer conforto e tecnologia,
-                garantindo que cada paciente tenha uma experiência única e resultados
-                que superem expectativas.
-              </p>
+              {content.paragraphs.map((paragraph, index) => (
+                <p key={`${paragraph}-${index}`}>{paragraph}</p>
+              ))}
             </div>
 
             <div className="flex flex-wrap gap-4 mt-8">
@@ -139,8 +115,8 @@ export function About() {
                   <Award className="w-5 h-5 text-[#C9A962]" />
                 </div>
                 <div>
-                  <p className="font-semibold text-white">CRO 15756-SC</p>
-                  <p className="text-xs text-white/60">Registro Ativo</p>
+                  <p className="font-semibold text-white">{content.croTitle}</p>
+                  <p className="text-xs text-white/60">{content.croCaption}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 bg-white/10 rounded-xl px-5 py-3">
@@ -148,8 +124,8 @@ export function About() {
                   <GraduationCap className="w-5 h-5 text-[#C9A962]" />
                 </div>
                 <div>
-                  <p className="font-semibold text-white">Especialista</p>
-                  <p className="text-xs text-white/60">Estética & Implantes</p>
+                  <p className="font-semibold text-white">{content.specialtyTitle}</p>
+                  <p className="text-xs text-white/60">{content.specialtyCaption}</p>
                 </div>
               </div>
             </div>
@@ -159,8 +135,8 @@ export function About() {
           <div ref={imageRef} className="relative">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
               <img
-                src="/aline02.jpg"
-                alt="Dra. Aline Rech"
+                src={content.imageUrl}
+                alt={content.imageAlt}
                 className="w-full h-[500px] sm:h-[600px] object-cover object-top"
               />
               {/* Overlay */}
@@ -169,8 +145,15 @@ export function About() {
 
             {/* Experience Badge */}
             <div className="absolute -bottom-6 -left-6 bg-[#000000] text-white rounded-2xl p-6 shadow-xl">
-              <p className="text-4xl font-bold text-[#C9A962]">+9</p>
-              <p className="text-sm text-white/80">Anos de<br />Experiência</p>
+              <p className="text-4xl font-bold text-[#C9A962]">{content.experienceValue}</p>
+              <p className="text-sm text-white/80">
+                {content.experienceLabel.split('\n').map((line, index) => (
+                  <span key={`${line}-${index}`}>
+                    {line}
+                    {index < content.experienceLabel.split('\n').length - 1 ? <br /> : null}
+                  </span>
+                ))}
+              </p>
             </div>
 
             {/* Decorative Elements */}
@@ -181,22 +164,26 @@ export function About() {
 
         {/* Diferenciais Cards */}
         <div ref={cardsRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {diferenciais.map((item, index) => (
-            <div
-              key={index}
-              className="group bg-white/10 hover:bg-[#C9A962]/20 rounded-2xl p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl border border-white/10 hover:border-[#C9A962]/30"
-            >
-              <div className="w-14 h-14 bg-white/10 group-hover:bg-[#C9A962] rounded-xl flex items-center justify-center mb-4 transition-colors duration-500">
-                <item.icon className="w-7 h-7 text-[#C9A962] group-hover:text-[#000000] transition-colors duration-500" />
+          {content.cards.map((item, index) => {
+            const Icon = iconMap[item.iconKey];
+
+            return (
+              <div
+                key={`${item.title}-${index}`}
+                className="group bg-white/10 hover:bg-[#C9A962]/20 rounded-2xl p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl border border-white/10 hover:border-[#C9A962]/30"
+              >
+                <div className="w-14 h-14 bg-white/10 group-hover:bg-[#C9A962] rounded-xl flex items-center justify-center mb-4 transition-colors duration-500">
+                  <Icon className="w-7 h-7 text-[#C9A962] group-hover:text-[#000000] transition-colors duration-500" />
+                </div>
+                <h3 className="font-semibold text-white group-hover:text-white text-lg mb-2 transition-colors duration-500">
+                  {item.title}
+                </h3>
+                <p className="text-white/60 group-hover:text-white/80 text-sm transition-colors duration-500">
+                  {item.description}
+                </p>
               </div>
-              <h3 className="font-semibold text-white group-hover:text-white text-lg mb-2 transition-colors duration-500">
-                {item.title}
-              </h3>
-              <p className="text-white/60 group-hover:text-white/80 text-sm transition-colors duration-500">
-                {item.description}
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
