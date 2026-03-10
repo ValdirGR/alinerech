@@ -3,7 +3,9 @@ import type {
   AdminModuleDefinition,
   ContactContent,
   FAQContent,
+  FooterContent,
   FeaturesContent,
+  HeaderContent,
   HeroContent,
   MythsContent,
   ProcessContent,
@@ -30,6 +32,12 @@ const isRecord = (value: unknown): value is Record<string, unknown> => {
 };
 
 export const adminModules: AdminModuleDefinition[] = [
+  {
+    key: 'header',
+    label: 'Header',
+    description: 'Logo, menu principal e CTA do topo do site.',
+    implemented: true,
+  },
   {
     key: 'hero',
     label: 'Hero',
@@ -96,7 +104,30 @@ export const adminModules: AdminModuleDefinition[] = [
     description: 'Biblioteca de imagens para reutilização no site.',
     implemented: true,
   },
+  {
+    key: 'footer',
+    label: 'Footer',
+    description: 'Links, contato, redes sociais e textos do rodapé.',
+    implemented: true,
+  },
 ];
+
+export const defaultHeaderContent: HeaderContent = {
+  logoUrl: '/logo-aline.png',
+  logoAlt: 'Dra. Aline Rech',
+  navLinks: [
+    { label: 'Início', href: '#inicio' },
+    { label: 'Sobre', href: '#sobre' },
+    { label: 'Serviços', href: '#servicos' },
+    { label: 'Processo', href: '#processo' },
+    { label: 'FAQ', href: '#faq' },
+    { label: 'Contato', href: '#contato' },
+  ],
+  ctaLabel: 'Agendar',
+  ctaLink: 'https://wa.me/5548996374030',
+  mobileTitle: 'Dra. Aline Rech - Odontologia Estética',
+  mobileSubtitle: 'Içara, SC',
+};
 
 export const defaultHeroContent: HeroContent = {
   badgeText: 'Especialista em Odontologia Estética',
@@ -482,6 +513,57 @@ export const defaultFeaturesContent: FeaturesContent = {
   ],
 };
 
+export const defaultFooterContent: FooterContent = {
+  logoUrl: '/logo-aline.png',
+  logoAlt: 'Dra. Aline Rech',
+  tagline: 'Odontologia Estética',
+  description:
+    'Transformando sorrisos e vidas através da odontologia estética de excelência. Seu sorriso perfeito começa aqui.',
+  socialLinks: [
+    { iconKey: 'instagram', href: 'https://instagram.com' },
+    { iconKey: 'facebook', href: 'https://facebook.com' },
+    { iconKey: 'mail', href: 'mailto:contato@draalinerech.com.br' },
+  ],
+  quickLinksTitle: 'Links Rápidos',
+  quickLinks: [
+    { label: 'Início', href: '#inicio' },
+    { label: 'Sobre', href: '#sobre' },
+    { label: 'Serviços', href: '#servicos' },
+    { label: 'Processo', href: '#processo' },
+    { label: 'FAQ', href: '#faq' },
+    { label: 'Contato', href: '#contato' },
+  ],
+  servicesTitle: 'Serviços',
+  serviceLinks: [
+    { label: 'Facetas em Resina', href: '#servicos' },
+    { label: 'Odontologia Estética', href: '#servicos' },
+    { label: 'Avaliação Gratuita', href: '#contato' },
+  ],
+  contactTitle: 'Contato',
+  contactItems: [
+    {
+      iconKey: 'map-pin',
+      title: 'Endereço',
+      content: 'R. Sete de Setembro, 501 - Centro\nIçara - SC, 88820-000',
+      link: null,
+    },
+    {
+      iconKey: 'phone',
+      title: 'Telefone',
+      content: '(48) 99637-4030',
+      link: 'tel:+5548996374030',
+    },
+    {
+      iconKey: 'clock',
+      title: 'Horário',
+      content: 'Seg - Sex: 08:30 às 12:00, 13:30 às 18:00\nSáb - Dom: Fechado',
+      link: null,
+    },
+  ],
+  copyrightText: 'Dra. Aline Rech. Todos os direitos reservados.',
+  madeWithText: 'Feito com amor em Içara, SC',
+};
+
 export const defaultTestimonialsContent: TestimonialsContent = {
   badgeText: 'Depoimentos',
   titleLead: 'O que nossos pacientes',
@@ -516,6 +598,35 @@ export const sectionLabels: Record<SectionKey, string> = adminModules.reduce(
   },
   {} as Record<SectionKey, string>
 );
+
+export const normalizeHeaderContent = (value: unknown): HeaderContent => {
+  if (!isRecord(value)) {
+    return defaultHeaderContent;
+  }
+
+  return {
+    ...defaultHeaderContent,
+    ...value,
+    navLinks: Array.isArray(value.navLinks)
+      ? value.navLinks
+          .map((item) => {
+            if (!isRecord(item)) {
+              return null;
+            }
+
+            const label = typeof item.label === 'string' ? item.label.trim() : '';
+            const href = typeof item.href === 'string' ? item.href.trim() : '';
+
+            if (!label || !href) {
+              return null;
+            }
+
+            return { label, href };
+          })
+          .filter((item): item is HeaderContent['navLinks'][number] => item !== null)
+      : defaultHeaderContent.navLinks,
+  };
+};
 
 export const normalizeHeroContent = (value: unknown): HeroContent => {
   if (!isRecord(value)) {
@@ -807,6 +918,97 @@ export const normalizeFeaturesContent = (value: unknown): FeaturesContent => {
           })
           .filter((item): item is FeaturesContent['stats'][number] => item !== null)
       : defaultFeaturesContent.stats,
+  };
+};
+
+export const normalizeFooterContent = (value: unknown): FooterContent => {
+  if (!isRecord(value)) {
+    return defaultFooterContent;
+  }
+
+  return {
+    ...defaultFooterContent,
+    ...value,
+    socialLinks: Array.isArray(value.socialLinks)
+      ? value.socialLinks
+          .map((item) => {
+            if (!isRecord(item)) {
+              return null;
+            }
+
+            const iconKey =
+              item.iconKey === 'instagram' || item.iconKey === 'facebook' || item.iconKey === 'mail'
+                ? item.iconKey
+                : null;
+            const href = typeof item.href === 'string' ? item.href.trim() : '';
+
+            if (!iconKey || !href) {
+              return null;
+            }
+
+            return { iconKey, href };
+          })
+          .filter((item): item is FooterContent['socialLinks'][number] => item !== null)
+      : defaultFooterContent.socialLinks,
+    quickLinks: Array.isArray(value.quickLinks)
+      ? value.quickLinks
+          .map((item) => {
+            if (!isRecord(item)) {
+              return null;
+            }
+
+            const label = typeof item.label === 'string' ? item.label.trim() : '';
+            const href = typeof item.href === 'string' ? item.href.trim() : '';
+
+            if (!label || !href) {
+              return null;
+            }
+
+            return { label, href };
+          })
+          .filter((item): item is FooterContent['quickLinks'][number] => item !== null)
+      : defaultFooterContent.quickLinks,
+    serviceLinks: Array.isArray(value.serviceLinks)
+      ? value.serviceLinks
+          .map((item) => {
+            if (!isRecord(item)) {
+              return null;
+            }
+
+            const label = typeof item.label === 'string' ? item.label.trim() : '';
+            const href = typeof item.href === 'string' ? item.href.trim() : '';
+
+            if (!label || !href) {
+              return null;
+            }
+
+            return { label, href };
+          })
+          .filter((item): item is FooterContent['serviceLinks'][number] => item !== null)
+      : defaultFooterContent.serviceLinks,
+    contactItems: Array.isArray(value.contactItems)
+      ? value.contactItems
+          .map((item) => {
+            if (!isRecord(item)) {
+              return null;
+            }
+
+            const iconKey =
+              item.iconKey === 'map-pin' || item.iconKey === 'phone' || item.iconKey === 'clock'
+                ? item.iconKey
+                : null;
+            const title = typeof item.title === 'string' ? item.title.trim() : '';
+            const content = typeof item.content === 'string' ? item.content.trim() : '';
+            const link = typeof item.link === 'string' && item.link.trim() ? item.link.trim() : null;
+
+            if (!iconKey || !title || !content) {
+              return null;
+            }
+
+            return { iconKey, title, content, link };
+          })
+          .filter((item): item is FooterContent['contactItems'][number] => item !== null)
+      : defaultFooterContent.contactItems,
   };
 };
 

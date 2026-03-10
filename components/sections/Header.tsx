@@ -2,10 +2,17 @@ import { useState, useEffect } from 'react';
 import { Menu, X, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import { defaultHeaderContent, normalizeHeaderContent } from '@/lib/content/defaults';
+import { usePublishedSection } from '@/lib/content/use-published-section';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { content } = usePublishedSection({
+    sectionKey: 'header',
+    fallback: defaultHeaderContent,
+    normalize: normalizeHeaderContent,
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,15 +22,6 @@ export function Header() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const navLinks = [
-    { label: 'Início', href: '#inicio' },
-    { label: 'Sobre', href: '#sobre' },
-    { label: 'Serviços', href: '#servicos' },
-    { label: 'Processo', href: '#processo' },
-    { label: 'FAQ', href: '#faq' },
-    { label: 'Contato', href: '#contato' },
-  ];
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -49,8 +47,8 @@ export function Header() {
               className="flex items-center gap-2"
             >
               <Image
-                src="/logo-aline.png"
-                alt="Dra. Aline Rech"
+                src={content.logoUrl}
+                alt={content.logoAlt}
                 width={300}
                 height={90}
                 className={`w-auto object-contain transition-all duration-300 transform origin-left ${isScrolled
@@ -62,7 +60,7 @@ export function Header() {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-6">
-              {navLinks.map((link, index) => (
+              {content.navLinks.map((link, index) => (
                 <button
                   key={index}
                   onClick={() => scrollToSection(link.href)}
@@ -77,14 +75,14 @@ export function Header() {
             {/* CTA Button */}
             <div className="hidden lg:block">
               <Button
-                onClick={() => window.open('https://wa.me/5548996374030', '_blank')}
+                onClick={() => window.open(content.ctaLink, '_blank')}
                 className={`font-semibold px-6 rounded-full transition-all duration-300 ${isScrolled
                   ? 'bg-[#000000] hover:bg-[#1a1a1a] text-white'
                   : 'bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm border border-white/30'
                   }`}
               >
                 <Phone className="w-4 h-4 mr-2" />
-                Agendar
+                {content.ctaLabel}
               </Button>
             </div>
 
@@ -122,7 +120,7 @@ export function Header() {
         >
           <div className="p-6 pt-20">
             <nav className="space-y-2">
-              {navLinks.map((link, index) => (
+              {content.navLinks.map((link, index) => (
                 <button
                   key={index}
                   onClick={() => scrollToSection(link.href)}
@@ -135,20 +133,20 @@ export function Header() {
 
             <div className="mt-8 pt-8 border-t border-gray-200">
               <Button
-                onClick={() => window.open('https://wa.me/5548996374030', '_blank')}
+                onClick={() => window.open(content.ctaLink, '_blank')}
                 className="w-full bg-[#000000] hover:bg-[#1a1a1a] text-white font-semibold py-6 rounded-xl"
               >
                 <Phone className="w-5 h-5 mr-2" />
-                Agendar pelo WhatsApp
+                {content.ctaLabel}
               </Button>
             </div>
 
             <div className="mt-8 text-center">
               <p className="text-sm text-gray-500">
-                Dra. Aline Rech - Odontologia Estética
+                {content.mobileTitle}
               </p>
               <p className="text-xs text-gray-400 mt-1">
-                Içara, SC
+                {content.mobileSubtitle}
               </p>
             </div>
           </div>

@@ -1,4 +1,5 @@
 export type SectionKey =
+  | 'header'
   | 'hero'
   | 'about'
   | 'services'
@@ -9,6 +10,7 @@ export type SectionKey =
   | 'faq'
   | 'contact'
   | 'testimonials'
+  | 'footer'
   | 'gallery';
 
 export type SectionStatus = 'draft' | 'published';
@@ -18,6 +20,21 @@ export type AdminRole = 'admin' | 'editor';
 export interface HeroStat {
   label: string;
   value: string;
+}
+
+export interface NavigationLink {
+  label: string;
+  href: string;
+}
+
+export interface HeaderContent {
+  logoUrl: string;
+  logoAlt: string;
+  navLinks: NavigationLink[];
+  ctaLabel: string;
+  ctaLink: string;
+  mobileTitle: string;
+  mobileSubtitle: string;
 }
 
 export interface HeroContent {
@@ -198,6 +215,34 @@ export interface FeaturesContent {
   description: string;
   items: FeatureItem[];
   stats: FeatureStat[];
+}
+
+export interface FooterSocialLink {
+  iconKey: 'instagram' | 'facebook' | 'mail';
+  href: string;
+}
+
+export interface FooterContactItem {
+  iconKey: 'map-pin' | 'phone' | 'clock';
+  title: string;
+  content: string;
+  link: string | null;
+}
+
+export interface FooterContent {
+  logoUrl: string;
+  logoAlt: string;
+  tagline: string;
+  description: string;
+  socialLinks: FooterSocialLink[];
+  quickLinksTitle: string;
+  quickLinks: NavigationLink[];
+  servicesTitle: string;
+  serviceLinks: NavigationLink[];
+  contactTitle: string;
+  contactItems: FooterContactItem[];
+  copyrightText: string;
+  madeWithText: string;
 }
 
 export interface TestimonialItem {

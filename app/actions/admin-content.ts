@@ -8,7 +8,9 @@ import type {
   ActionResult,
   ContactContent,
   FAQContent,
+  FooterContent,
   FeaturesContent,
+  HeaderContent,
   HeroContent,
   MythsContent,
   ProcessContent,
@@ -16,6 +18,21 @@ import type {
   ServicesContent,
   TestimonialsContent,
 } from '@/lib/content/types'
+
+const navigationLinkSchema = z.object({
+  label: z.string().trim().min(1),
+  href: z.string().trim().min(1),
+})
+
+const headerSchema = z.object({
+  logoUrl: z.string().trim().min(1, 'Informe a logo.'),
+  logoAlt: z.string().trim().min(1, 'Informe o alt da logo.'),
+  navLinks: z.array(navigationLinkSchema).min(6).max(6),
+  ctaLabel: z.string().trim().min(1, 'Informe o CTA principal.'),
+  ctaLink: z.string().trim().min(1, 'Informe o link do CTA principal.'),
+  mobileTitle: z.string().trim().min(1, 'Informe o título do menu mobile.'),
+  mobileSubtitle: z.string().trim().min(1, 'Informe o subtítulo do menu mobile.'),
+})
 
 const heroSchema = z.object({
   badgeText: z.string().trim().min(1, 'Informe o selo superior.'),
@@ -204,6 +221,34 @@ const featureItemIconSchema = z.enum([
   'trending-up',
 ])
 
+const footerSocialLinkSchema = z.object({
+  iconKey: z.enum(['instagram', 'facebook', 'mail']),
+  href: z.string().trim().min(1),
+})
+
+const footerContactItemSchema = z.object({
+  iconKey: z.enum(['map-pin', 'phone', 'clock']),
+  title: z.string().trim().min(1),
+  content: z.string().trim().min(1),
+  link: z.string().trim().nullable(),
+})
+
+const footerSchema = z.object({
+  logoUrl: z.string().trim().min(1, 'Informe a logo.'),
+  logoAlt: z.string().trim().min(1, 'Informe o alt da logo.'),
+  tagline: z.string().trim().min(1, 'Informe a tagline.'),
+  description: z.string().trim().min(1, 'Informe a descrição do rodapé.'),
+  socialLinks: z.array(footerSocialLinkSchema).min(3).max(3),
+  quickLinksTitle: z.string().trim().min(1, 'Informe o título dos links rápidos.'),
+  quickLinks: z.array(navigationLinkSchema).min(6).max(6),
+  servicesTitle: z.string().trim().min(1, 'Informe o título de serviços.'),
+  serviceLinks: z.array(navigationLinkSchema).min(3).max(3),
+  contactTitle: z.string().trim().min(1, 'Informe o título de contato.'),
+  contactItems: z.array(footerContactItemSchema).min(3).max(3),
+  copyrightText: z.string().trim().min(1, 'Informe o texto de copyright.'),
+  madeWithText: z.string().trim().min(1, 'Informe o texto final do rodapé.'),
+})
+
 const featuresSchema = z.object({
   badgeText: z.string().trim().min(1, 'Informe o selo superior.'),
   titleLead: z.string().trim().min(1, 'Informe a primeira parte do titulo.'),
@@ -276,6 +321,23 @@ const getHeroContentFromFormData = (formData: FormData): HeroContent => {
     professionalSubtitle: formData.get('professionalSubtitle'),
     trustItems,
     stats,
+  })
+}
+
+const getHeaderContentFromFormData = (formData: FormData): HeaderContent => {
+  const navLinks = Array.from({ length: 6 }, (_, index) => ({
+    label: String(formData.get(`headerNavLabel${index}`) ?? ''),
+    href: String(formData.get(`headerNavHref${index}`) ?? ''),
+  }))
+
+  return headerSchema.parse({
+    logoUrl: formData.get('logoUrl'),
+    logoAlt: formData.get('logoAlt'),
+    navLinks,
+    ctaLabel: formData.get('ctaLabel'),
+    ctaLink: formData.get('ctaLink'),
+    mobileTitle: formData.get('mobileTitle'),
+    mobileSubtitle: formData.get('mobileSubtitle'),
   })
 }
 
@@ -456,6 +518,50 @@ const getFeaturesContentFromFormData = (formData: FormData): FeaturesContent => 
   })
 }
 
+const getFooterContentFromFormData = (formData: FormData): FooterContent => {
+  const socialLinks = Array.from({ length: 3 }, (_, index) => ({
+    iconKey: String(formData.get(`footerSocialIcon${index}`) ?? ''),
+    href: String(formData.get(`footerSocialHref${index}`) ?? ''),
+  }))
+
+  const quickLinks = Array.from({ length: 6 }, (_, index) => ({
+    label: String(formData.get(`footerQuickLabel${index}`) ?? ''),
+    href: String(formData.get(`footerQuickHref${index}`) ?? ''),
+  }))
+
+  const serviceLinks = Array.from({ length: 3 }, (_, index) => ({
+    label: String(formData.get(`footerServiceLabel${index}`) ?? ''),
+    href: String(formData.get(`footerServiceHref${index}`) ?? ''),
+  }))
+
+  const contactItems = Array.from({ length: 3 }, (_, index) => {
+    const rawLink = String(formData.get(`footerContactLink${index}`) ?? '').trim()
+
+    return {
+      iconKey: String(formData.get(`footerContactIcon${index}`) ?? ''),
+      title: String(formData.get(`footerContactTitle${index}`) ?? ''),
+      content: String(formData.get(`footerContactContent${index}`) ?? ''),
+      link: rawLink || null,
+    }
+  })
+
+  return footerSchema.parse({
+    logoUrl: formData.get('logoUrl'),
+    logoAlt: formData.get('logoAlt'),
+    tagline: formData.get('tagline'),
+    description: formData.get('description'),
+    socialLinks,
+    quickLinksTitle: formData.get('quickLinksTitle'),
+    quickLinks,
+    servicesTitle: formData.get('servicesTitle'),
+    serviceLinks,
+    contactTitle: formData.get('contactTitle'),
+    contactItems,
+    copyrightText: formData.get('copyrightText'),
+    madeWithText: formData.get('madeWithText'),
+  })
+}
+
 const getTestimonialsContentFromFormData = (formData: FormData): TestimonialsContent => {
   const items = Array.from({ length: 2 }, (_, index) => ({
     name: String(formData.get(`testimonialName${index}`) ?? ''),
@@ -509,6 +615,55 @@ export async function saveHeroDraft(formData: FormData): Promise<ActionResult> {
     return {
       success: true,
       message: 'Rascunho do Hero salvo com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function saveHeaderDraft(formData: FormData): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+    const content = getHeaderContentFromFormData(formData)
+
+    await upsertSectionDraft({
+      sectionKey: 'header',
+      content,
+      userId: user.id,
+    })
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/header')
+
+    return {
+      success: true,
+      message: 'Rascunho do Header salvo com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function publishHeader(): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+
+    await publishSectionDraft('header', user.id)
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/header')
+
+    return {
+      success: true,
+      message: 'Header publicado com sucesso.',
     }
   } catch (error) {
     return {
@@ -923,6 +1078,55 @@ export async function publishFeatures(): Promise<ActionResult> {
     return {
       success: true,
       message: 'Diferenciais publicado com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function saveFooterDraft(formData: FormData): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+    const content = getFooterContentFromFormData(formData)
+
+    await upsertSectionDraft({
+      sectionKey: 'footer',
+      content,
+      userId: user.id,
+    })
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/footer')
+
+    return {
+      success: true,
+      message: 'Rascunho do Footer salvo com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function publishFooter(): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+
+    await publishSectionDraft('footer', user.id)
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/footer')
+
+    return {
+      success: true,
+      message: 'Footer publicado com sucesso.',
     }
   } catch (error) {
     return {
