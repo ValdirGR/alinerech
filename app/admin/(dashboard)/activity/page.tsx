@@ -13,7 +13,7 @@ export default async function ActivityAdminPage() {
         </p>
       </div>
 
-      <ActivityFeed items={activityItems} />
+      <ActivityFeed items={activityItems} enableFilters />
     </div>
   )
 }
