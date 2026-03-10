@@ -1,7 +1,16 @@
 'use client'
 
 import { useDeferredValue, useMemo, useState, useTransition } from 'react'
+import { ExternalLink, Mail, MessageCircle, Phone } from 'lucide-react'
 import { updateLeadStatusAction } from '@/app/actions/leads'
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import {
   Select,
@@ -66,6 +75,7 @@ const getSourceLabel = (source: string | undefined) => {
 
 export function LeadsTable({ leads }: LeadsTableProps) {
   const [leadItems, setLeadItems] = useState(leads)
+  const [selectedLeadId, setSelectedLeadId] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState(ALL_FILTER_VALUE)
   const [sourceFilter, setSourceFilter] = useState(ALL_FILTER_VALUE)
@@ -115,6 +125,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
     },
     { new: 0, in_contact: 0, converted: 0, archived: 0 } as Record<LeadRecord['status'], number>,
   )
+  const selectedLead = leadItems.find((lead) => lead.id === selectedLeadId) ?? null
 
   const handleStatusChange = (leadId: string, nextStatus: LeadRecord['status']) => {
     const previousLead = leadItems.find((lead) => lead.id === leadId)
@@ -144,6 +155,18 @@ export function LeadsTable({ leads }: LeadsTableProps) {
       setFeedbackError(!result.success)
       setPendingLeadId(null)
     })
+  }
+
+  const normalizePhone = (phone: string) => phone.replace(/\D/g, '')
+
+  const getWhatsappLink = (phone: string, name: string) => {
+    const normalizedPhone = normalizePhone(phone)
+
+    if (!normalizedPhone) {
+      return null
+    }
+
+    return `https://wa.me/${normalizedPhone}?text=${encodeURIComponent(`Ola ${name}, vi seu contato no painel e estou retornando seu atendimento.`)}`
   }
 
   if (leadItems.length === 0) {
@@ -255,6 +278,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                 <TableHead className="px-4 py-4">Origem</TableHead>
                 <TableHead className="px-4 py-4">Status</TableHead>
                 <TableHead className="px-4 py-4">Recebido em</TableHead>
+                <TableHead className="px-4 py-4">Ações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -297,12 +321,96 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                   <TableCell className="px-4 py-4 text-gray-600">
                     {new Date(lead.createdAt).toLocaleString('pt-BR')}
                   </TableCell>
+                  <TableCell className="px-4 py-4">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setSelectedLeadId(lead.id)}
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                      Ver lead
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </div>
       )}
+
+      <Dialog open={Boolean(selectedLead)} onOpenChange={(open) => !open && setSelectedLeadId(null)}>
+        <DialogContent className="max-w-2xl">
+          {selectedLead ? (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-[#0B3D4C]">{selectedLead.name}</DialogTitle>
+                <DialogDescription>
+                  Lead recebido em {new Date(selectedLead.createdAt).toLocaleString('pt-BR')} via {getSourceLabel(selectedLead.source)}.
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Telefone</p>
+                  <p className="mt-2 text-sm font-medium text-[#0B3D4C]">{selectedLead.phone}</p>
+                </div>
+
+                <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">E-mail</p>
+                  <p className="mt-2 text-sm font-medium text-[#0B3D4C]">{selectedLead.email || 'Nao informado'}</p>
+                </div>
+
+                <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Status</p>
+                  <span className={`mt-2 inline-flex rounded-full px-2.5 py-1 text-xs font-semibold uppercase tracking-wide ${getStatusBadgeClassName(selectedLead.status)}`}>
+                    {getStatusLabel(selectedLead.status)}
+                  </span>
+                </div>
+
+                <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Origem</p>
+                  <p className="mt-2 text-sm font-medium text-[#0B3D4C]">{getSourceLabel(selectedLead.source)}</p>
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-gray-200 bg-white p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Mensagem completa</p>
+                <p className="mt-3 whitespace-pre-wrap break-words text-sm leading-6 text-[#0B3D4C]">
+                  {selectedLead.message || 'Sem mensagem adicional.'}
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                {getWhatsappLink(selectedLead.phone, selectedLead.name) ? (
+                  <Button asChild className="bg-[#0B3D4C] text-white hover:bg-[#155A6E]">
+                    <a href={getWhatsappLink(selectedLead.phone, selectedLead.name) ?? '#'} target="_blank" rel="noreferrer">
+                      <MessageCircle className="h-4 w-4" />
+                      Chamar no WhatsApp
+                    </a>
+                  </Button>
+                ) : null}
+
+                <Button asChild variant="outline">
+                  <a href={`tel:${normalizePhone(selectedLead.phone)}`}>
+                    <Phone className="h-4 w-4" />
+                    Ligar
+                  </a>
+                </Button>
+
+                {selectedLead.email ? (
+                  <Button asChild variant="outline">
+                    <a href={`mailto:${selectedLead.email}`}>
+                      <Mail className="h-4 w-4" />
+                      Enviar e-mail
+                    </a>
+                  </Button>
+                ) : null}
+              </div>
+            </>
+          ) : null}
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
