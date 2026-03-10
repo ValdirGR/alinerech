@@ -105,6 +105,16 @@ export async function requireAdminAccess() {
   return { supabase, user, profile };
 }
 
+export async function requirePrimaryAdminAccess() {
+  const context = await requireAdminAccess();
+
+  if (context.profile.role !== 'admin') {
+    throw new Error('Acesso restrito a administradores.');
+  }
+
+  return context;
+}
+
 export async function getCurrentSection<TContent>(
   sectionKey: SectionKey,
   status: SectionStatus,

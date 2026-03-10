@@ -29,7 +29,7 @@ export default async function AdminProtectedLayout({
                 </div>
 
                 <nav className="flex-1 overflow-y-auto pr-1">
-                    <AdminSidebarNav />
+                    <AdminSidebarNav role={profile.role} />
                 </nav>
 
                 <div className="mt-auto pt-6 border-t border-gray-700">

@@ -2,9 +2,10 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { History, LayoutGrid, FileText, Image as ImageIcon, MessageSquareText } from 'lucide-react'
+import { History, LayoutGrid, FileText, Image as ImageIcon, MessageSquareText, HardDriveDownload } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { adminModules } from '@/lib/content/defaults'
+import type { AdminRole } from '@/lib/content/types'
 
 const topLevelLinks = [
   {
@@ -24,13 +25,22 @@ const topLevelLinks = [
   },
 ]
 
-export function AdminSidebarNav() {
+const adminOnlyLinks = [
+  {
+    href: '/admin/backups',
+    label: 'Backups',
+    icon: HardDriveDownload,
+  },
+]
+
+export function AdminSidebarNav({ role }: { role: AdminRole }) {
   const pathname = usePathname()
+  const availableLinks = role === 'admin' ? [...topLevelLinks, ...adminOnlyLinks] : topLevelLinks
 
   return (
     <div className="space-y-8">
       <div className="space-y-2">
-        {topLevelLinks.map((link) => {
+        {availableLinks.map((link) => {
           const isActive = pathname === link.href
           return (
             <Link

@@ -378,7 +378,30 @@ Exibe os leads capturados pelo formulário público, com busca, filtros, altera�
 - `components/admin/leads-table.tsx`
 - `lib/content/server.ts`
 
-### 3.11 Placeholder de módulos inexistentes
+### 3.11 Backups manuais
+
+**O que faz**
+
+Permite ao perfil `admin` gerar um backup operacional sob demanda diretamente no `/admin`, com download em `.zip` para a máquina local.
+
+**Como funciona internamente**
+
+- A página `/admin/backups` expõe opções de exportação manual.
+- A rota `/admin/backups/download` valida o escopo solicitado.
+- O backend exige perfil `admin` e usa `SUPABASE_SERVICE_ROLE_KEY` apenas no servidor.
+- O ZIP pode incluir:
+  - tabelas `site_sections`, `media_assets`, `admin_profiles`, `leads`
+  - arquivos dos buckets `site-images` e `results-images`
+  - `manifest.json` com metadados da exportação
+
+**Arquivos envolvidos**
+
+- `app/admin/(dashboard)/backups/page.tsx`
+- `app/admin/backups/download/route.ts`
+- `lib/admin/backup.ts`
+- `utils/supabase/admin.ts`
+
+### 3.12 Placeholder de módulos inexistentes
 
 **O que faz**
 
@@ -594,6 +617,7 @@ As variáveis confirmadas pelo código são:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
 ```
 
 Essas variáveis são usadas em:
