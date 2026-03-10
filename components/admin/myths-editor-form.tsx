@@ -4,6 +4,7 @@ import { useRef, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishMyths, saveMythsDraft } from '@/app/actions/admin-content'
+import { EditorSection } from '@/components/admin/editor-section'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -91,12 +92,11 @@ export function MythsEditorForm({ snapshot }: MythsEditorFormProps) {
       ) : null}
 
       <form ref={formRef} className="space-y-8">
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Header da seção</h2>
-            <p className="text-sm text-gray-500">Edite o selo, o título, a descrição e a observação final.</p>
-          </div>
-
+        <EditorSection
+          title="Header da seção"
+          description="Edite o selo, o título, a descrição e a observação final."
+          defaultOpen
+        >
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="badgeText">Selo superior</Label>
@@ -119,14 +119,12 @@ export function MythsEditorForm({ snapshot }: MythsEditorFormProps) {
               <Textarea id="disclaimer" name="disclaimer" rows={3} defaultValue={current.disclaimer} />
             </div>
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Cards da seção</h2>
-            <p className="text-sm text-gray-500">Atualize os oito cards de mito e verdade exibidos no grid.</p>
-          </div>
-
+        <EditorSection
+          title="Cards da seção"
+          description="Atualize os oito cards de mito e verdade exibidos no grid."
+        >
           <div className="grid gap-4 xl:grid-cols-2">
             {current.items.map((item, index) => (
               <div key={`myth-${index}`} className="space-y-4 rounded-xl border border-gray-200 p-4">
@@ -167,7 +165,7 @@ export function MythsEditorForm({ snapshot }: MythsEditorFormProps) {
               </div>
             ))}
           </div>
-        </section>
+        </EditorSection>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
           <Button type="button" variant="outline" disabled={isPending} onClick={() => runAction('draft')}>

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishHero, saveHeroDraft } from '@/app/actions/admin-content'
 import { AdminImageField } from '@/components/admin/admin-image-field'
+import { EditorSection } from '@/components/admin/editor-section'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -93,12 +94,11 @@ export function HeroEditorForm({ snapshot }: HeroEditorFormProps) {
       ) : null}
 
       <form ref={formRef} className="space-y-8">
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Textos principais</h2>
-            <p className="text-sm text-gray-500">Controle o destaque textual do Hero.</p>
-          </div>
-
+        <EditorSection
+          title="Textos principais"
+          description="Controle o destaque textual do Hero."
+          defaultOpen
+        >
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="badgeText">Selo superior</Label>
@@ -131,14 +131,12 @@ export function HeroEditorForm({ snapshot }: HeroEditorFormProps) {
               <Textarea id="description" name="description" rows={4} defaultValue={current.description} />
             </div>
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Ações e mídia</h2>
-            <p className="text-sm text-gray-500">Links, vídeo e imagem principal do topo.</p>
-          </div>
-
+        <EditorSection
+          title="Ações e mídia"
+          description="Links, vídeo e imagem principal do topo."
+        >
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="primaryCtaLabel">CTA principal</Label>
@@ -187,14 +185,12 @@ export function HeroEditorForm({ snapshot }: HeroEditorFormProps) {
               />
             </div>
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Itens de confiança</h2>
-            <p className="text-sm text-gray-500">Três bullets que aparecem abaixo dos botões.</p>
-          </div>
-
+        <EditorSection
+          title="Itens de confiança"
+          description="Tres bullets que aparecem abaixo dos botoes."
+        >
           <div className="grid gap-4 md:grid-cols-3">
             {current.trustItems.map((item, index) => (
               <div key={`trust-${index}`} className="space-y-2">
@@ -203,14 +199,12 @@ export function HeroEditorForm({ snapshot }: HeroEditorFormProps) {
               </div>
             ))}
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Estatísticas</h2>
-            <p className="text-sm text-gray-500">Mantenha o layout atual de quatro métricas.</p>
-          </div>
-
+        <EditorSection
+          title="Estatísticas"
+          description="Mantenha o layout atual de quatro metricas."
+        >
           <div className="grid gap-4 md:grid-cols-2">
             {current.stats.map((stat, index) => (
               <div key={`stat-${index}`} className="grid gap-4 rounded-xl border border-gray-200 p-4 md:grid-cols-2">
@@ -225,7 +219,7 @@ export function HeroEditorForm({ snapshot }: HeroEditorFormProps) {
               </div>
             ))}
           </div>
-        </section>
+        </EditorSection>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
           <Button type="button" variant="outline" disabled={isPending} onClick={() => runAction('draft')}>

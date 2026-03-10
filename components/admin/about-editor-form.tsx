@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishAbout, saveAboutDraft } from '@/app/actions/admin-content'
 import { AdminImageField } from '@/components/admin/admin-image-field'
+import { EditorSection } from '@/components/admin/editor-section'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -99,12 +100,11 @@ export function AboutEditorForm({ snapshot }: AboutEditorFormProps) {
       ) : null}
 
       <form ref={formRef} className="space-y-8">
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Textos principais</h2>
-            <p className="text-sm text-gray-500">Controle a narrativa institucional da seção Sobre.</p>
-          </div>
-
+        <EditorSection
+          title="Textos principais"
+          description="Controle a narrativa institucional da seção Sobre."
+          defaultOpen
+        >
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="badgeText">Selo superior</Label>
@@ -132,14 +132,12 @@ export function AboutEditorForm({ snapshot }: AboutEditorFormProps) {
               </div>
             ))}
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Imagem e credenciais</h2>
-            <p className="text-sm text-gray-500">Gerencie a foto principal e os destaques profissionais.</p>
-          </div>
-
+        <EditorSection
+          title="Imagem e credenciais"
+          description="Gerencie a foto principal e os destaques profissionais."
+        >
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
               <AdminImageField
@@ -189,14 +187,12 @@ export function AboutEditorForm({ snapshot }: AboutEditorFormProps) {
               />
             </div>
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Cards de diferenciais</h2>
-            <p className="text-sm text-gray-500">Mantenha os quatro cards exibidos na seção.</p>
-          </div>
-
+        <EditorSection
+          title="Cards de diferenciais"
+          description="Mantenha os quatro cards exibidos na seção."
+        >
           <div className="grid gap-4 md:grid-cols-2">
             {current.cards.map((card, index) => (
               <div key={`card-${index}`} className="space-y-4 rounded-xl border border-gray-200 p-4">
@@ -231,7 +227,7 @@ export function AboutEditorForm({ snapshot }: AboutEditorFormProps) {
               </div>
             ))}
           </div>
-        </section>
+        </EditorSection>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
           <Button type="button" variant="outline" disabled={isPending} onClick={() => runAction('draft')}>

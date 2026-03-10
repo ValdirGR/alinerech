@@ -4,6 +4,7 @@ import { useRef, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishFaq, saveFaqDraft } from '@/app/actions/admin-content'
+import { EditorSection } from '@/components/admin/editor-section'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -91,12 +92,11 @@ export function FaqEditorForm({ snapshot }: FaqEditorFormProps) {
       ) : null}
 
       <form ref={formRef} className="space-y-8">
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Header e CTA</h2>
-            <p className="text-sm text-gray-500">Edite a abertura do FAQ e a chamada final para WhatsApp.</p>
-          </div>
-
+        <EditorSection
+          title="Header e CTA"
+          description="Edite a abertura do FAQ e a chamada final para WhatsApp."
+          defaultOpen
+        >
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="badgeText">Selo superior</Label>
@@ -135,14 +135,12 @@ export function FaqEditorForm({ snapshot }: FaqEditorFormProps) {
               <Input id="ctaLink" name="ctaLink" defaultValue={current.ctaLink} />
             </div>
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Perguntas e respostas</h2>
-            <p className="text-sm text-gray-500">Edite as dez perguntas exibidas na área de dúvidas.</p>
-          </div>
-
+        <EditorSection
+          title="Perguntas e respostas"
+          description="Edite as dez perguntas exibidas na area de duvidas."
+        >
           <div className="space-y-4">
             {current.items.map((item, index) => (
               <div key={`faq-${index}`} className="grid gap-4 rounded-xl border border-gray-200 p-4">
@@ -162,7 +160,7 @@ export function FaqEditorForm({ snapshot }: FaqEditorFormProps) {
               </div>
             ))}
           </div>
-        </section>
+        </EditorSection>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
           <Button type="button" variant="outline" disabled={isPending} onClick={() => runAction('draft')}>

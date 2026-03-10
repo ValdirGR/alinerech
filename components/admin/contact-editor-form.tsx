@@ -4,6 +4,7 @@ import { useRef, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishContact, saveContactDraft } from '@/app/actions/admin-content'
+import { EditorSection } from '@/components/admin/editor-section'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -98,12 +99,11 @@ export function ContactEditorForm({ snapshot }: ContactEditorFormProps) {
       ) : null}
 
       <form ref={formRef} className="space-y-8">
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Textos principais</h2>
-            <p className="text-sm text-gray-500">Edite o título, CTA e mensagens principais da seção.</p>
-          </div>
-
+        <EditorSection
+          title="Textos principais"
+          description="Edite o titulo, CTA e mensagens principais da secao."
+          defaultOpen
+        >
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="badgeText">Selo superior</Label>
@@ -130,14 +130,12 @@ export function ContactEditorForm({ snapshot }: ContactEditorFormProps) {
               <Input id="whatsappLink" name="whatsappLink" defaultValue={current.whatsappLink} />
             </div>
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Formulário</h2>
-            <p className="text-sm text-gray-500">Controle os textos do formulário e da confirmação.</p>
-          </div>
-
+        <EditorSection
+          title="Formulario"
+          description="Controle os textos do formulario e da confirmacao."
+        >
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="formTitle">Título do formulário</Label>
@@ -164,14 +162,12 @@ export function ContactEditorForm({ snapshot }: ContactEditorFormProps) {
               <Textarea id="privacyText" name="privacyText" rows={3} defaultValue={current.privacyText} />
             </div>
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Blocos de informação</h2>
-            <p className="text-sm text-gray-500">Mantenha os três itens de contato exibidos no site.</p>
-          </div>
-
+        <EditorSection
+          title="Blocos de informacao"
+          description="Mantenha os tres itens de contato exibidos no site."
+        >
           <div className="grid gap-4 md:grid-cols-3">
             {current.infoItems.map((item, index) => (
               <div key={`info-${index}`} className="space-y-4 rounded-xl border border-gray-200 p-4">
@@ -215,7 +211,7 @@ export function ContactEditorForm({ snapshot }: ContactEditorFormProps) {
               </div>
             ))}
           </div>
-        </section>
+        </EditorSection>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
           <Button type="button" variant="outline" disabled={isPending} onClick={() => runAction('draft')}>

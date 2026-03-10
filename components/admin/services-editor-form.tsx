@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishServices, saveServicesDraft } from '@/app/actions/admin-content'
 import { AdminImageField } from '@/components/admin/admin-image-field'
+import { EditorSection } from '@/components/admin/editor-section'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -93,12 +94,11 @@ export function ServicesEditorForm({ snapshot }: ServicesEditorFormProps) {
       ) : null}
 
       <form ref={formRef} className="space-y-8">
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Header e serviço principal</h2>
-            <p className="text-sm text-gray-500">Edite a abertura da seção e o destaque do tratamento principal.</p>
-          </div>
-
+        <EditorSection
+          title="Header e serviço principal"
+          description="Edite a abertura da seção e o destaque do tratamento principal."
+          defaultOpen
+        >
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="badgeText">Selo superior</Label>
@@ -148,14 +148,12 @@ export function ServicesEditorForm({ snapshot }: ServicesEditorFormProps) {
               <Input id="imageAlt" name="imageAlt" defaultValue={current.imageAlt} />
             </div>
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Benefícios e CTAs</h2>
-            <p className="text-sm text-gray-500">Mantenha a lista de benefícios e os dois botões do card.</p>
-          </div>
-
+        <EditorSection
+          title="Benefícios e CTAs"
+          description="Mantenha a lista de benefícios e os dois botões do card."
+        >
           <div className="grid gap-5 md:grid-cols-2">
             {current.benefits.map((benefit, index) => (
               <div key={`benefit-${index}`} className="space-y-2">
@@ -172,14 +170,12 @@ export function ServicesEditorForm({ snapshot }: ServicesEditorFormProps) {
               <Input id="secondaryCtaLabel" name="secondaryCtaLabel" defaultValue={current.secondaryCtaLabel} />
             </div>
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Conteúdo expandido</h2>
-            <p className="text-sm text-gray-500">Edite limitações, processo e orientações após o procedimento.</p>
-          </div>
-
+        <EditorSection
+          title="Conteúdo expandido"
+          description="Edite limitações, processo e orientações após o procedimento."
+        >
           <div className="space-y-6">
             <div className="space-y-4">
               <div className="space-y-2">
@@ -231,7 +227,7 @@ export function ServicesEditorForm({ snapshot }: ServicesEditorFormProps) {
               </div>
             </div>
           </div>
-        </section>
+        </EditorSection>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
           <Button type="button" variant="outline" disabled={isPending} onClick={() => runAction('draft')}>

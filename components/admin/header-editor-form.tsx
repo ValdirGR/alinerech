@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishHeader, saveHeaderDraft } from '@/app/actions/admin-content'
 import { AdminImageField } from '@/components/admin/admin-image-field'
+import { EditorSection } from '@/components/admin/editor-section'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -91,12 +92,11 @@ export function HeaderEditorForm({ snapshot }: HeaderEditorFormProps) {
       ) : null}
 
       <form ref={formRef} className="space-y-8">
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Logo e CTA</h2>
-            <p className="text-sm text-gray-500">Controle a identidade visual e o botão principal do topo.</p>
-          </div>
-
+        <EditorSection
+          title="Logo e CTA"
+          description="Controle a identidade visual e o botão principal do topo."
+          defaultOpen
+        >
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
               <AdminImageField
@@ -129,14 +129,12 @@ export function HeaderEditorForm({ snapshot }: HeaderEditorFormProps) {
               <Input id="mobileSubtitle" name="mobileSubtitle" defaultValue={current.mobileSubtitle} />
             </div>
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Links do menu</h2>
-            <p className="text-sm text-gray-500">Atualize os seis links de navegação do desktop e mobile.</p>
-          </div>
-
+        <EditorSection
+          title="Links do menu"
+          description="Atualize os seis links de navegacao do desktop e mobile."
+        >
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {current.navLinks.map((item, index) => (
               <div key={`header-link-${index}`} className="space-y-3 rounded-xl border border-gray-200 p-4">
@@ -151,7 +149,7 @@ export function HeaderEditorForm({ snapshot }: HeaderEditorFormProps) {
               </div>
             ))}
           </div>
-        </section>
+        </EditorSection>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
           <Button type="button" variant="outline" disabled={isPending} onClick={() => runAction('draft')}>

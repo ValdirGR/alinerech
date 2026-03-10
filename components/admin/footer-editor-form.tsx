@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishFooter, saveFooterDraft } from '@/app/actions/admin-content'
 import { AdminImageField } from '@/components/admin/admin-image-field'
+import { EditorSection } from '@/components/admin/editor-section'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -92,12 +93,11 @@ export function FooterEditorForm({ snapshot }: FooterEditorFormProps) {
       ) : null}
 
       <form ref={formRef} className="space-y-8">
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Marca e textos principais</h2>
-            <p className="text-sm text-gray-500">Edite a logo, tagline, descrição e textos do rodapé inferior.</p>
-          </div>
-
+        <EditorSection
+          title="Marca e textos principais"
+          description="Edite a logo, tagline, descricao e textos do rodape inferior."
+          defaultOpen
+        >
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
               <AdminImageField
@@ -130,14 +130,12 @@ export function FooterEditorForm({ snapshot }: FooterEditorFormProps) {
               <Input id="madeWithText" name="madeWithText" defaultValue={current.madeWithText} />
             </div>
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Redes sociais</h2>
-            <p className="text-sm text-gray-500">Defina os três ícones e links do rodapé.</p>
-          </div>
-
+        <EditorSection
+          title="Redes sociais"
+          description="Defina os tres icones e links do rodape."
+        >
           <div className="grid gap-4 md:grid-cols-3">
             {current.socialLinks.map((item, index) => (
               <div key={`social-${index}`} className="space-y-3 rounded-xl border border-gray-200 p-4">
@@ -161,14 +159,12 @@ export function FooterEditorForm({ snapshot }: FooterEditorFormProps) {
               </div>
             ))}
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Links do rodapé</h2>
-            <p className="text-sm text-gray-500">Edite os blocos de links rápidos e serviços.</p>
-          </div>
-
+        <EditorSection
+          title="Links do rodape"
+          description="Edite os blocos de links rapidos e servicos."
+        >
           <div className="grid gap-6 xl:grid-cols-2">
             <div className="space-y-4">
               <div className="space-y-2">
@@ -212,14 +208,12 @@ export function FooterEditorForm({ snapshot }: FooterEditorFormProps) {
               </div>
             </div>
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Contato do rodapé</h2>
-            <p className="text-sm text-gray-500">Edite os três blocos de contato exibidos na coluna final.</p>
-          </div>
-
+        <EditorSection
+          title="Contato do rodape"
+          description="Edite os tres blocos de contato exibidos na coluna final."
+        >
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="contactTitle">Título de contato</Label>
@@ -262,7 +256,7 @@ export function FooterEditorForm({ snapshot }: FooterEditorFormProps) {
               ))}
             </div>
           </div>
-        </section>
+        </EditorSection>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
           <Button type="button" variant="outline" disabled={isPending} onClick={() => runAction('draft')}>

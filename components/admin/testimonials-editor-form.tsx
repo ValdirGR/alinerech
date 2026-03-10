@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishTestimonials, saveTestimonialsDraft } from '@/app/actions/admin-content'
 import { AdminImageField } from '@/components/admin/admin-image-field'
+import { EditorSection } from '@/components/admin/editor-section'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -92,12 +93,11 @@ export function TestimonialsEditorForm({ snapshot }: TestimonialsEditorFormProps
       ) : null}
 
       <form ref={formRef} className="space-y-8">
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Header da seção</h2>
-            <p className="text-sm text-gray-500">Edite o selo, o título e a descrição acima do carrossel.</p>
-          </div>
-
+        <EditorSection
+          title="Header da seção"
+          description="Edite o selo, o título e a descrição acima do carrossel."
+          defaultOpen
+        >
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="badgeText">Selo superior</Label>
@@ -116,14 +116,12 @@ export function TestimonialsEditorForm({ snapshot }: TestimonialsEditorFormProps
               <Textarea id="description" name="description" rows={4} defaultValue={current.description} />
             </div>
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Depoimentos do carrossel</h2>
-            <p className="text-sm text-gray-500">Atualize as duas histórias exibidas no bloco de prova social.</p>
-          </div>
-
+        <EditorSection
+          title="Depoimentos do carrossel"
+          description="Atualize as duas histórias exibidas no bloco de prova social."
+        >
           <div className="grid gap-4 xl:grid-cols-2">
             {current.items.map((item, index) => (
               <div key={`testimonial-${index}`} className="space-y-4 rounded-xl border border-gray-200 p-4">
@@ -181,14 +179,12 @@ export function TestimonialsEditorForm({ snapshot }: TestimonialsEditorFormProps
               </div>
             ))}
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Selos de confiança</h2>
-            <p className="text-sm text-gray-500">Esses textos aparecem abaixo do carrossel.</p>
-          </div>
-
+        <EditorSection
+          title="Selos de confiança"
+          description="Esses textos aparecem abaixo do carrossel."
+        >
           <div className="grid gap-4 md:grid-cols-3">
             {current.trustBadges.map((badge, index) => (
               <div key={`badge-${index}`} className="space-y-2">
@@ -197,7 +193,7 @@ export function TestimonialsEditorForm({ snapshot }: TestimonialsEditorFormProps
               </div>
             ))}
           </div>
-        </section>
+        </EditorSection>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
           <Button type="button" variant="outline" disabled={isPending} onClick={() => runAction('draft')}>
