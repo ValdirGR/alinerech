@@ -16,13 +16,13 @@ export default async function AdminProtectedLayout({
 
     return (
         <div className="admin-shell min-h-screen bg-gray-50 flex flex-col md:flex-row">
-            <aside className="w-full md:w-64 bg-[#0B3D4C] text-white p-6 shadow-xl z-10 flex flex-col">
-                <div className="mb-10">
+            <aside className="w-full md:w-64 bg-[#0B3D4C] text-white p-5 shadow-xl z-10 flex flex-col">
+                <div className="mb-7">
                     <h2 className="text-2xl font-bold bg-gradient-accent bg-clip-text text-transparent">
                         Aline Rech
                     </h2>
                     <span className="text-sm text-gray-400">Painel Administrativo</span>
-                    <div className="mt-4 rounded-xl bg-white/10 px-4 py-3 text-sm text-gray-200">
+                    <div className="mt-3 rounded-xl bg-white/10 px-4 py-2.5 text-sm text-gray-200">
                         <p className="font-medium text-white">{profile.fullName}</p>
                         <p className="text-xs uppercase tracking-wide text-gray-300">{profile.role}</p>
                     </div>
@@ -32,7 +32,7 @@ export default async function AdminProtectedLayout({
                     <AdminSidebarNav role={profile.role} />
                 </nav>
 
-                <div className="mt-auto pt-6 border-t border-gray-700">
+                <div className="mt-auto pt-5 border-t border-gray-700">
                     <AdminLogoutButton />
                 </div>
             </aside>

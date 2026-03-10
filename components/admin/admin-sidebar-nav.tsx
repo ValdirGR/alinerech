@@ -38,8 +38,8 @@ export function AdminSidebarNav({ role }: { role: AdminRole }) {
   const availableLinks = role === 'admin' ? [...topLevelLinks, ...adminOnlyLinks] : topLevelLinks
 
   return (
-    <div className="space-y-8">
-      <div className="space-y-2">
+    <div className="space-y-4">
+      <div className="space-y-1">
         {availableLinks.map((link) => {
           const isActive = pathname === link.href
           return (
@@ -47,7 +47,7 @@ export function AdminSidebarNav({ role }: { role: AdminRole }) {
               key={link.href}
               href={link.href}
               className={cn(
-                'flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors',
+                'flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium transition-colors',
                 isActive ? 'bg-[#155A6E] text-white' : 'text-gray-300 hover:bg-white/10 hover:text-white'
               )}
             >
@@ -59,11 +59,11 @@ export function AdminSidebarNav({ role }: { role: AdminRole }) {
       </div>
 
       <div>
-        <div className="mb-3 flex items-center gap-2 px-4 text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">
+        <div className="mb-1.5 flex items-center gap-2 px-4 text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">
           <FileText className="h-3.5 w-3.5" />
           Conteúdo
         </div>
-        <div className="space-y-2">
+        <div className="space-y-1">
           {adminModules.map((moduleItem) => {
             const href = `/admin/${moduleItem.key}`
             const isActive = pathname === href
@@ -73,7 +73,7 @@ export function AdminSidebarNav({ role }: { role: AdminRole }) {
                 key={moduleItem.key}
                 href={href}
                 className={cn(
-                  'flex items-center justify-between gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors',
+                  'flex items-center justify-between gap-3 rounded-lg px-4 py-2 text-sm font-medium transition-colors',
                   isActive ? 'bg-[#155A6E] text-white' : 'text-gray-300 hover:bg-white/10 hover:text-white'
                 )}
               >
