@@ -311,6 +311,19 @@ export interface DashboardModuleSummary extends AdminModuleDefinition {
   draftUpdatedAt: string | null;
 }
 
+export interface SectionActivityRecord {
+  id: string;
+  sectionKey: SectionKey;
+  sectionLabel: string;
+  action: 'draft_saved' | 'published';
+  actionLabel: string;
+  version: number;
+  actorName: string;
+  occurredAt: string;
+  status: SectionStatus;
+  isCurrent: boolean;
+}
+
 export interface LeadInput {
   name: string;
   phone: string;

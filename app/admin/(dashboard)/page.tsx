@@ -1,8 +1,13 @@
 import Link from 'next/link'
-import { getDashboardModuleSummaries, getLeads } from '@/lib/content/server'
+import { ActivityFeed } from '@/components/admin/activity-feed'
+import { getDashboardModuleSummaries, getLeads, getSectionActivity } from '@/lib/content/server'
 
 export default async function AdminDashboardPage() {
-    const [modules, leads] = await Promise.all([getDashboardModuleSummaries(), getLeads()])
+    const [modules, leads, activityItems] = await Promise.all([
+        getDashboardModuleSummaries(),
+        getLeads(),
+        getSectionActivity(5),
+    ])
 
     return (
         <div className="space-y-8">
@@ -87,6 +92,25 @@ export default async function AdminDashboardPage() {
                             </div>
                         </Link>
                     ))}
+                </div>
+            </div>
+
+            <div className="rounded-2xl border border-gray-100 bg-white shadow-sm">
+                <div className="flex flex-col gap-3 border-b border-gray-100 px-6 py-5 md:flex-row md:items-center md:justify-between">
+                    <div>
+                        <h2 className="text-lg font-semibold text-[#0B3D4C]">Histórico recente</h2>
+                        <p className="text-sm text-gray-500">Últimos rascunhos salvos e publicações registradas no CMS.</p>
+                    </div>
+                    <Link
+                        href="/admin/activity"
+                        className="inline-flex items-center justify-center rounded-full border border-gray-200 px-4 py-2 text-sm font-medium text-[#0B3D4C] transition-colors hover:border-[#C9A962] hover:bg-[#FFFCF4]"
+                    >
+                        Ver histórico completo
+                    </Link>
+                </div>
+
+                <div className="p-6">
+                    <ActivityFeed items={activityItems} compact />
                 </div>
             </div>
         </div>

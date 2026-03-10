@@ -6,6 +6,7 @@ import type {
   LeadInput,
   LeadRecord,
   MediaAssetRecord,
+  SectionActivityRecord,
   SectionKey,
   SectionSnapshot,
   SectionStatus,
@@ -387,4 +388,64 @@ export async function getMediaAssets(params?: {
         label: entry.label,
       })),
   }));
+}
+
+export async function getSectionActivity(limit = 12): Promise<SectionActivityRecord[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('site_sections')
+    .select('id, section_key, status, version, is_current, created_by, published_by, published_at, updated_at')
+    .order('updated_at', { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    if (!isMissingTableError(error)) {
+      console.error('Error loading section activity:', error.message);
+    }
+
+    return [];
+  }
+
+  const actorIds = Array.from(
+    new Set(
+      (data ?? [])
+        .flatMap((item) => [item.created_by, item.published_by])
+        .filter((value): value is string => Boolean(value))
+    )
+  );
+
+  let profilesByUserId = new Map<string, string>();
+
+  if (actorIds.length > 0) {
+    const { data: profiles, error: profilesError } = await supabase
+      .from('admin_profiles')
+      .select('user_id, full_name')
+      .in('user_id', actorIds);
+
+    if (profilesError) {
+      if (!isMissingTableError(profilesError)) {
+        console.error('Error loading activity actors:', profilesError.message);
+      }
+    } else {
+      profilesByUserId = new Map((profiles ?? []).map((item) => [item.user_id, item.full_name]));
+    }
+  }
+
+  return (data ?? []).map((item) => {
+    const isPublishedAction = item.status === 'published' && Boolean(item.published_at);
+    const actorId = isPublishedAction ? item.published_by : item.created_by;
+
+    return {
+      id: item.id,
+      sectionKey: item.section_key as SectionKey,
+      sectionLabel: adminModules.find((moduleItem) => moduleItem.key === item.section_key)?.label ?? item.section_key,
+      action: isPublishedAction ? 'published' : 'draft_saved',
+      actionLabel: isPublishedAction ? 'Publicação' : 'Rascunho salvo',
+      version: item.version,
+      actorName: actorId ? profilesByUserId.get(actorId) ?? 'Administrador' : 'Sistema',
+      occurredAt: isPublishedAction ? item.published_at ?? item.updated_at : item.updated_at,
+      status: item.status,
+      isCurrent: item.is_current,
+    };
+  });
 }

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutGrid, FileText, Image as ImageIcon, MessageSquareText } from 'lucide-react'
+import { History, LayoutGrid, FileText, Image as ImageIcon, MessageSquareText } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { adminModules } from '@/lib/content/defaults'
 
@@ -16,6 +16,11 @@ const topLevelLinks = [
     href: '/admin/leads',
     label: 'Leads',
     icon: MessageSquareText,
+  },
+  {
+    href: '/admin/activity',
+    label: 'Histórico',
+    icon: History,
   },
 ]
 
