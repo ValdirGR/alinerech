@@ -3,6 +3,7 @@ import type {
   AdminModuleDefinition,
   ContactContent,
   FAQContent,
+  FeaturesContent,
   HeroContent,
   MythsContent,
   ProcessContent,
@@ -63,6 +64,12 @@ export const adminModules: AdminModuleDefinition[] = [
     key: 'myths',
     label: 'Mito ou Verdade',
     description: 'Cards de objeções, verdades e nota explicativa da seção.',
+    implemented: true,
+  },
+  {
+    key: 'features',
+    label: 'Diferenciais',
+    description: 'Cards de diferenciais e indicadores de confiança da clínica.',
     implemented: true,
   },
   {
@@ -419,6 +426,62 @@ export const defaultMythsContent: MythsContent = {
     '* As informações acima são baseadas em evidências científicas e experiência clínica. Cada caso é único e deve ser avaliado individualmente durante a consulta.',
 };
 
+export const defaultFeaturesContent: FeaturesContent = {
+  badgeText: 'Por que nos escolher',
+  titleLead: 'O que nos torna',
+  titleHighlight: 'diferentes',
+  description:
+    'Compromisso com a excelência, tecnologia de ponta e um atendimento que coloca você no centro de tudo.',
+  items: [
+    {
+      iconKey: 'microscope',
+      title: 'Tecnologia de Ponta',
+      description: 'Equipamentos modernos que garantem precisão e conforto em todos os procedimentos.',
+    },
+    {
+      iconKey: 'clock',
+      title: 'Agilidade',
+      description: 'Procedimentos otimizados para você ter resultado no menor tempo possível.',
+    },
+    {
+      iconKey: 'users',
+      title: 'Equipe Especializada',
+      description: 'Profissionais altamente qualificados e em constante atualização.',
+    },
+    {
+      iconKey: 'stethoscope',
+      title: 'Avaliação Completa',
+      description: 'Diagnóstico detalhado com planejamento personalizado para cada caso.',
+    },
+    {
+      iconKey: 'sparkles',
+      title: 'Resultados Naturais',
+      description: 'Sorrisos harmoniosos que preservam sua identidade e expressão.',
+    },
+    {
+      iconKey: 'shield-check',
+      title: 'Protocolos de Segurança',
+      description: 'Rigorosa biossegurança e esterilização em todos os procedimentos.',
+    },
+    {
+      iconKey: 'heart-handshake',
+      title: 'Acompanhamento',
+      description: 'Suporte contínuo antes, durante e após o tratamento.',
+    },
+    {
+      iconKey: 'trending-up',
+      title: 'Alta Satisfação',
+      description: 'Pacientes que recomendam e voltam para novos tratamentos.',
+    },
+  ],
+  stats: [
+    { value: '2.500+', label: 'Pacientes Atendidos' },
+    { value: '9+', label: 'Anos de Experiência' },
+    { value: '5.0', label: 'Avaliação Média' },
+    { value: '98%', label: 'Taxa de Satisfação' },
+  ],
+};
+
 export const defaultTestimonialsContent: TestimonialsContent = {
   badgeText: 'Depoimentos',
   titleLead: 'O que nossos pacientes',
@@ -686,6 +749,64 @@ export const normalizeMythsContent = (value: unknown): MythsContent => {
           })
           .filter((item): item is MythsContent['items'][number] => item !== null)
       : defaultMythsContent.items,
+  };
+};
+
+export const normalizeFeaturesContent = (value: unknown): FeaturesContent => {
+  if (!isRecord(value)) {
+    return defaultFeaturesContent;
+  }
+
+  return {
+    ...defaultFeaturesContent,
+    ...value,
+    items: Array.isArray(value.items)
+      ? value.items
+          .map((item) => {
+            if (!isRecord(item)) {
+              return null;
+            }
+
+            const iconKey =
+              item.iconKey === 'microscope' ||
+              item.iconKey === 'clock' ||
+              item.iconKey === 'users' ||
+              item.iconKey === 'stethoscope' ||
+              item.iconKey === 'sparkles' ||
+              item.iconKey === 'shield-check' ||
+              item.iconKey === 'heart-handshake' ||
+              item.iconKey === 'trending-up'
+                ? item.iconKey
+                : null;
+            const title = typeof item.title === 'string' ? item.title.trim() : '';
+            const description = typeof item.description === 'string' ? item.description.trim() : '';
+
+            if (!iconKey || !title || !description) {
+              return null;
+            }
+
+            return { iconKey, title, description };
+          })
+          .filter((item): item is FeaturesContent['items'][number] => item !== null)
+      : defaultFeaturesContent.items,
+    stats: Array.isArray(value.stats)
+      ? value.stats
+          .map((item) => {
+            if (!isRecord(item)) {
+              return null;
+            }
+
+            const valueText = typeof item.value === 'string' ? item.value.trim() : '';
+            const label = typeof item.label === 'string' ? item.label.trim() : '';
+
+            if (!valueText || !label) {
+              return null;
+            }
+
+            return { value: valueText, label };
+          })
+          .filter((item): item is FeaturesContent['stats'][number] => item !== null)
+      : defaultFeaturesContent.stats,
   };
 };
 

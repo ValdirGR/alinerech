@@ -5,6 +5,7 @@ export type SectionKey =
   | 'results'
   | 'process'
   | 'myths'
+  | 'features'
   | 'faq'
   | 'contact'
   | 'testimonials'
@@ -169,6 +170,34 @@ export interface MythsContent {
   description: string;
   items: MythItem[];
   disclaimer: string;
+}
+
+export interface FeatureItem {
+  iconKey:
+    | 'microscope'
+    | 'clock'
+    | 'users'
+    | 'stethoscope'
+    | 'sparkles'
+    | 'shield-check'
+    | 'heart-handshake'
+    | 'trending-up';
+  title: string;
+  description: string;
+}
+
+export interface FeatureStat {
+  value: string;
+  label: string;
+}
+
+export interface FeaturesContent {
+  badgeText: string;
+  titleLead: string;
+  titleHighlight: string;
+  description: string;
+  items: FeatureItem[];
+  stats: FeatureStat[];
 }
 
 export interface TestimonialItem {

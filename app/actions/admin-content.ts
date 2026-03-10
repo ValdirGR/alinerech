@@ -8,6 +8,7 @@ import type {
   ActionResult,
   ContactContent,
   FAQContent,
+  FeaturesContent,
   HeroContent,
   MythsContent,
   ProcessContent,
@@ -190,6 +191,43 @@ const mythsSchema = z.object({
   description: z.string().trim().min(1, 'Informe a descricao da seção.'),
   items: z.array(mythItemSchema).min(8).max(8),
   disclaimer: z.string().trim().min(1, 'Informe a observação final.'),
+})
+
+const featureItemIconSchema = z.enum([
+  'microscope',
+  'clock',
+  'users',
+  'stethoscope',
+  'sparkles',
+  'shield-check',
+  'heart-handshake',
+  'trending-up',
+])
+
+const featuresSchema = z.object({
+  badgeText: z.string().trim().min(1, 'Informe o selo superior.'),
+  titleLead: z.string().trim().min(1, 'Informe a primeira parte do titulo.'),
+  titleHighlight: z.string().trim().min(1, 'Informe o destaque do titulo.'),
+  description: z.string().trim().min(1, 'Informe a descricao da seção.'),
+  items: z
+    .array(
+      z.object({
+        iconKey: featureItemIconSchema,
+        title: z.string().trim().min(1),
+        description: z.string().trim().min(1),
+      })
+    )
+    .min(8)
+    .max(8),
+  stats: z
+    .array(
+      z.object({
+        value: z.string().trim().min(1),
+        label: z.string().trim().min(1),
+      })
+    )
+    .min(4)
+    .max(4),
 })
 
 const testimonialsSchema = z.object({
@@ -393,6 +431,28 @@ const getMythsContentFromFormData = (formData: FormData): MythsContent => {
     description: formData.get('description'),
     items,
     disclaimer: formData.get('disclaimer'),
+  })
+}
+
+const getFeaturesContentFromFormData = (formData: FormData): FeaturesContent => {
+  const items = Array.from({ length: 8 }, (_, index) => ({
+    iconKey: String(formData.get(`featureIcon${index}`) ?? ''),
+    title: String(formData.get(`featureTitle${index}`) ?? ''),
+    description: String(formData.get(`featureDescription${index}`) ?? ''),
+  }))
+
+  const stats = Array.from({ length: 4 }, (_, index) => ({
+    value: String(formData.get(`featureStatValue${index}`) ?? ''),
+    label: String(formData.get(`featureStatLabel${index}`) ?? ''),
+  }))
+
+  return featuresSchema.parse({
+    badgeText: formData.get('badgeText'),
+    titleLead: formData.get('titleLead'),
+    titleHighlight: formData.get('titleHighlight'),
+    description: formData.get('description'),
+    items,
+    stats,
   })
 }
 
@@ -814,6 +874,55 @@ export async function publishMyths(): Promise<ActionResult> {
     return {
       success: true,
       message: 'Mito ou Verdade publicado com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function saveFeaturesDraft(formData: FormData): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+    const content = getFeaturesContentFromFormData(formData)
+
+    await upsertSectionDraft({
+      sectionKey: 'features',
+      content,
+      userId: user.id,
+    })
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/features')
+
+    return {
+      success: true,
+      message: 'Rascunho de Diferenciais salvo com sucesso.',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: getActionErrorMessage(error),
+    }
+  }
+}
+
+export async function publishFeatures(): Promise<ActionResult> {
+  try {
+    const { user } = await requireAdminAccess()
+
+    await publishSectionDraft('features', user.id)
+
+    revalidatePath('/')
+    revalidatePath('/admin')
+    revalidatePath('/admin/features')
+
+    return {
+      success: true,
+      message: 'Diferenciais publicado com sucesso.',
     }
   } catch (error) {
     return {

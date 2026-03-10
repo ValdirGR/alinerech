@@ -11,6 +11,8 @@ import {
   HeartHandshake,
   TrendingUp
 } from 'lucide-react';
+import { defaultFeaturesContent, normalizeFeaturesContent } from '@/lib/content/defaults';
+import { usePublishedSection } from '@/lib/content/use-published-section';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,6 +21,22 @@ export function Features() {
   const headerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
+  const { content } = usePublishedSection({
+    sectionKey: 'features',
+    fallback: defaultFeaturesContent,
+    normalize: normalizeFeaturesContent,
+  });
+
+  const iconMap = {
+    microscope: Microscope,
+    clock: Clock,
+    users: Users,
+    stethoscope: Stethoscope,
+    sparkles: Sparkles,
+    'shield-check': ShieldCheck,
+    'heart-handshake': HeartHandshake,
+    'trending-up': TrendingUp,
+  } as const;
 
   useEffect(() => {
     const triggers: ScrollTrigger[] = [];
@@ -76,56 +94,6 @@ export function Features() {
     };
   }, []);
 
-  const features = [
-    {
-      icon: Microscope,
-      title: 'Tecnologia de Ponta',
-      description: 'Equipamentos modernos que garantem precisão e conforto em todos os procedimentos.'
-    },
-    {
-      icon: Clock,
-      title: 'Agilidade',
-      description: 'Procedimentos otimizados para você ter resultado no menor tempo possível.'
-    },
-    {
-      icon: Users,
-      title: 'Equipe Especializada',
-      description: 'Profissionais altamente qualificados e em constante atualização.'
-    },
-    {
-      icon: Stethoscope,
-      title: 'Avaliação Completa',
-      description: 'Diagnóstico detalhado com planejamento personalizado para cada caso.'
-    },
-    {
-      icon: Sparkles,
-      title: 'Resultados Naturais',
-      description: 'Sorrisos harmoniosos que preservam sua identidade e expressão.'
-    },
-    {
-      icon: ShieldCheck,
-      title: 'Protocolos de Segurança',
-      description: 'Rigorosa biossegurança e esterilização em todos os procedimentos.'
-    },
-    {
-      icon: HeartHandshake,
-      title: 'Acompanhamento',
-      description: 'Suporte contínuo antes, durante e após o tratamento.'
-    },
-    {
-      icon: TrendingUp,
-      title: 'Alta Satisfação',
-      description: 'Pacientes que recomendam e voltam para novos tratamentos.'
-    }
-  ];
-
-  const stats = [
-    { value: '2.500+', label: 'Pacientes Atendidos' },
-    { value: '9+', label: 'Anos de Experiência' },
-    { value: '5.0', label: 'Avaliação Média' },
-    { value: '98%', label: 'Taxa de Satisfação' }
-  ];
-
   return (
     <section
       ref={sectionRef}
@@ -149,29 +117,31 @@ export function Features() {
         <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-white/20">
             <Sparkles className="w-4 h-4 text-[#C9A962]" />
-            <span className="text-white/90 text-sm font-medium">Por que nos escolher</span>
+            <span className="text-white/90 text-sm font-medium">{content.badgeText}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-            O que nos torna{' '}
-            <span className="text-[#C9A962]">diferentes</span>
+            {content.titleLead}{' '}
+            <span className="text-[#C9A962]">{content.titleHighlight}</span>
           </h2>
 
           <p className="text-white/70 text-lg">
-            Compromisso com a excelência, tecnologia de ponta e um atendimento
-            que coloca você no centro de tudo.
+            {content.description}
           </p>
         </div>
 
         {/* Features Grid */}
         <div ref={gridRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {features.map((feature, index) => (
+          {content.items.map((feature, index) => {
+            const Icon = iconMap[feature.iconKey];
+
+            return (
             <div
-              key={index}
+              key={`${feature.title}-${index}`}
               className="group bg-white/5 backdrop-blur-sm hover:bg-white/10 border border-white/10 hover:border-[#C9A962]/30 rounded-2xl p-6 transition-all duration-500 hover:-translate-y-2"
             >
               <div className="w-14 h-14 bg-[#C9A962]/20 group-hover:bg-[#C9A962] rounded-xl flex items-center justify-center mb-4 transition-colors duration-500">
-                <feature.icon className="w-7 h-7 text-[#C9A962] group-hover:text-[#000000] transition-colors duration-500" />
+                <Icon className="w-7 h-7 text-[#C9A962] group-hover:text-[#000000] transition-colors duration-500" />
               </div>
               <h3 className="font-semibold text-white text-lg mb-2">
                 {feature.title}
@@ -180,7 +150,7 @@ export function Features() {
                 {feature.description}
               </p>
             </div>
-          ))}
+          )})}
         </div>
 
         {/* Stats */}
@@ -188,7 +158,7 @@ export function Features() {
           ref={statsRef}
           className="grid grid-cols-2 md:grid-cols-4 gap-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8"
         >
-          {stats.map((stat, index) => (
+          {content.stats.map((stat, index) => (
             <div key={index} className="text-center">
               <p className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#C9A962] mb-2">
                 {stat.value}
