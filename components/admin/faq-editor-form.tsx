@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishFaq, saveFaqDraft } from '@/app/actions/admin-content'
 import { EditorSection } from '@/components/admin/editor-section'
+import { EditorSectionNav } from '@/components/admin/editor-section-nav'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -91,8 +92,16 @@ export function FaqEditorForm({ snapshot }: FaqEditorFormProps) {
         </div>
       ) : null}
 
+      <EditorSectionNav
+        items={[
+          { id: 'faq-header', label: 'Header e CTA' },
+          { id: 'faq-items', label: 'Perguntas' },
+        ]}
+      />
+
       <form ref={formRef} className="space-y-8">
         <EditorSection
+          sectionId="faq-header"
           title="Header e CTA"
           description="Edite a abertura do FAQ e a chamada final para WhatsApp."
           defaultOpen
@@ -138,6 +147,7 @@ export function FaqEditorForm({ snapshot }: FaqEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="faq-items"
           title="Perguntas e respostas"
           description="Edite as dez perguntas exibidas na area de duvidas."
         >

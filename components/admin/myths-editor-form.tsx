@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishMyths, saveMythsDraft } from '@/app/actions/admin-content'
 import { EditorSection } from '@/components/admin/editor-section'
+import { EditorSectionNav } from '@/components/admin/editor-section-nav'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -91,8 +92,16 @@ export function MythsEditorForm({ snapshot }: MythsEditorFormProps) {
         </div>
       ) : null}
 
+      <EditorSectionNav
+        items={[
+          { id: 'myths-header', label: 'Header' },
+          { id: 'myths-cards', label: 'Cards' },
+        ]}
+      />
+
       <form ref={formRef} className="space-y-8">
         <EditorSection
+          sectionId="myths-header"
           title="Header da seção"
           description="Edite o selo, o título, a descrição e a observação final."
           defaultOpen
@@ -122,6 +131,7 @@ export function MythsEditorForm({ snapshot }: MythsEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="myths-cards"
           title="Cards da seção"
           description="Atualize os oito cards de mito e verdade exibidos no grid."
         >

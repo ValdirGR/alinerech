@@ -6,6 +6,7 @@ import { Save, Send } from 'lucide-react'
 import { publishHeader, saveHeaderDraft } from '@/app/actions/admin-content'
 import { AdminImageField } from '@/components/admin/admin-image-field'
 import { EditorSection } from '@/components/admin/editor-section'
+import { EditorSectionNav } from '@/components/admin/editor-section-nav'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -91,8 +92,16 @@ export function HeaderEditorForm({ snapshot }: HeaderEditorFormProps) {
         </div>
       ) : null}
 
+      <EditorSectionNav
+        items={[
+          { id: 'header-brand', label: 'Logo e CTA' },
+          { id: 'header-links', label: 'Menu' },
+        ]}
+      />
+
       <form ref={formRef} className="space-y-8">
         <EditorSection
+          sectionId="header-brand"
           title="Logo e CTA"
           description="Controle a identidade visual e o botão principal do topo."
           defaultOpen
@@ -132,6 +141,7 @@ export function HeaderEditorForm({ snapshot }: HeaderEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="header-links"
           title="Links do menu"
           description="Atualize os seis links de navegacao do desktop e mobile."
         >

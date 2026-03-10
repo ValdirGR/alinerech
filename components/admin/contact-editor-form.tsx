@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishContact, saveContactDraft } from '@/app/actions/admin-content'
 import { EditorSection } from '@/components/admin/editor-section'
+import { EditorSectionNav } from '@/components/admin/editor-section-nav'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -98,8 +99,17 @@ export function ContactEditorForm({ snapshot }: ContactEditorFormProps) {
         </div>
       ) : null}
 
+      <EditorSectionNav
+        items={[
+          { id: 'contact-copy', label: 'Textos' },
+          { id: 'contact-form', label: 'Formulario' },
+          { id: 'contact-info', label: 'Informacoes' },
+        ]}
+      />
+
       <form ref={formRef} className="space-y-8">
         <EditorSection
+          sectionId="contact-copy"
           title="Textos principais"
           description="Edite o titulo, CTA e mensagens principais da secao."
           defaultOpen
@@ -133,6 +143,7 @@ export function ContactEditorForm({ snapshot }: ContactEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="contact-form"
           title="Formulario"
           description="Controle os textos do formulario e da confirmacao."
         >
@@ -165,6 +176,7 @@ export function ContactEditorForm({ snapshot }: ContactEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="contact-info"
           title="Blocos de informacao"
           description="Mantenha os tres itens de contato exibidos no site."
         >

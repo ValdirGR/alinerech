@@ -6,6 +6,7 @@ import { Save, Send } from 'lucide-react'
 import { publishProcess, saveProcessDraft } from '@/app/actions/admin-content'
 import { AdminImageField } from '@/components/admin/admin-image-field'
 import { EditorSection } from '@/components/admin/editor-section'
+import { EditorSectionNav } from '@/components/admin/editor-section-nav'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -92,8 +93,16 @@ export function ProcessEditorForm({ snapshot }: ProcessEditorFormProps) {
         </div>
       ) : null}
 
+      <EditorSectionNav
+        items={[
+          { id: 'process-header', label: 'Header e CTA' },
+          { id: 'process-steps', label: 'Etapas' },
+        ]}
+      />
+
       <form ref={formRef} className="space-y-8">
         <EditorSection
+          sectionId="process-header"
           title="Header e CTA"
           description="Edite a apresentação da seção e a chamada final."
           defaultOpen
@@ -135,6 +144,7 @@ export function ProcessEditorForm({ snapshot }: ProcessEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="process-steps"
           title="Etapas do processo"
           description="Edite as quatro etapas exibidas no passo a passo."
         >

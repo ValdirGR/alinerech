@@ -6,6 +6,7 @@ import { Save, Send } from 'lucide-react'
 import { publishTestimonials, saveTestimonialsDraft } from '@/app/actions/admin-content'
 import { AdminImageField } from '@/components/admin/admin-image-field'
 import { EditorSection } from '@/components/admin/editor-section'
+import { EditorSectionNav } from '@/components/admin/editor-section-nav'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -92,8 +93,17 @@ export function TestimonialsEditorForm({ snapshot }: TestimonialsEditorFormProps
         </div>
       ) : null}
 
+      <EditorSectionNav
+        items={[
+          { id: 'testimonials-header', label: 'Header' },
+          { id: 'testimonials-items', label: 'Depoimentos' },
+          { id: 'testimonials-badges', label: 'Selos' },
+        ]}
+      />
+
       <form ref={formRef} className="space-y-8">
         <EditorSection
+          sectionId="testimonials-header"
           title="Header da seção"
           description="Edite o selo, o título e a descrição acima do carrossel."
           defaultOpen
@@ -119,6 +129,7 @@ export function TestimonialsEditorForm({ snapshot }: TestimonialsEditorFormProps
         </EditorSection>
 
         <EditorSection
+          sectionId="testimonials-items"
           title="Depoimentos do carrossel"
           description="Atualize as duas histórias exibidas no bloco de prova social."
         >
@@ -182,6 +193,7 @@ export function TestimonialsEditorForm({ snapshot }: TestimonialsEditorFormProps
         </EditorSection>
 
         <EditorSection
+          sectionId="testimonials-badges"
           title="Selos de confiança"
           description="Esses textos aparecem abaixo do carrossel."
         >

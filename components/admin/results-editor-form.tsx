@@ -6,6 +6,7 @@ import { Save, Send } from 'lucide-react'
 import { publishResults, saveResultsDraft } from '@/app/actions/admin-content'
 import { AdminImageField } from '@/components/admin/admin-image-field'
 import { EditorSection } from '@/components/admin/editor-section'
+import { EditorSectionNav } from '@/components/admin/editor-section-nav'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -92,8 +93,16 @@ export function ResultsEditorForm({ snapshot }: ResultsEditorFormProps) {
         </div>
       ) : null}
 
+      <EditorSectionNav
+        items={[
+          { id: 'results-header', label: 'Header' },
+          { id: 'results-gallery', label: 'Galeria' },
+        ]}
+      />
+
       <form ref={formRef} className="space-y-8">
         <EditorSection
+          sectionId="results-header"
           title="Header da seção"
           description="Edite o texto principal acima da galeria de resultados."
           defaultOpen
@@ -119,6 +128,7 @@ export function ResultsEditorForm({ snapshot }: ResultsEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="results-gallery"
           title="Galeria de imagens"
           description="Configure as nove imagens exibidas na grade de resultados."
         >

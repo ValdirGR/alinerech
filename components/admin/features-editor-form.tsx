@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishFeatures, saveFeaturesDraft } from '@/app/actions/admin-content'
 import { EditorSection } from '@/components/admin/editor-section'
+import { EditorSectionNav } from '@/components/admin/editor-section-nav'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -102,8 +103,17 @@ export function FeaturesEditorForm({ snapshot }: FeaturesEditorFormProps) {
         </div>
       ) : null}
 
+      <EditorSectionNav
+        items={[
+          { id: 'features-header', label: 'Header' },
+          { id: 'features-cards', label: 'Cards' },
+          { id: 'features-stats', label: 'Indicadores' },
+        ]}
+      />
+
       <form ref={formRef} className="space-y-8">
         <EditorSection
+          sectionId="features-header"
           title="Header da seção"
           description="Edite o selo, o título e a descrição dos diferenciais."
           defaultOpen
@@ -129,6 +139,7 @@ export function FeaturesEditorForm({ snapshot }: FeaturesEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="features-cards"
           title="Cards de diferenciais"
           description="Atualize os oito cards exibidos no grid principal."
         >
@@ -169,6 +180,7 @@ export function FeaturesEditorForm({ snapshot }: FeaturesEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="features-stats"
           title="Indicadores"
           description="Atualize os quatro números destacados abaixo do grid."
         >

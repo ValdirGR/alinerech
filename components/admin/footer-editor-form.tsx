@@ -6,6 +6,7 @@ import { Save, Send } from 'lucide-react'
 import { publishFooter, saveFooterDraft } from '@/app/actions/admin-content'
 import { AdminImageField } from '@/components/admin/admin-image-field'
 import { EditorSection } from '@/components/admin/editor-section'
+import { EditorSectionNav } from '@/components/admin/editor-section-nav'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -92,8 +93,18 @@ export function FooterEditorForm({ snapshot }: FooterEditorFormProps) {
         </div>
       ) : null}
 
+      <EditorSectionNav
+        items={[
+          { id: 'footer-brand', label: 'Marca' },
+          { id: 'footer-social', label: 'Redes' },
+          { id: 'footer-links', label: 'Links' },
+          { id: 'footer-contact', label: 'Contato' },
+        ]}
+      />
+
       <form ref={formRef} className="space-y-8">
         <EditorSection
+          sectionId="footer-brand"
           title="Marca e textos principais"
           description="Edite a logo, tagline, descricao e textos do rodape inferior."
           defaultOpen
@@ -133,6 +144,7 @@ export function FooterEditorForm({ snapshot }: FooterEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="footer-social"
           title="Redes sociais"
           description="Defina os tres icones e links do rodape."
         >
@@ -162,6 +174,7 @@ export function FooterEditorForm({ snapshot }: FooterEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="footer-links"
           title="Links do rodape"
           description="Edite os blocos de links rapidos e servicos."
         >
@@ -211,6 +224,7 @@ export function FooterEditorForm({ snapshot }: FooterEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="footer-contact"
           title="Contato do rodape"
           description="Edite os tres blocos de contato exibidos na coluna final."
         >

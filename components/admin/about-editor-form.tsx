@@ -6,6 +6,7 @@ import { Save, Send } from 'lucide-react'
 import { publishAbout, saveAboutDraft } from '@/app/actions/admin-content'
 import { AdminImageField } from '@/components/admin/admin-image-field'
 import { EditorSection } from '@/components/admin/editor-section'
+import { EditorSectionNav } from '@/components/admin/editor-section-nav'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -99,8 +100,17 @@ export function AboutEditorForm({ snapshot }: AboutEditorFormProps) {
         </div>
       ) : null}
 
+      <EditorSectionNav
+        items={[
+          { id: 'about-copy', label: 'Textos' },
+          { id: 'about-credentials', label: 'Imagem e credenciais' },
+          { id: 'about-cards', label: 'Cards' },
+        ]}
+      />
+
       <form ref={formRef} className="space-y-8">
         <EditorSection
+          sectionId="about-copy"
           title="Textos principais"
           description="Controle a narrativa institucional da seção Sobre."
           defaultOpen
@@ -135,6 +145,7 @@ export function AboutEditorForm({ snapshot }: AboutEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="about-credentials"
           title="Imagem e credenciais"
           description="Gerencie a foto principal e os destaques profissionais."
         >
@@ -190,6 +201,7 @@ export function AboutEditorForm({ snapshot }: AboutEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="about-cards"
           title="Cards de diferenciais"
           description="Mantenha os quatro cards exibidos na seção."
         >

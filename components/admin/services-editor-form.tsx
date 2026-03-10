@@ -6,6 +6,7 @@ import { Save, Send } from 'lucide-react'
 import { publishServices, saveServicesDraft } from '@/app/actions/admin-content'
 import { AdminImageField } from '@/components/admin/admin-image-field'
 import { EditorSection } from '@/components/admin/editor-section'
+import { EditorSectionNav } from '@/components/admin/editor-section-nav'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -93,8 +94,17 @@ export function ServicesEditorForm({ snapshot }: ServicesEditorFormProps) {
         </div>
       ) : null}
 
+      <EditorSectionNav
+        items={[
+          { id: 'services-main', label: 'Header e servico' },
+          { id: 'services-benefits', label: 'Beneficios e CTAs' },
+          { id: 'services-details', label: 'Conteudo expandido' },
+        ]}
+      />
+
       <form ref={formRef} className="space-y-8">
         <EditorSection
+          sectionId="services-main"
           title="Header e serviço principal"
           description="Edite a abertura da seção e o destaque do tratamento principal."
           defaultOpen
@@ -151,6 +161,7 @@ export function ServicesEditorForm({ snapshot }: ServicesEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="services-benefits"
           title="Benefícios e CTAs"
           description="Mantenha a lista de benefícios e os dois botões do card."
         >
@@ -173,6 +184,7 @@ export function ServicesEditorForm({ snapshot }: ServicesEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="services-details"
           title="Conteúdo expandido"
           description="Edite limitações, processo e orientações após o procedimento."
         >

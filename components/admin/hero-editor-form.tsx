@@ -6,6 +6,7 @@ import { Save, Send } from 'lucide-react'
 import { publishHero, saveHeroDraft } from '@/app/actions/admin-content'
 import { AdminImageField } from '@/components/admin/admin-image-field'
 import { EditorSection } from '@/components/admin/editor-section'
+import { EditorSectionNav } from '@/components/admin/editor-section-nav'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -93,8 +94,18 @@ export function HeroEditorForm({ snapshot }: HeroEditorFormProps) {
         </div>
       ) : null}
 
+      <EditorSectionNav
+        items={[
+          { id: 'hero-copy', label: 'Textos' },
+          { id: 'hero-media', label: 'Acoes e midia' },
+          { id: 'hero-trust', label: 'Confianca' },
+          { id: 'hero-stats', label: 'Estatisticas' },
+        ]}
+      />
+
       <form ref={formRef} className="space-y-8">
         <EditorSection
+          sectionId="hero-copy"
           title="Textos principais"
           description="Controle o destaque textual do Hero."
           defaultOpen
@@ -134,6 +145,7 @@ export function HeroEditorForm({ snapshot }: HeroEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="hero-media"
           title="Ações e mídia"
           description="Links, vídeo e imagem principal do topo."
         >
@@ -188,6 +200,7 @@ export function HeroEditorForm({ snapshot }: HeroEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="hero-trust"
           title="Itens de confiança"
           description="Tres bullets que aparecem abaixo dos botoes."
         >
@@ -202,6 +215,7 @@ export function HeroEditorForm({ snapshot }: HeroEditorFormProps) {
         </EditorSection>
 
         <EditorSection
+          sectionId="hero-stats"
           title="Estatísticas"
           description="Mantenha o layout atual de quatro metricas."
         >

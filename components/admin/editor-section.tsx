@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import {
   Collapsible,
@@ -8,6 +9,7 @@ import {
 } from '@/components/ui/collapsible'
 
 type EditorSectionProps = {
+  sectionId?: string
   title: string
   description: string
   children: React.ReactNode
@@ -15,13 +17,38 @@ type EditorSectionProps = {
 }
 
 export function EditorSection({
+  sectionId,
   title,
   description,
   children,
   defaultOpen = false,
 }: EditorSectionProps) {
+  const [open, setOpen] = useState(defaultOpen)
+
+  useEffect(() => {
+    if (!sectionId) {
+      return
+    }
+
+    const syncHashState = () => {
+      if (window.location.hash === `#${sectionId}`) {
+        setOpen(true)
+      }
+    }
+
+    syncHashState()
+    window.addEventListener('hashchange', syncHashState)
+
+    return () => window.removeEventListener('hashchange', syncHashState)
+  }, [sectionId])
+
   return (
-    <Collapsible defaultOpen={defaultOpen} className="rounded-2xl border border-gray-200 bg-white shadow-sm">
+    <Collapsible
+      id={sectionId}
+      open={open}
+      onOpenChange={setOpen}
+      className="scroll-mt-24 rounded-2xl border border-gray-200 bg-white shadow-sm"
+    >
       <CollapsibleTrigger className="group flex w-full items-center justify-between gap-4 px-6 py-5 text-left">
         <div>
           <h2 className="text-lg font-semibold text-[#0B3D4C]">{title}</h2>
