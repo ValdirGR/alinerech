@@ -2,7 +2,7 @@
 
 import { z } from 'zod'
 import { revalidatePath } from 'next/cache'
-import { createLead } from '@/lib/content/server'
+import { createLead, updateLeadStatus } from '@/lib/content/server'
 import type { ActionResult } from '@/lib/content/types'
 
 const leadSchema = z.object({
@@ -10,6 +10,11 @@ const leadSchema = z.object({
   phone: z.string().trim().min(8, 'Informe um telefone válido.'),
   email: z.string().trim().email('Informe um e-mail válido.').or(z.literal('')),
   message: z.string().trim().max(1500, 'Mensagem muito longa.').optional(),
+})
+
+const leadStatusSchema = z.object({
+  leadId: z.string().uuid('Lead inválido.'),
+  status: z.enum(['new', 'in_contact', 'converted', 'archived']),
 })
 
 export async function submitLead(formData: FormData): Promise<ActionResult> {
@@ -45,6 +50,36 @@ export async function submitLead(formData: FormData): Promise<ActionResult> {
     return {
       success: false,
       message: error instanceof Error ? error.message : 'Não foi possível enviar sua mensagem.',
+    }
+  }
+}
+
+export async function updateLeadStatusAction(input: {
+  leadId: string
+  status: 'new' | 'in_contact' | 'converted' | 'archived'
+}): Promise<ActionResult> {
+  try {
+    const payload = leadStatusSchema.parse(input)
+
+    await updateLeadStatus(payload)
+
+    revalidatePath('/admin/leads')
+
+    return {
+      success: true,
+      message: 'Status do lead atualizado com sucesso.',
+    }
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return {
+        success: false,
+        message: error.issues[0]?.message ?? 'Dados inválidos.',
+      }
+    }
+
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : 'Não foi possível atualizar o lead.',
     }
   }
 }

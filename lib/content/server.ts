@@ -327,6 +327,22 @@ export async function getLeads(): Promise<LeadRecord[]> {
   }));
 }
 
+export async function updateLeadStatus(params: {
+  leadId: string;
+  status: LeadRecord['status'];
+}) {
+  const { supabase } = await requireAdminAccess();
+
+  const { error } = await supabase
+    .from('leads')
+    .update({ status: params.status })
+    .eq('id', params.leadId);
+
+  if (error) {
+    throw error;
+  }
+}
+
 export async function getMediaAssets(params?: {
   bucketName?: 'site-images' | 'results-images';
   module?: string;

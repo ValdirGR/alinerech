@@ -1,6 +1,7 @@
 'use client'
 
-import { useDeferredValue, useMemo, useState } from 'react'
+import { useDeferredValue, useMemo, useState, useTransition } from 'react'
+import { updateLeadStatusAction } from '@/app/actions/leads'
 import { Input } from '@/components/ui/input'
 import {
   Select,
@@ -64,18 +65,23 @@ const getSourceLabel = (source: string | undefined) => {
 }
 
 export function LeadsTable({ leads }: LeadsTableProps) {
+  const [leadItems, setLeadItems] = useState(leads)
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState(ALL_FILTER_VALUE)
   const [sourceFilter, setSourceFilter] = useState(ALL_FILTER_VALUE)
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null)
+  const [feedbackError, setFeedbackError] = useState(false)
+  const [pendingLeadId, setPendingLeadId] = useState<string | null>(null)
+  const [isPending, startTransition] = useTransition()
   const deferredSearchTerm = useDeferredValue(searchTerm)
 
   const normalizedSearchTerm = deferredSearchTerm.trim().toLocaleLowerCase('pt-BR')
   const sourceOptions = useMemo(
-    () => Array.from(new Set(leads.map((lead) => lead.source || ''))).filter(Boolean).sort((left, right) => left.localeCompare(right, 'pt-BR')),
-    [leads],
+    () => Array.from(new Set(leadItems.map((lead) => lead.source || ''))).filter(Boolean).sort((left, right) => left.localeCompare(right, 'pt-BR')),
+    [leadItems],
   )
 
-  const filteredLeads = leads.filter((lead) => {
+  const filteredLeads = leadItems.filter((lead) => {
     if (statusFilter !== ALL_FILTER_VALUE && lead.status !== statusFilter) {
       return false
     }
@@ -110,7 +116,37 @@ export function LeadsTable({ leads }: LeadsTableProps) {
     { new: 0, in_contact: 0, converted: 0, archived: 0 } as Record<LeadRecord['status'], number>,
   )
 
-  if (leads.length === 0) {
+  const handleStatusChange = (leadId: string, nextStatus: LeadRecord['status']) => {
+    const previousLead = leadItems.find((lead) => lead.id === leadId)
+
+    if (!previousLead || previousLead.status === nextStatus) {
+      return
+    }
+
+    setLeadItems((currentLeads) =>
+      currentLeads.map((lead) => (lead.id === leadId ? { ...lead, status: nextStatus } : lead)),
+    )
+    setPendingLeadId(leadId)
+    setFeedbackMessage(null)
+
+    startTransition(async () => {
+      const result = await updateLeadStatusAction({ leadId, status: nextStatus })
+
+      if (!result.success) {
+        setLeadItems((currentLeads) =>
+          currentLeads.map((lead) =>
+            lead.id === leadId && previousLead ? { ...lead, status: previousLead.status } : lead,
+          ),
+        )
+      }
+
+      setFeedbackMessage(result.message)
+      setFeedbackError(!result.success)
+      setPendingLeadId(null)
+    })
+  }
+
+  if (leadItems.length === 0) {
     return (
       <div className="p-10 text-sm text-gray-500">
         Nenhum lead encontrado ainda. Depois que a migration for aplicada e o formulario comecar a salvar,
@@ -193,6 +229,18 @@ export function LeadsTable({ leads }: LeadsTableProps) {
         </div>
       </div>
 
+      {feedbackMessage ? (
+        <div
+          className={`mx-6 rounded-xl border px-4 py-3 text-sm ${
+            feedbackError
+              ? 'border-red-200 bg-red-50 text-red-700'
+              : 'border-emerald-200 bg-emerald-50 text-emerald-700'
+          }`}
+        >
+          {feedbackMessage}
+        </div>
+      ) : null}
+
       {filteredLeads.length === 0 ? (
         <div className="px-6 pb-6 text-sm text-gray-500">Nenhum lead corresponde aos filtros aplicados.</div>
       ) : (
@@ -224,9 +272,27 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                   </TableCell>
                   <TableCell className="px-4 py-4 text-gray-600">{getSourceLabel(lead.source)}</TableCell>
                   <TableCell className="px-4 py-4">
-                    <span className={`rounded-full px-2.5 py-1 text-xs font-semibold uppercase tracking-wide ${getStatusBadgeClassName(lead.status)}`}>
-                      {getStatusLabel(lead.status)}
-                    </span>
+                    <div className="space-y-2">
+                      <Select
+                        value={lead.status}
+                        onValueChange={(value) => handleStatusChange(lead.id, value as LeadRecord['status'])}
+                        disabled={isPending && pendingLeadId === lead.id}
+                      >
+                        <SelectTrigger className="h-8 w-[160px] bg-white text-xs">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="new">Novo</SelectItem>
+                          <SelectItem value="in_contact">Em contato</SelectItem>
+                          <SelectItem value="converted">Convertido</SelectItem>
+                          <SelectItem value="archived">Arquivado</SelectItem>
+                        </SelectContent>
+                      </Select>
+
+                      <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold uppercase tracking-wide ${getStatusBadgeClassName(lead.status)}`}>
+                        {getStatusLabel(lead.status)}
+                      </span>
+                    </div>
                   </TableCell>
                   <TableCell className="px-4 py-4 text-gray-600">
                     {new Date(lead.createdAt).toLocaleString('pt-BR')}
