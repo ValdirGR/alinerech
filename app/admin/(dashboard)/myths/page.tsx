@@ -1,4 +1,5 @@
 import { MythsEditorForm } from '@/components/admin/myths-editor-form'
+import { SectionSnapshotPreview } from '@/components/admin/section-snapshot-preview'
 import { defaultMythsContent, normalizeMythsContent } from '@/lib/content/defaults'
 import { getSectionSnapshot } from '@/lib/content/server'
 
@@ -13,6 +14,8 @@ export default async function MythsAdminPage() {
           Gerencie os cards de objeções e verdades sobre facetas e implantes exibidos na home.
         </p>
       </div>
+
+      <SectionSnapshotPreview sectionLabel="Mito ou Verdade" snapshot={snapshot} />
 
       <MythsEditorForm snapshot={snapshot} />
     </div>

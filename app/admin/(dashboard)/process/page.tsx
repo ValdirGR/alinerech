@@ -1,4 +1,5 @@
 import { ProcessEditorForm } from '@/components/admin/process-editor-form'
+import { SectionSnapshotPreview } from '@/components/admin/section-snapshot-preview'
 import { defaultProcessContent, normalizeProcessContent } from '@/lib/content/defaults'
 import { getSectionSnapshot } from '@/lib/content/server'
 
@@ -13,6 +14,8 @@ export default async function ProcessAdminPage() {
           Gerencie o cabeçalho, o procedimento principal, as quatro etapas e o CTA final da seção.
         </p>
       </div>
+
+      <SectionSnapshotPreview sectionLabel="Como Funciona" snapshot={snapshot} />
 
       <ProcessEditorForm snapshot={snapshot} />
     </div>

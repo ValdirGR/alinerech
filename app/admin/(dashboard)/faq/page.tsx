@@ -1,4 +1,5 @@
 import { FaqEditorForm } from '@/components/admin/faq-editor-form'
+import { SectionSnapshotPreview } from '@/components/admin/section-snapshot-preview'
 import { defaultFaqContent, normalizeFaqContent } from '@/lib/content/defaults'
 import { getSectionSnapshot } from '@/lib/content/server'
 
@@ -13,6 +14,8 @@ export default async function FaqAdminPage() {
           Gerencie a abertura da seção, as perguntas frequentes e o CTA final para WhatsApp.
         </p>
       </div>
+
+      <SectionSnapshotPreview sectionLabel="FAQ" snapshot={snapshot} />
 
       <FaqEditorForm snapshot={snapshot} />
     </div>

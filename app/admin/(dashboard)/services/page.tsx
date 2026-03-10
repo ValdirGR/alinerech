@@ -1,4 +1,5 @@
 import { ServicesEditorForm } from '@/components/admin/services-editor-form'
+import { SectionSnapshotPreview } from '@/components/admin/section-snapshot-preview'
 import { defaultServicesContent, normalizeServicesContent } from '@/lib/content/defaults'
 import { getSectionSnapshot } from '@/lib/content/server'
 
@@ -13,6 +14,8 @@ export default async function ServicesAdminPage() {
           Gerencie o cabeçalho da seção, o tratamento principal, a lista de benefícios e o conteúdo expandido.
         </p>
       </div>
+
+      <SectionSnapshotPreview sectionLabel="Serviços" snapshot={snapshot} />
 
       <ServicesEditorForm snapshot={snapshot} />
     </div>

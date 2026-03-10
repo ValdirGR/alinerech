@@ -1,4 +1,5 @@
 import { FeaturesEditorForm } from '@/components/admin/features-editor-form'
+import { SectionSnapshotPreview } from '@/components/admin/section-snapshot-preview'
 import { defaultFeaturesContent, normalizeFeaturesContent } from '@/lib/content/defaults'
 import { getSectionSnapshot } from '@/lib/content/server'
 
@@ -13,6 +14,8 @@ export default async function FeaturesAdminPage() {
           Gerencie os cards de diferenciais e os indicadores exibidos na seção de prova institucional.
         </p>
       </div>
+
+      <SectionSnapshotPreview sectionLabel="Diferenciais" snapshot={snapshot} />
 
       <FeaturesEditorForm snapshot={snapshot} />
     </div>

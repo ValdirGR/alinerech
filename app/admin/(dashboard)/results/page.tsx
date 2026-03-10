@@ -1,4 +1,5 @@
 import { ResultsEditorForm } from '@/components/admin/results-editor-form'
+import { SectionSnapshotPreview } from '@/components/admin/section-snapshot-preview'
 import { defaultResultsContent, normalizeResultsContent } from '@/lib/content/defaults'
 import { getSectionSnapshot } from '@/lib/content/server'
 
@@ -13,6 +14,8 @@ export default async function ResultsAdminPage() {
           Gerencie o cabeçalho da galeria e as nove imagens exibidas na seção de resultados.
         </p>
       </div>
+
+      <SectionSnapshotPreview sectionLabel="Resultados" snapshot={snapshot} />
 
       <ResultsEditorForm snapshot={snapshot} />
     </div>

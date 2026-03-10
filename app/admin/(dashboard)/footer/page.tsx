@@ -1,4 +1,5 @@
 import { FooterEditorForm } from '@/components/admin/footer-editor-form'
+import { SectionSnapshotPreview } from '@/components/admin/section-snapshot-preview'
 import { defaultFooterContent, normalizeFooterContent } from '@/lib/content/defaults'
 import { getSectionSnapshot } from '@/lib/content/server'
 
@@ -13,6 +14,8 @@ export default async function FooterAdminPage() {
           Gerencie a identidade, os links, o contato e os textos finais do rodapé.
         </p>
       </div>
+
+      <SectionSnapshotPreview sectionLabel="Footer" snapshot={snapshot} />
 
       <FooterEditorForm snapshot={snapshot} />
     </div>

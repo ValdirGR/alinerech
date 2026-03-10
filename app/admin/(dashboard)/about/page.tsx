@@ -1,4 +1,5 @@
 import { AboutEditorForm } from '@/components/admin/about-editor-form'
+import { SectionSnapshotPreview } from '@/components/admin/section-snapshot-preview'
 import { defaultAboutContent, normalizeAboutContent } from '@/lib/content/defaults'
 import { getSectionSnapshot } from '@/lib/content/server'
 
@@ -13,6 +14,8 @@ export default async function AboutAdminPage() {
           Gerencie a apresentação institucional, os diferenciais e a imagem principal com fluxo de rascunho e publicação.
         </p>
       </div>
+
+      <SectionSnapshotPreview sectionLabel="Sobre" snapshot={snapshot} />
 
       <AboutEditorForm snapshot={snapshot} />
     </div>

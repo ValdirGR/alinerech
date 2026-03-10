@@ -1,4 +1,5 @@
 import { HeroEditorForm } from '@/components/admin/hero-editor-form'
+import { SectionSnapshotPreview } from '@/components/admin/section-snapshot-preview'
 import { defaultHeroContent, normalizeHeroContent } from '@/lib/content/defaults'
 import { getSectionSnapshot } from '@/lib/content/server'
 
@@ -13,6 +14,8 @@ export default async function HeroAdminPage() {
           Gerencie o topo do site com fluxo de rascunho e publicação. O site público só utiliza a versão publicada.
         </p>
       </div>
+
+      <SectionSnapshotPreview sectionLabel="Hero" snapshot={snapshot} />
 
       <HeroEditorForm snapshot={snapshot} />
     </div>

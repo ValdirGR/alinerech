@@ -1,4 +1,5 @@
 import { ContactEditorForm } from '@/components/admin/contact-editor-form'
+import { SectionSnapshotPreview } from '@/components/admin/section-snapshot-preview'
 import { defaultContactContent, normalizeContactContent } from '@/lib/content/defaults'
 import { getSectionSnapshot } from '@/lib/content/server'
 
@@ -13,6 +14,8 @@ export default async function ContactAdminPage() {
           Gerencie CTA, informações de contato e os textos do formulário com fluxo de rascunho e publicação.
         </p>
       </div>
+
+      <SectionSnapshotPreview sectionLabel="Contato" snapshot={snapshot} />
 
       <ContactEditorForm snapshot={snapshot} />
     </div>

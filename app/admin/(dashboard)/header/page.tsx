@@ -1,4 +1,5 @@
 import { HeaderEditorForm } from '@/components/admin/header-editor-form'
+import { SectionSnapshotPreview } from '@/components/admin/section-snapshot-preview'
 import { defaultHeaderContent, normalizeHeaderContent } from '@/lib/content/defaults'
 import { getSectionSnapshot } from '@/lib/content/server'
 
@@ -13,6 +14,8 @@ export default async function HeaderAdminPage() {
           Gerencie a logo, o menu principal e o CTA do topo do site.
         </p>
       </div>
+
+      <SectionSnapshotPreview sectionLabel="Header" snapshot={snapshot} />
 
       <HeaderEditorForm snapshot={snapshot} />
     </div>

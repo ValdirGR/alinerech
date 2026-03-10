@@ -1,4 +1,5 @@
 import { TestimonialsEditorForm } from '@/components/admin/testimonials-editor-form'
+import { SectionSnapshotPreview } from '@/components/admin/section-snapshot-preview'
 import { defaultTestimonialsContent, normalizeTestimonialsContent } from '@/lib/content/defaults'
 import { getSectionSnapshot } from '@/lib/content/server'
 
@@ -17,6 +18,8 @@ export default async function TestimonialsAdminPage() {
           Gerencie o carrossel de prova social, as imagens dos pacientes e os selos de confiança da seção.
         </p>
       </div>
+
+      <SectionSnapshotPreview sectionLabel="Depoimentos" snapshot={snapshot} />
 
       <TestimonialsEditorForm snapshot={snapshot} />
     </div>
