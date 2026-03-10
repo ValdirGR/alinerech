@@ -4,6 +4,7 @@ import { useRef, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishFeatures, saveFeaturesDraft } from '@/app/actions/admin-content'
+import { EditorSection } from '@/components/admin/editor-section'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -102,12 +103,11 @@ export function FeaturesEditorForm({ snapshot }: FeaturesEditorFormProps) {
       ) : null}
 
       <form ref={formRef} className="space-y-8">
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Header da seção</h2>
-            <p className="text-sm text-gray-500">Edite o selo, o título e a descrição dos diferenciais.</p>
-          </div>
-
+        <EditorSection
+          title="Header da seção"
+          description="Edite o selo, o título e a descrição dos diferenciais."
+          defaultOpen
+        >
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="badgeText">Selo superior</Label>
@@ -126,14 +126,12 @@ export function FeaturesEditorForm({ snapshot }: FeaturesEditorFormProps) {
               <Textarea id="description" name="description" rows={4} defaultValue={current.description} />
             </div>
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Cards de diferenciais</h2>
-            <p className="text-sm text-gray-500">Atualize os oito cards exibidos no grid principal.</p>
-          </div>
-
+        <EditorSection
+          title="Cards de diferenciais"
+          description="Atualize os oito cards exibidos no grid principal."
+        >
           <div className="grid gap-4 xl:grid-cols-2">
             {current.items.map((item, index) => (
               <div key={`feature-${index}`} className="space-y-4 rounded-xl border border-gray-200 p-4">
@@ -168,14 +166,12 @@ export function FeaturesEditorForm({ snapshot }: FeaturesEditorFormProps) {
               </div>
             ))}
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Indicadores</h2>
-            <p className="text-sm text-gray-500">Atualize os quatro números destacados abaixo do grid.</p>
-          </div>
-
+        <EditorSection
+          title="Indicadores"
+          description="Atualize os quatro números destacados abaixo do grid."
+        >
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {current.stats.map((item, index) => (
               <div key={`stat-${index}`} className="space-y-4 rounded-xl border border-gray-200 p-4">
@@ -190,7 +186,7 @@ export function FeaturesEditorForm({ snapshot }: FeaturesEditorFormProps) {
               </div>
             ))}
           </div>
-        </section>
+        </EditorSection>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
           <Button type="button" variant="outline" disabled={isPending} onClick={() => runAction('draft')}>

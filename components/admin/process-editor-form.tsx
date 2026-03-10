@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishProcess, saveProcessDraft } from '@/app/actions/admin-content'
 import { AdminImageField } from '@/components/admin/admin-image-field'
+import { EditorSection } from '@/components/admin/editor-section'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -92,12 +93,11 @@ export function ProcessEditorForm({ snapshot }: ProcessEditorFormProps) {
       ) : null}
 
       <form ref={formRef} className="space-y-8">
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Header e CTA</h2>
-            <p className="text-sm text-gray-500">Edite a apresentação da seção e a chamada final.</p>
-          </div>
-
+        <EditorSection
+          title="Header e CTA"
+          description="Edite a apresentação da seção e a chamada final."
+          defaultOpen
+        >
           <div className="grid gap-5 md:grid-cols-2">
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="badgeText">Selo superior</Label>
@@ -132,14 +132,12 @@ export function ProcessEditorForm({ snapshot }: ProcessEditorFormProps) {
               <Input id="ctaLabel" name="ctaLabel" defaultValue={current.ctaLabel} />
             </div>
           </div>
-        </section>
+        </EditorSection>
 
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-[#0B3D4C]">Etapas do processo</h2>
-            <p className="text-sm text-gray-500">Edite as quatro etapas exibidas no passo a passo.</p>
-          </div>
-
+        <EditorSection
+          title="Etapas do processo"
+          description="Edite as quatro etapas exibidas no passo a passo."
+        >
           <div className="grid gap-4 md:grid-cols-2">
             {current.steps.map((step, index) => (
               <div key={`step-${index}`} className="space-y-4 rounded-xl border border-gray-200 p-4">
@@ -170,7 +168,7 @@ export function ProcessEditorForm({ snapshot }: ProcessEditorFormProps) {
               </div>
             ))}
           </div>
-        </section>
+        </EditorSection>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
           <Button type="button" variant="outline" disabled={isPending} onClick={() => runAction('draft')}>
