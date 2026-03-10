@@ -389,10 +389,17 @@ Permite ao perfil `admin` gerar um backup operacional sob demanda diretamente no
 - A página `/admin/backups` expõe opções de exportação manual.
 - A rota `/admin/backups/download` valida o escopo solicitado.
 - O backend exige perfil `admin` e usa `SUPABASE_SERVICE_ROLE_KEY` apenas no servidor.
+- O acesso visual ao item de navegação é exibido apenas para usuários com papel `admin`.
 - O ZIP pode incluir:
   - tabelas `site_sections`, `media_assets`, `admin_profiles`, `leads`
   - arquivos dos buckets `site-images` e `results-images`
   - `manifest.json` com metadados da exportação
+- Os escopos disponíveis atualmente são:
+  - `database`: exporta apenas dados estruturados do painel
+  - `storage`: exporta apenas os arquivos dos buckets usados pelo site
+  - `full`: combina banco e storage no mesmo pacote
+- O nome do arquivo segue o padrão `aline-rech-<scope>-<timestamp>.zip`.
+- Esta etapa é exclusivamente manual e operacional: não há agendamento, retenção histórica nem fluxo de restauração.
 
 **Arquivos envolvidos**
 
@@ -568,6 +575,8 @@ Roles aceitas pelo banco:
 
 No estado atual da implementação, ambas têm acesso operacional equivalente dentro do painel, porque a função `private.is_admin_user()` aceita os dois papéis.
 
+Exceção importante: a funcionalidade de backup manual não segue essa equivalência. Embora `admin` e `editor` continuem equivalentes para CMS, mídia, histórico e leads, a exportação em `/admin/backups` é explicitamente restrita ao papel `admin` no backend.
+
 ### Requisitos mínimos para liberar um usuário
 
 1. Criar o usuário em `auth.users` via Supabase Auth.
@@ -592,6 +601,7 @@ Não existe API REST customizada para o painel. A comunicação é feita por:
 - Supabase Auth
 - Supabase Postgres
 - Supabase Storage
+- Vercel Environment Variables para disponibilizar `SUPABASE_SERVICE_ROLE_KEY` no ambiente de execução do servidor
 
 ### Integrações não implementadas no `/admin`
 
@@ -601,6 +611,7 @@ Não existe API REST customizada para o painel. A comunicação é feita por:
 ### Dependências relevantes por responsabilidade
 
 - `@supabase/ssr`, `@supabase/supabase-js`: auth, banco e storage
+- `jszip`: geração server-side do arquivo `.zip` para exportação manual de backup
 - `zod`: validação dos formulários e actions
 - `@radix-ui/react-*`: componentes de interface usados no painel
 - `vaul`: drawer utilitário disponível no projeto
@@ -625,6 +636,14 @@ Essas variáveis são usadas em:
 - `utils/supabase/server.ts`
 - `utils/supabase/client.ts`
 - `proxy.ts`
+- `utils/supabase/admin.ts`
+
+#### Observação sobre `SUPABASE_SERVICE_ROLE_KEY`
+
+- Essa variável é obrigatória para a funcionalidade de backup manual.
+- Ela deve existir apenas no ambiente do servidor.
+- Nunca deve ser exposta em componentes client-side ou em variáveis prefixadas com `NEXT_PUBLIC_`.
+- Em produção, deve ser configurada no provedor de hospedagem, por exemplo na Vercel.
 
 ### Pré-requisitos
 
@@ -699,6 +718,24 @@ Executar, na ordem:
 4. Alterar o status.
 5. Abrir o modal de detalhe.
 6. Validar atalhos de contato.
+
+#### Backups
+
+1. Garantir que o usuário autenticado tenha `role = admin` em `admin_profiles`.
+2. Garantir que `SUPABASE_SERVICE_ROLE_KEY` esteja configurada no ambiente do servidor.
+3. Abrir `/admin/backups`.
+4. Confirmar que a navegação “Backups” aparece apenas para `admin`.
+5. Testar os três escopos de exportação: `database`, `storage` e `full`.
+6. Validar que o navegador baixa um arquivo `.zip`.
+7. Abrir o pacote e confirmar a presença de `manifest.json`.
+8. Confirmar a presença da pasta `database/` quando o escopo incluir banco.
+9. Confirmar a presença da pasta `storage/` quando o escopo incluir storage.
+
+#### Produção
+
+1. Configurar `SUPABASE_SERVICE_ROLE_KEY` na Vercel ou no provedor equivalente.
+2. Fazer novo deploy após cadastrar a variável.
+3. Validar `/admin/backups` já no ambiente publicado.
 
 ### Verificação de build
 
