@@ -23,7 +23,7 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-primary flex items-center justify-center p-4">
+        <div className="admin-shell min-h-screen bg-gradient-primary flex items-center justify-center p-4">
             <div className="glass-effect w-full max-w-md p-8 rounded-2xl shadow-2xl animate-fadeInUp">
                 <div className="mb-8 text-center">
                     <h1 className="text-3xl font-bold text-[#0B3D4C] mb-2">Painel Admin</h1>

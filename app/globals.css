@@ -198,3 +198,60 @@
   transform: scale(1.1);
   box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
 }
+
+/* Admin theme overrides: keep the public site unchanged and swap the panel's green brand tone to the landing page black palette. */
+.admin-shell.bg-gradient-primary,
+.admin-shell .bg-gradient-primary {
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+}
+
+.admin-shell[class*="text-[#0B3D4C]"],
+.admin-shell [class*="text-[#0B3D4C]"] {
+  color: #000000 !important;
+}
+
+.admin-shell[class*="bg-[#0B3D4C]"],
+.admin-shell [class*="bg-[#0B3D4C]"] {
+  background-color: #000000 !important;
+}
+
+.admin-shell[class*="bg-[#155A6E]"],
+.admin-shell [class*="bg-[#155A6E]"] {
+  background-color: #1a1a1a !important;
+}
+
+.admin-shell[class*="border-[#0B3D4C]"],
+.admin-shell [class*="border-[#0B3D4C]"] {
+  border-color: #000000 !important;
+}
+
+.admin-shell[class*="border-[#0B3D4C]/20"],
+.admin-shell [class*="border-[#0B3D4C]/20"] {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+.admin-shell[class*="bg-[#F5FAFB]"],
+.admin-shell [class*="bg-[#F5FAFB]"],
+.admin-shell[class*="bg-[#F3FAFC]"],
+.admin-shell [class*="bg-[#F3FAFC]"],
+.admin-shell[class*="bg-[#FFFCF4]"],
+.admin-shell [class*="bg-[#FFFCF4]"],
+.admin-shell[class*="bg-[#FFF8E8]"],
+.admin-shell [class*="bg-[#FFF8E8]"] {
+  background-color: #f8f9fa !important;
+}
+
+.admin-shell[class*="hover:bg-[#155A6E]"]:hover,
+.admin-shell [class*="hover:bg-[#155A6E]"]:hover {
+  background-color: #1a1a1a !important;
+}
+
+.admin-shell[class*="hover:bg-[#FFFCF4]"]:hover,
+.admin-shell [class*="hover:bg-[#FFFCF4]"]:hover,
+.admin-shell .group:hover [class*="group-hover:bg-[#FFFCF4]"] {
+  background-color: #f8f9fa !important;
+}
+
+.admin-shell .group:hover [class*="group-hover:text-[#0B3D4C]"] {
+  color: #000000 !important;
+}

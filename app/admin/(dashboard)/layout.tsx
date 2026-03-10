@@ -15,7 +15,7 @@ export default async function AdminProtectedLayout({
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
+        <div className="admin-shell min-h-screen bg-gray-50 flex flex-col md:flex-row">
             <aside className="w-full md:w-64 bg-[#0B3D4C] text-white p-6 shadow-xl z-10 flex flex-col">
                 <div className="mb-10">
                     <h2 className="text-2xl font-bold bg-gradient-accent bg-clip-text text-transparent">
