@@ -100,18 +100,15 @@ export function Services() {
           {/* Facetas em Resina */}
           <div className="bg-white/10 border border-white/10 rounded-3xl shadow-xl overflow-hidden">
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-              {/* Image */}
+              {/* Text Highlight */}
               <div className="relative">
-                <div className="relative rounded-2xl overflow-hidden shadow-lg group m-6 lg:m-8">
-                  <img
-                    src={content.imageUrl}
-                    alt={content.imageAlt}
-                    className="w-full h-[350px] sm:h-[400px] object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-linear-to-t from-[#000000]/60 via-transparent to-transparent" />
-
-
+                <div className="relative m-6 lg:m-8 rounded-2xl border border-white/10 bg-linear-to-br from-white/6 via-white/4 to-[#C9A962]/10 p-8 sm:p-10 lg:p-12 shadow-lg">
+                  <p className="text-[#C9A962] text-lg sm:text-xl lg:text-[1.75rem] font-semibold leading-tight mb-5">
+                    {content.serviceSubtitle}
+                  </p>
+                  <p className="text-white/90 text-[0.95rem] sm:text-base lg:text-[1.45rem] leading-relaxed">
+                    {content.serviceDescription}
+                  </p>
                 </div>
 
                 {/* Decorative Elements */}
@@ -120,14 +117,11 @@ export function Services() {
 
               {/* Content */}
               <div className="p-6 lg:p-8 lg:pr-12">
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2">
+                <h3 className="text-3xl sm:text-4xl lg:text-[2.8rem] font-bold text-white mb-3 leading-tight">
                   {content.serviceTitle}
                 </h3>
-                <p className="text-[#C9A962] font-medium text-lg mb-4">
+                <p className="text-[#C9A962] font-medium text-xl sm:text-2xl mb-5 leading-snug">
                   {content.serviceSubtitle}
-                </p>
-                <p className="text-white/70 mb-6 leading-relaxed">
-                  {content.serviceDescription}
                 </p>
 
                 {/* Benefits */}
@@ -137,7 +131,7 @@ export function Services() {
                       <div className="w-5 h-5 bg-[#C9A962] rounded-full flex items-center justify-center shrink-0 mt-0.5">
                         <Check className="w-3 h-3 text-[#000000]" />
                       </div>
-                      <span className="text-white/80 text-sm">{benefit}</span>
+                      <span className="text-white/80 text-base sm:text-lg leading-relaxed">{benefit}</span>
                     </div>
                   ))}
                 </div>

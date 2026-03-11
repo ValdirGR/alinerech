@@ -96,7 +96,7 @@ export function ServicesEditorForm({ snapshot }: ServicesEditorFormProps) {
 
       <EditorSectionNav
         items={[
-          { id: 'services-main', label: 'Header e servico' },
+          { id: 'services-main', label: 'Header e layout do card' },
           { id: 'services-benefits', label: 'Beneficios e CTAs' },
           { id: 'services-details', label: 'Conteudo expandido' },
         ]}
@@ -105,57 +105,104 @@ export function ServicesEditorForm({ snapshot }: ServicesEditorFormProps) {
       <form ref={formRef} className="space-y-8">
         <EditorSection
           sectionId="services-main"
-          title="Header e serviço principal"
-          description="Edite a abertura da seção e o destaque do tratamento principal."
+          title="Header e layout principal"
+          description="Edite a abertura da seção, o bloco de texto destacado à esquerda e o conteúdo do card à direita."
           defaultOpen
         >
-          <div className="grid gap-5 md:grid-cols-2">
-            <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="badgeText">Selo superior</Label>
-              <Input id="badgeText" name="badgeText" defaultValue={current.badgeText} />
+          <div className="space-y-6">
+            <div className="rounded-2xl border border-gray-200 bg-gray-50 p-5">
+              <div className="mb-4">
+                <h3 className="text-base font-semibold text-[#0B3D4C]">Abertura da seção</h3>
+                <p className="mt-1 text-sm text-gray-500">
+                  Conteúdo exibido acima do card principal de tratamentos.
+                </p>
+              </div>
+
+              <div className="grid gap-5 md:grid-cols-2">
+                <div className="space-y-2 md:col-span-2">
+                  <Label htmlFor="badgeText">Selo superior</Label>
+                  <Input id="badgeText" name="badgeText" defaultValue={current.badgeText} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="titleLead">Título base</Label>
+                  <Input id="titleLead" name="titleLead" defaultValue={current.titleLead} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="titleHighlight">Destaque do título</Label>
+                  <Input id="titleHighlight" name="titleHighlight" defaultValue={current.titleHighlight} />
+                </div>
+                <div className="space-y-2 md:col-span-2">
+                  <Label htmlFor="description">Descrição da seção</Label>
+                  <Textarea id="description" name="description" rows={3} defaultValue={current.description} />
+                </div>
+              </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="titleLead">Título base</Label>
-              <Input id="titleLead" name="titleLead" defaultValue={current.titleLead} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="titleHighlight">Destaque do título</Label>
-              <Input id="titleHighlight" name="titleHighlight" defaultValue={current.titleHighlight} />
-            </div>
-            <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="description">Descrição da seção</Label>
-              <Textarea id="description" name="description" rows={3} defaultValue={current.description} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="serviceTitle">Título do serviço</Label>
-              <Input id="serviceTitle" name="serviceTitle" defaultValue={current.serviceTitle} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="serviceSubtitle">Subtítulo do serviço</Label>
-              <Input id="serviceSubtitle" name="serviceSubtitle" defaultValue={current.serviceSubtitle} />
-            </div>
-            <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="serviceDescription">Descrição do serviço</Label>
-              <Textarea
-                id="serviceDescription"
-                name="serviceDescription"
-                rows={5}
-                defaultValue={current.serviceDescription}
-              />
-            </div>
-            <div className="space-y-2 md:col-span-2">
-              <AdminImageField
-                name="imageUrl"
-                label="Imagem principal"
-                bucketName="site-images"
-                module="services"
-                defaultValue={current.imageUrl}
-                altFieldName="imageAlt"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="imageAlt">Alt da imagem</Label>
-              <Input id="imageAlt" name="imageAlt" defaultValue={current.imageAlt} />
+
+            <div className="grid gap-6 lg:grid-cols-2">
+              <div className="rounded-2xl border border-[#C9A962]/30 bg-[#FFFCF4] p-5">
+                <div className="mb-4">
+                  <h3 className="text-base font-semibold text-[#0B3D4C]">Coluna esquerda</h3>
+                  <p className="mt-1 text-sm text-[#8A6B2F]">
+                    Bloco de texto ampliado que substituiu a foto no layout público.
+                  </p>
+                </div>
+
+                <div className="space-y-5">
+                  <div className="space-y-2">
+                    <Label htmlFor="serviceSubtitle">Título do bloco destacado</Label>
+                    <Input id="serviceSubtitle" name="serviceSubtitle" defaultValue={current.serviceSubtitle} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="serviceDescription">Texto do bloco destacado</Label>
+                    <Textarea
+                      id="serviceDescription"
+                      name="serviceDescription"
+                      rows={6}
+                      defaultValue={current.serviceDescription}
+                    />
+                    <p className="text-xs text-[#8A6B2F]">
+                      Este parágrafo aparece com fonte ampliada na coluna esquerda do card.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-gray-200 bg-white p-5">
+                <div className="mb-4">
+                  <h3 className="text-base font-semibold text-[#0B3D4C]">Coluna direita</h3>
+                  <p className="mt-1 text-sm text-gray-500">
+                    Conteúdo textual do card com título, subtítulo repetido e lista de benefícios.
+                  </p>
+                </div>
+
+                <div className="space-y-5">
+                  <div className="space-y-2">
+                    <Label htmlFor="serviceTitle">Título do serviço</Label>
+                    <Input id="serviceTitle" name="serviceTitle" defaultValue={current.serviceTitle} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="serviceSubtitle">Subtítulo do card</Label>
+                    <p className="rounded-lg border border-dashed border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-600">
+                      Usa o mesmo conteúdo do campo “Título do bloco destacado” na coluna esquerda.
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <AdminImageField
+                      name="imageUrl"
+                      label="Imagem de apoio do tratamento"
+                      bucketName="site-images"
+                      module="services"
+                      defaultValue={current.imageUrl}
+                      altFieldName="imageAlt"
+                      helperText="Mantida no módulo para apoio editorial, mas não aparece mais como foto principal do card neste layout."
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="imageAlt">Alt da imagem</Label>
+                    <Input id="imageAlt" name="imageAlt" defaultValue={current.imageAlt} />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </EditorSection>

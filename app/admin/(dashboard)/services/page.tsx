@@ -11,7 +11,7 @@ export default async function ServicesAdminPage() {
       <div>
         <h1 className="text-3xl font-bold text-[#0B3D4C]">Serviços</h1>
         <p className="mt-2 max-w-2xl text-gray-500">
-          Gerencie o cabeçalho da seção, o tratamento principal, a lista de benefícios e o conteúdo expandido.
+          Gerencie o cabeçalho da seção, o bloco de texto destacado, o conteúdo do card, a lista de benefícios e a área expandida.
         </p>
       </div>
 
