@@ -60,7 +60,7 @@ export function EditorSection({
         </span>
       </CollapsibleTrigger>
 
-      <CollapsibleContent className="border-t border-gray-100 px-6 py-6">
+      <CollapsibleContent forceMount className="border-t border-gray-100 px-6 py-6 data-[state=closed]:hidden">
         {children}
       </CollapsibleContent>
     </Collapsible>

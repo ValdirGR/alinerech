@@ -4,7 +4,6 @@ import { useRef, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { Save, Send } from 'lucide-react'
 import { publishServices, saveServicesDraft } from '@/app/actions/admin-content'
-import { AdminImageField } from '@/components/admin/admin-image-field'
 import { EditorSection } from '@/components/admin/editor-section'
 import { EditorSectionNav } from '@/components/admin/editor-section-nav'
 import { Button } from '@/components/ui/button'
@@ -96,113 +95,69 @@ export function ServicesEditorForm({ snapshot }: ServicesEditorFormProps) {
 
       <EditorSectionNav
         items={[
-          { id: 'services-main', label: 'Header e layout do card' },
-          { id: 'services-benefits', label: 'Beneficios e CTAs' },
-          { id: 'services-details', label: 'Conteudo expandido' },
+          { id: 'services-header', label: 'Cabeçalho' },
+          { id: 'services-card', label: 'Card principal' },
+          { id: 'services-benefits', label: 'Benefícios e CTAs' },
+          { id: 'services-details', label: 'Conteúdo expandido' },
         ]}
       />
 
       <form ref={formRef} className="space-y-8">
+        {/* Hidden inputs for fields not displayed publicly but required by the schema */}
+        <input type="hidden" name="imageUrl" value={current.imageUrl} />
+        <input type="hidden" name="imageAlt" value={current.imageAlt} />
+
         <EditorSection
-          sectionId="services-main"
-          title="Header e layout principal"
-          description="Edite a abertura da seção, o bloco de texto destacado à esquerda e o conteúdo do card à direita."
+          sectionId="services-header"
+          title="Cabeçalho da seção"
+          description="Selo, título e descrição exibidos acima do card de tratamento."
           defaultOpen
         >
-          <div className="space-y-6">
-            <div className="rounded-2xl border border-gray-200 bg-gray-50 p-5">
-              <div className="mb-4">
-                <h3 className="text-base font-semibold text-[#0B3D4C]">Abertura da seção</h3>
-                <p className="mt-1 text-sm text-gray-500">
-                  Conteúdo exibido acima do card principal de tratamentos.
-                </p>
-              </div>
-
-              <div className="grid gap-5 md:grid-cols-2">
-                <div className="space-y-2 md:col-span-2">
-                  <Label htmlFor="badgeText">Selo superior</Label>
-                  <Input id="badgeText" name="badgeText" defaultValue={current.badgeText} />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="titleLead">Título base</Label>
-                  <Input id="titleLead" name="titleLead" defaultValue={current.titleLead} />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="titleHighlight">Destaque do título</Label>
-                  <Input id="titleHighlight" name="titleHighlight" defaultValue={current.titleHighlight} />
-                </div>
-                <div className="space-y-2 md:col-span-2">
-                  <Label htmlFor="description">Descrição da seção</Label>
-                  <Textarea id="description" name="description" rows={3} defaultValue={current.description} />
-                </div>
-              </div>
+          <div className="grid gap-5 md:grid-cols-2">
+            <div className="space-y-2 md:col-span-2">
+              <Label htmlFor="badgeText">Selo superior</Label>
+              <Input id="badgeText" name="badgeText" defaultValue={current.badgeText} />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="titleLead">Título base</Label>
+              <Input id="titleLead" name="titleLead" defaultValue={current.titleLead} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="titleHighlight">Destaque dourado do título</Label>
+              <Input id="titleHighlight" name="titleHighlight" defaultValue={current.titleHighlight} />
+            </div>
+            <div className="space-y-2 md:col-span-2">
+              <Label htmlFor="description">Descrição da seção</Label>
+              <Textarea id="description" name="description" rows={3} defaultValue={current.description} />
+            </div>
+          </div>
+        </EditorSection>
 
-            <div className="grid gap-6 lg:grid-cols-2">
-              <div className="rounded-2xl border border-[#C9A962]/30 bg-[#FFFCF4] p-5">
-                <div className="mb-4">
-                  <h3 className="text-base font-semibold text-[#0B3D4C]">Coluna esquerda</h3>
-                  <p className="mt-1 text-sm text-[#8A6B2F]">
-                    Bloco de texto ampliado que substituiu a foto no layout público.
-                  </p>
-                </div>
-
-                <div className="space-y-5">
-                  <div className="space-y-2">
-                    <Label htmlFor="serviceSubtitle">Título do bloco destacado</Label>
-                    <Input id="serviceSubtitle" name="serviceSubtitle" defaultValue={current.serviceSubtitle} />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="serviceDescription">Texto do bloco destacado</Label>
-                    <Textarea
-                      id="serviceDescription"
-                      name="serviceDescription"
-                      rows={6}
-                      defaultValue={current.serviceDescription}
-                    />
-                    <p className="text-xs text-[#8A6B2F]">
-                      Este parágrafo aparece com fonte ampliada na coluna esquerda do card.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-gray-200 bg-white p-5">
-                <div className="mb-4">
-                  <h3 className="text-base font-semibold text-[#0B3D4C]">Coluna direita</h3>
-                  <p className="mt-1 text-sm text-gray-500">
-                    Conteúdo textual do card com título, subtítulo repetido e lista de benefícios.
-                  </p>
-                </div>
-
-                <div className="space-y-5">
-                  <div className="space-y-2">
-                    <Label htmlFor="serviceTitle">Título do serviço</Label>
-                    <Input id="serviceTitle" name="serviceTitle" defaultValue={current.serviceTitle} />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="serviceSubtitle">Subtítulo do card</Label>
-                    <p className="rounded-lg border border-dashed border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-600">
-                      Usa o mesmo conteúdo do campo “Título do bloco destacado” na coluna esquerda.
-                    </p>
-                  </div>
-                  <div className="space-y-2">
-                    <AdminImageField
-                      name="imageUrl"
-                      label="Imagem de apoio do tratamento"
-                      bucketName="site-images"
-                      module="services"
-                      defaultValue={current.imageUrl}
-                      altFieldName="imageAlt"
-                      helperText="Mantida no módulo para apoio editorial, mas não aparece mais como foto principal do card neste layout."
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="imageAlt">Alt da imagem</Label>
-                    <Input id="imageAlt" name="imageAlt" defaultValue={current.imageAlt} />
-                  </div>
-                </div>
-              </div>
+        <EditorSection
+          sectionId="services-card"
+          title="Card principal de tratamento"
+          description="Textos do card: bloco destacado à esquerda e conteúdo à direita."
+        >
+          <div className="grid gap-5 md:grid-cols-2">
+            <div className="space-y-2 md:col-span-2">
+              <Label htmlFor="serviceTitle">Título do serviço</Label>
+              <Input id="serviceTitle" name="serviceTitle" defaultValue={current.serviceTitle} />
+              <p className="text-xs text-gray-500">Título grande exibido na coluna direita do card.</p>
+            </div>
+            <div className="space-y-2 md:col-span-2">
+              <Label htmlFor="serviceSubtitle">Subtítulo do serviço</Label>
+              <Input id="serviceSubtitle" name="serviceSubtitle" defaultValue={current.serviceSubtitle} />
+              <p className="text-xs text-gray-500">Aparece como título dourado no bloco à esquerda e como subtítulo na coluna direita.</p>
+            </div>
+            <div className="space-y-2 md:col-span-2">
+              <Label htmlFor="serviceDescription">Descrição do serviço</Label>
+              <Textarea
+                id="serviceDescription"
+                name="serviceDescription"
+                rows={5}
+                defaultValue={current.serviceDescription}
+              />
+              <p className="text-xs text-gray-500">Texto exibido com fonte ampliada no bloco destacado à esquerda do card.</p>
             </div>
           </div>
         </EditorSection>
@@ -210,7 +165,7 @@ export function ServicesEditorForm({ snapshot }: ServicesEditorFormProps) {
         <EditorSection
           sectionId="services-benefits"
           title="Benefícios e CTAs"
-          description="Mantenha a lista de benefícios e os dois botões do card."
+          description="Lista de benefícios com check e os dois botões do card."
         >
           <div className="grid gap-5 md:grid-cols-2">
             {current.benefits.map((benefit, index) => (
@@ -220,11 +175,11 @@ export function ServicesEditorForm({ snapshot }: ServicesEditorFormProps) {
               </div>
             ))}
             <div className="space-y-2">
-              <Label htmlFor="primaryCtaLabel">CTA principal</Label>
+              <Label htmlFor="primaryCtaLabel">Botão principal (dourado)</Label>
               <Input id="primaryCtaLabel" name="primaryCtaLabel" defaultValue={current.primaryCtaLabel} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="secondaryCtaLabel">CTA secundário</Label>
+              <Label htmlFor="secondaryCtaLabel">Botão secundário (outline)</Label>
               <Input id="secondaryCtaLabel" name="secondaryCtaLabel" defaultValue={current.secondaryCtaLabel} />
             </div>
           </div>
@@ -233,7 +188,7 @@ export function ServicesEditorForm({ snapshot }: ServicesEditorFormProps) {
         <EditorSection
           sectionId="services-details"
           title="Conteúdo expandido"
-          description="Edite limitações, processo e orientações após o procedimento."
+          description="Limitações, processo e cuidados exibidos ao clicar em 'Saiba mais'."
         >
           <div className="space-y-6">
             <div className="space-y-4">
