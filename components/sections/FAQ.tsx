@@ -4,10 +4,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ChevronDown, HelpCircle } from 'lucide-react';
 import { defaultFaqContent, normalizeFaqContent } from '@/lib/content/defaults';
 import { usePublishedSection } from '@/lib/content/use-published-section';
+import type { FAQContent } from '@/lib/content/types';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function FAQ() {
+export function FAQ({ initialContent }: { initialContent?: FAQContent }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -16,6 +17,7 @@ export function FAQ() {
     sectionKey: 'faq',
     fallback: defaultFaqContent,
     normalize: normalizeFaqContent,
+    initialContent,
   });
 
 

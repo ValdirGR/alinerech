@@ -4,10 +4,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Search, ClipboardList, Settings, Sparkles, CalendarCheck } from 'lucide-react';
 import { defaultProcessContent, normalizeProcessContent } from '@/lib/content/defaults';
 import { usePublishedSection } from '@/lib/content/use-published-section';
+import type { ProcessContent } from '@/lib/content/types';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Process() {
+export function Process({ initialContent }: { initialContent?: ProcessContent }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const facetasRef = useRef<HTMLDivElement>(null);
@@ -15,6 +16,7 @@ export function Process() {
     sectionKey: 'process',
     fallback: defaultProcessContent,
     normalize: normalizeProcessContent,
+    initialContent,
   });
 
   const stepIcons = [Search, ClipboardList, Sparkles, CalendarCheck] as const;

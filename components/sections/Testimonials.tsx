@@ -5,10 +5,11 @@ import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { defaultTestimonialsContent, normalizeTestimonialsContent } from '@/lib/content/defaults';
 import { usePublishedSection } from '@/lib/content/use-published-section';
+import type { TestimonialsContent } from '@/lib/content/types';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Testimonials() {
+export function Testimonials({ initialContent }: { initialContent?: TestimonialsContent }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -17,6 +18,7 @@ export function Testimonials() {
     sectionKey: 'testimonials',
     fallback: defaultTestimonialsContent,
     normalize: normalizeTestimonialsContent,
+    initialContent,
   });
 
   useEffect(() => {

@@ -1,61 +1,63 @@
-'use client';
+import { getCurrentSection } from '@/lib/content/server';
+import {
+  normalizeHeaderContent,
+  normalizeHeroContent,
+  normalizeAboutContent,
+  normalizeServicesContent,
+  normalizeResultsContent,
+  normalizeProcessContent,
+  normalizeMythsContent,
+  normalizeFeaturesContent,
+  normalizeTestimonialsContent,
+  normalizeFaqContent,
+  normalizeContactContent,
+  normalizeFooterContent,
+} from '@/lib/content/defaults';
+import { ClientPage, type AllSectionsContent } from './client-page';
 
-import { useEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Header } from '@/components/sections/Header';
-import { Hero } from '@/components/sections/Hero';
-import { About } from '@/components/sections/About';
-import { Services } from '@/components/sections/Services';
-import { Results } from '@/components/sections/Results';
-import { Process } from '@/components/sections/Process';
-import { MitoVerdade } from '@/components/sections/MitoVerdade';
-import { Features } from '@/components/sections/Features';
-import { Testimonials } from '@/components/sections/Testimonials';
-import { FAQ } from '@/components/sections/FAQ';
-import { Contact } from '@/components/sections/Contact';
-import { Footer } from '@/components/sections/Footer';
-import { WhatsAppFloat } from '@/components/WhatsAppFloat';
+export default async function Page() {
+  const [
+    header,
+    hero,
+    about,
+    services,
+    results,
+    process,
+    myths,
+    features,
+    testimonials,
+    faq,
+    contact,
+    footer,
+  ] = await Promise.all([
+    getCurrentSection('header', 'published', normalizeHeaderContent),
+    getCurrentSection('hero', 'published', normalizeHeroContent),
+    getCurrentSection('about', 'published', normalizeAboutContent),
+    getCurrentSection('services', 'published', normalizeServicesContent),
+    getCurrentSection('results', 'published', normalizeResultsContent),
+    getCurrentSection('process', 'published', normalizeProcessContent),
+    getCurrentSection('myths', 'published', normalizeMythsContent),
+    getCurrentSection('features', 'published', normalizeFeaturesContent),
+    getCurrentSection('testimonials', 'published', normalizeTestimonialsContent),
+    getCurrentSection('faq', 'published', normalizeFaqContent),
+    getCurrentSection('contact', 'published', normalizeContactContent),
+    getCurrentSection('footer', 'published', normalizeFooterContent),
+  ]);
 
-gsap.registerPlugin(ScrollTrigger);
+  const content: AllSectionsContent = {
+    header: header?.content,
+    hero: hero?.content,
+    about: about?.content,
+    services: services?.content,
+    results: results?.content,
+    process: process?.content,
+    myths: myths?.content,
+    features: features?.content,
+    testimonials: testimonials?.content,
+    faq: faq?.content,
+    contact: contact?.content,
+    footer: footer?.content,
+  };
 
-function App() {
-    useEffect(() => {
-        // Configuração global do GSAP
-        gsap.config({
-            nullTargetWarn: false,
-        });
-
-        // ScrollTrigger padrão
-        ScrollTrigger.defaults({
-            toggleActions: 'play none none none',
-        });
-
-        // Cleanup
-        return () => {
-            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-        };
-    }, []);
-
-    return (
-        <div className="min-h-screen bg-white">
-            <Header />
-            <main>
-                <Hero />
-                <About />
-                <Services />
-                <Results />
-                <Process />
-                <MitoVerdade />
-                <Features />
-                <Testimonials />
-                <FAQ />
-                <Contact />
-            </main>
-            <Footer />
-            <WhatsAppFloat />
-        </div>
-    );
+  return <ClientPage content={content} />;
 }
-
-export default App;

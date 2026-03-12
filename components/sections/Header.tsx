@@ -4,14 +4,16 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { defaultHeaderContent, normalizeHeaderContent } from '@/lib/content/defaults';
 import { usePublishedSection } from '@/lib/content/use-published-section';
+import type { HeaderContent } from '@/lib/content/types';
 
-export function Header() {
+export function Header({ initialContent }: { initialContent?: HeaderContent }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { content } = usePublishedSection({
     sectionKey: 'header',
     fallback: defaultHeaderContent,
     normalize: normalizeHeaderContent,
+    initialContent,
   });
 
   useEffect(() => {

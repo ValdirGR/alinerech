@@ -5,10 +5,11 @@ import { Check, Sparkles, ArrowRight, ChevronDown, AlertCircle, Clock, Shield } 
 import { Button } from '@/components/ui/button';
 import { defaultServicesContent, normalizeServicesContent } from '@/lib/content/defaults';
 import { usePublishedSection } from '@/lib/content/use-published-section';
+import type { ServicesContent } from '@/lib/content/types';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Services() {
+export function Services({ initialContent }: { initialContent?: ServicesContent }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
@@ -17,6 +18,7 @@ export function Services() {
     sectionKey: 'services',
     fallback: defaultServicesContent,
     normalize: normalizeServicesContent,
+    initialContent,
   });
 
   useEffect(() => {

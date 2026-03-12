@@ -10,13 +10,15 @@ import {
 import Image from 'next/image';
 import { defaultFooterContent, normalizeFooterContent } from '@/lib/content/defaults';
 import { usePublishedSection } from '@/lib/content/use-published-section';
+import type { FooterContent } from '@/lib/content/types';
 
-export function Footer() {
+export function Footer({ initialContent }: { initialContent?: FooterContent }) {
   const currentYear = new Date().getFullYear();
   const { content } = usePublishedSection({
     sectionKey: 'footer',
     fallback: defaultFooterContent,
     normalize: normalizeFooterContent,
+    initialContent,
   });
 
   const socialIconMap = {

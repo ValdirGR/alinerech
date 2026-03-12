@@ -5,10 +5,11 @@ import { Camera, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import { defaultResultsContent, normalizeResultsContent } from '@/lib/content/defaults';
 import { usePublishedSection } from '@/lib/content/use-published-section';
+import type { ResultsContent } from '@/lib/content/types';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Results() {
+export function Results({ initialContent }: { initialContent?: ResultsContent }) {
     const sectionRef = useRef<HTMLDivElement>(null);
     const headerRef = useRef<HTMLDivElement>(null);
     const gridRef = useRef<HTMLDivElement>(null);
@@ -16,6 +17,7 @@ export function Results() {
         sectionKey: 'results',
         fallback: defaultResultsContent,
         normalize: normalizeResultsContent,
+        initialContent,
     });
 
     useEffect(() => {

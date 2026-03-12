@@ -4,10 +4,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { X, Check, AlertTriangle } from 'lucide-react';
 import { defaultMythsContent, normalizeMythsContent } from '@/lib/content/defaults';
 import { usePublishedSection } from '@/lib/content/use-published-section';
+import type { MythsContent } from '@/lib/content/types';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function MitoVerdade() {
+export function MitoVerdade({ initialContent }: { initialContent?: MythsContent }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
@@ -15,6 +16,7 @@ export function MitoVerdade() {
     sectionKey: 'myths',
     fallback: defaultMythsContent,
     normalize: normalizeMythsContent,
+    initialContent,
   });
 
   useEffect(() => {

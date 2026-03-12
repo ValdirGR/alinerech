@@ -5,8 +5,9 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
 import { defaultHeroContent, normalizeHeroContent } from '@/lib/content/defaults';
 import { usePublishedSection } from '@/lib/content/use-published-section';
+import type { HeroContent } from '@/lib/content/types';
 
-export function Hero() {
+export function Hero({ initialContent }: { initialContent?: HeroContent }) {
   const heroRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -15,6 +16,7 @@ export function Hero() {
     sectionKey: 'hero',
     fallback: defaultHeroContent,
     normalize: normalizeHeroContent,
+    initialContent,
   });
 
   useEffect(() => {

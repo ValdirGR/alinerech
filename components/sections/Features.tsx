@@ -13,10 +13,11 @@ import {
 } from 'lucide-react';
 import { defaultFeaturesContent, normalizeFeaturesContent } from '@/lib/content/defaults';
 import { usePublishedSection } from '@/lib/content/use-published-section';
+import type { FeaturesContent } from '@/lib/content/types';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Features() {
+export function Features({ initialContent }: { initialContent?: FeaturesContent }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -25,6 +26,7 @@ export function Features() {
     sectionKey: 'features',
     fallback: defaultFeaturesContent,
     normalize: normalizeFeaturesContent,
+    initialContent,
   });
 
   const iconMap = {

@@ -17,6 +17,7 @@ import { Label } from '@/components/ui/label';
 import { submitLead } from '@/app/actions/leads';
 import { defaultContactContent, normalizeContactContent } from '@/lib/content/defaults';
 import { usePublishedSection } from '@/lib/content/use-published-section';
+import type { ContactContent } from '@/lib/content/types';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,7 +27,7 @@ const iconMap = {
   clock: Clock,
 };
 
-export function Contact() {
+export function Contact({ initialContent }: { initialContent?: ContactContent }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLDivElement>(null);
@@ -43,6 +44,7 @@ export function Contact() {
     sectionKey: 'contact',
     fallback: defaultContactContent,
     normalize: normalizeContactContent,
+    initialContent,
   });
 
   useEffect(() => {

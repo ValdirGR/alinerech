@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Award, GraduationCap, Heart, Shield } from 'lucide-react';
 import { defaultAboutContent, normalizeAboutContent } from '@/lib/content/defaults';
 import { usePublishedSection } from '@/lib/content/use-published-section';
+import type { AboutContent } from '@/lib/content/types';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,7 +15,7 @@ const iconMap = {
   shield: Shield,
 };
 
-export function About() {
+export function About({ initialContent }: { initialContent?: AboutContent }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -23,6 +24,7 @@ export function About() {
     sectionKey: 'about',
     fallback: defaultAboutContent,
     normalize: normalizeAboutContent,
+    initialContent,
   });
   useEffect(() => {
     const triggers: ScrollTrigger[] = [];

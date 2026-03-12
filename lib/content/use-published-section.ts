@@ -8,11 +8,17 @@ export function usePublishedSection<TContent>(params: {
   sectionKey: SectionKey;
   fallback: TContent;
   normalize: (value: unknown) => TContent;
+  initialContent?: TContent;
 }) {
-  const [content, setContent] = useState<TContent>(params.fallback);
+  const [content, setContent] = useState<TContent>(params.initialContent ?? params.fallback);
   const [record, setRecord] = useState<SiteSectionRecord<TContent> | null>(null);
 
   useEffect(() => {
+    // Skip client-side fetch when content was already provided by the server
+    if (params.initialContent) {
+      return;
+    }
+
     let isMounted = true;
     const supabase = createClient();
 
