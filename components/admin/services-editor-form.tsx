@@ -145,9 +145,14 @@ export function ServicesEditorForm({ snapshot }: ServicesEditorFormProps) {
               <p className="text-xs text-gray-500">Título grande exibido na coluna direita do card.</p>
             </div>
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="serviceSubtitle">Subtítulo do serviço</Label>
+              <Label htmlFor="highlightTitle">Título do bloco destacado (esquerda)</Label>
+              <Input id="highlightTitle" name="highlightTitle" defaultValue={current.highlightTitle} />
+              <p className="text-xs text-gray-500">Título dourado exibido no bloco à esquerda do card.</p>
+            </div>
+            <div className="space-y-2 md:col-span-2">
+              <Label htmlFor="serviceSubtitle">Subtítulo do serviço (direita)</Label>
               <Input id="serviceSubtitle" name="serviceSubtitle" defaultValue={current.serviceSubtitle} />
-              <p className="text-xs text-gray-500">Aparece como título dourado no bloco à esquerda e como subtítulo na coluna direita.</p>
+              <p className="text-xs text-gray-500">Subtítulo dourado exibido na coluna direita, abaixo do título do serviço.</p>
             </div>
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="serviceDescription">Descrição do serviço</Label>

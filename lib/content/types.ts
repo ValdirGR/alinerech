@@ -108,6 +108,7 @@ export interface ServicesContent {
   description: string;
   serviceTitle: string;
   serviceSubtitle: string;
+  highlightTitle: string;
   serviceDescription: string;
   imageUrl: string;
   imageAlt: string;

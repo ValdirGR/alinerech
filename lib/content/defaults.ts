@@ -240,6 +240,7 @@ export const defaultServicesContent: ServicesContent = {
     'Oferecemos tratamentos odontológicos de excelência com foco em estética e saúde. Cada procedimento é personalizado para atender às suas necessidades específicas.',
   serviceTitle: 'Facetas em Resina',
   serviceSubtitle: 'Transformação imediata do seu sorriso',
+  highlightTitle: 'Transformação imediata do seu sorriso',
   serviceDescription:
     'As facetas em resina são laminados diretos de resina composta aplicados sobre a face do dente. São a solução ideal para quem busca um sorriso perfeito de forma rápida e acessível, corrigindo imperfeições como manchas, espaços entre dentes, dentes desalinhados ou desgastados.',
   imageUrl: '/facetas-resina.jpg',
