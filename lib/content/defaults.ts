@@ -298,7 +298,7 @@ export const defaultFaqContent: FAQContent = {
     {
       question: 'Vai estragar meus dentes?',
       answer:
-        'Não. Na maioria dos casos, o desgaste é mínimo e planejado para preservar o máximo de estrutura dental saudável. As facetas em resina exigem pouquíssimo preparo do dente, mantendo sua integridade.',
+        'Não. Na maioria dos casos, o desgaste é zero. Em situações específicas, pode ser necessário um pequeno preparo — sempre mínimo e controlado.',
     },
     {
       question: 'Fica artificial?',
