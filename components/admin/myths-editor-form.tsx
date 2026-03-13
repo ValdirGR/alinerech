@@ -95,7 +95,8 @@ export function MythsEditorForm({ snapshot }: MythsEditorFormProps) {
       <EditorSectionNav
         items={[
           { id: 'myths-header', label: 'Header' },
-          { id: 'myths-cards', label: 'Cards' },
+          { id: 'myths-facetas', label: 'Facetas' },
+          { id: 'myths-implantes', label: 'Implantes' },
         ]}
       />
 
@@ -139,49 +140,100 @@ export function MythsEditorForm({ snapshot }: MythsEditorFormProps) {
         </EditorSection>
 
         <EditorSection
-          sectionId="myths-cards"
-          title="Cards da seção"
-          description="Atualize os oito cards de mito e verdade exibidos no grid."
+          sectionId="myths-facetas"
+          title="Cards — Facetas"
+          description="Cards de mito e verdade sobre facetas em resina."
         >
           <div className="grid gap-4 xl:grid-cols-2">
-            {current.items.map((item, index) => (
-              <div key={`myth-${index}`} className="space-y-4 rounded-xl border border-gray-200 p-4">
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor={`mythType${index}`}>Tipo</Label>
-                    <select
-                      id={`mythType${index}`}
-                      name={`mythType${index}`}
-                      defaultValue={item.type}
-                      className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs"
-                    >
-                      <option value="mito">Mito</option>
-                      <option value="verdade">Verdade</option>
-                    </select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor={`mythCategory${index}`}>Categoria</Label>
-                    <select
-                      id={`mythCategory${index}`}
-                      name={`mythCategory${index}`}
-                      defaultValue={item.category}
-                      className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs"
-                    >
-                      <option value="Facetas">Facetas</option>
-                      <option value="Implantes">Implantes</option>
-                    </select>
-                  </div>
-                  <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor={`mythStatement${index}`}>Afirmação</Label>
-                    <Input id={`mythStatement${index}`} name={`mythStatement${index}`} defaultValue={item.statement} />
-                  </div>
-                  <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor={`mythTruth${index}`}>Explicação</Label>
-                    <Textarea id={`mythTruth${index}`} name={`mythTruth${index}`} rows={4} defaultValue={item.truth} />
+            {current.items.map((item, index) =>
+              item.category !== 'Facetas' ? null : (
+                <div key={`myth-${index}`} className="space-y-4 rounded-xl border border-[#C9A962]/30 bg-[#FFFBF0] p-4">
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label htmlFor={`mythType${index}`}>Tipo</Label>
+                      <select
+                        id={`mythType${index}`}
+                        name={`mythType${index}`}
+                        defaultValue={item.type}
+                        className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs"
+                      >
+                        <option value="mito">Mito</option>
+                        <option value="verdade">Verdade</option>
+                      </select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor={`mythCategory${index}`}>Categoria</Label>
+                      <select
+                        id={`mythCategory${index}`}
+                        name={`mythCategory${index}`}
+                        defaultValue={item.category}
+                        className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs"
+                      >
+                        <option value="Facetas">Facetas</option>
+                        <option value="Implantes">Implantes</option>
+                      </select>
+                    </div>
+                    <div className="space-y-2 md:col-span-2">
+                      <Label htmlFor={`mythStatement${index}`}>Afirmação</Label>
+                      <Input id={`mythStatement${index}`} name={`mythStatement${index}`} defaultValue={item.statement} />
+                    </div>
+                    <div className="space-y-2 md:col-span-2">
+                      <Label htmlFor={`mythTruth${index}`}>Explicação</Label>
+                      <Textarea id={`mythTruth${index}`} name={`mythTruth${index}`} rows={4} defaultValue={item.truth} />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            )}
+          </div>
+        </EditorSection>
+
+        <EditorSection
+          sectionId="myths-implantes"
+          title="Cards — Implantes"
+          description="Cards de mito e verdade sobre implantes dentários."
+        >
+          <div className="grid gap-4 xl:grid-cols-2">
+            {current.items.map((item, index) =>
+              item.category !== 'Implantes' ? null : (
+                <div key={`myth-${index}`} className="space-y-4 rounded-xl border border-blue-300/30 bg-blue-50/50 p-4">
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label htmlFor={`mythType${index}`}>Tipo</Label>
+                      <select
+                        id={`mythType${index}`}
+                        name={`mythType${index}`}
+                        defaultValue={item.type}
+                        className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs"
+                      >
+                        <option value="mito">Mito</option>
+                        <option value="verdade">Verdade</option>
+                      </select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor={`mythCategory${index}`}>Categoria</Label>
+                      <select
+                        id={`mythCategory${index}`}
+                        name={`mythCategory${index}`}
+                        defaultValue={item.category}
+                        className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs"
+                      >
+                        <option value="Facetas">Facetas</option>
+                        <option value="Implantes">Implantes</option>
+                      </select>
+                    </div>
+                    <div className="space-y-2 md:col-span-2">
+                      <Label htmlFor={`mythStatement${index}`}>Afirmação</Label>
+                      <Input id={`mythStatement${index}`} name={`mythStatement${index}`} defaultValue={item.statement} />
+                    </div>
+                    <div className="space-y-2 md:col-span-2">
+                      <Label htmlFor={`mythTruth${index}`}>Explicação</Label>
+                      <Textarea id={`mythTruth${index}`} name={`mythTruth${index}`} rows={4} defaultValue={item.truth} />
+                    </div>
+                  </div>
+                </div>
+              )
+            )}
           </div>
         </EditorSection>
 
