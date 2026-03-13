@@ -109,10 +109,12 @@ export function Hero({ initialContent }: { initialContent?: HeroContent }) {
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-none tracking-tight mb-8">
-              {content.titleLead}{' '}
+              {content.titleLead}
+              <br />
               <span className="text-[#C9A962]">{content.titleHighlight}</span>
               <br />
-              {content.titleSecondLead}{' '}
+              {content.titleSecondLead}
+              <br />
               <span className="text-[#C9A962]">{content.titleSecondHighlight}</span>
             </h1>
 
