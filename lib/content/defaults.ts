@@ -313,7 +313,7 @@ export const defaultFaqContent: FAQContent = {
     {
       question: 'Posso fazer se tenho bruxismo?',
       answer:
-        'O bruxismo é uma contraindicação relativa. Em casos leves a moderados, é possível realizar o procedimento com uso de placa de proteção noturna. Em casos severos, pode ser recomendada outra abordagem estética.',
+        'Sim! A resina composta é o material com propriedades mais semelhantes ao dente natural — por isso é excelente para quem tem bruxismo, devolvendo a estrutura perdida pelo desgaste. O uso de placa de proteção noturna é recomendado para preservar o resultado.',
     },
     {
       question: 'Mancha ou fica amarelo com o tempo?',
