@@ -11,13 +11,17 @@ gsap.registerPlugin(ScrollTrigger);
 export function MitoVerdade({ initialContent }: { initialContent?: MythsContent }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
+  const facetasRef = useRef<HTMLDivElement>(null);
+  const implantesRef = useRef<HTMLDivElement>(null);
   const { content } = usePublishedSection({
     sectionKey: 'myths',
     fallback: defaultMythsContent,
     normalize: normalizeMythsContent,
     initialContent,
   });
+
+  const facetasItems = content.items.filter((item) => item.category === 'Facetas');
+  const implantesItems = content.items.filter((item) => item.category === 'Implantes');
 
   useEffect(() => {
     const triggers: ScrollTrigger[] = [];
@@ -37,19 +41,33 @@ export function MitoVerdade({ initialContent }: { initialContent?: MythsContent 
       });
       triggers.push(headerTrigger);
 
-      const cardsTrigger = ScrollTrigger.create({
-        trigger: cardsRef.current,
+      const facetasTrigger = ScrollTrigger.create({
+        trigger: facetasRef.current,
         start: 'top 75%',
         onEnter: () => {
           gsap.fromTo(
-            cardsRef.current?.children || [],
+            facetasRef.current?.children || [],
             { opacity: 0, y: 40, scale: 0.95 },
             { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.08, ease: 'power2.out' }
           );
         },
         once: true
       });
-      triggers.push(cardsTrigger);
+      triggers.push(facetasTrigger);
+
+      const implantesTrigger = ScrollTrigger.create({
+        trigger: implantesRef.current,
+        start: 'top 75%',
+        onEnter: () => {
+          gsap.fromTo(
+            implantesRef.current?.children || [],
+            { opacity: 0, y: 40, scale: 0.95 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.08, ease: 'power2.out' }
+          );
+        },
+        once: true
+      });
+      triggers.push(implantesTrigger);
     }, sectionRef);
 
     return () => {
@@ -94,48 +112,95 @@ export function MitoVerdade({ initialContent }: { initialContent?: MythsContent 
           </p>
         </div>
 
-        {/* Cards Grid */}
-        <div ref={cardsRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {content.items.map((item, index) => (
-            <div
-              key={index}
-              className="group bg-white/5 backdrop-blur-sm hover:bg-white/10 border border-white/10 hover:border-[#C9A962]/30 rounded-2xl p-5 transition-all duration-500 hover:-translate-y-1"
-            >
-              {/* Category Badge */}
-              <span className={`inline-block text-xs font-medium px-3 py-1 rounded-full mb-4 ${item.category === 'Facetas'
-                ? 'bg-[#C9A962]/20 text-[#C9A962]'
-                : 'bg-blue-400/20 text-blue-300'
-                }`}>
-                {item.category}
+        {/* Facetas Section */}
+        {facetasItems.length > 0 && (
+          <div className="mb-16">
+            <div className="flex items-center gap-3 mb-8">
+              <span className="inline-block text-sm font-semibold px-4 py-1.5 rounded-full bg-[#C9A962]/20 text-[#C9A962]">
+                {content.facetasSectionTitle}
               </span>
-
-              {/* Icon */}
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${item.type === 'mito'
-                ? 'bg-red-500/20'
-                : 'bg-green-500/20'
-                }`}>
-                {item.type === 'mito' ? (
-                  <X className="w-6 h-6 text-red-400" />
-                ) : (
-                  <Check className="w-6 h-6 text-green-400" />
-                )}
-              </div>
-
-              {/* Statement */}
-              <p className="text-white font-medium text-sm mb-3 leading-snug">
-                "{item.statement}"
-              </p>
-
-              {/* Divider */}
-              <div className="w-full h-px bg-white/10 mb-3" />
-
-              {/* Truth */}
-              <p className="text-white/70 text-xs leading-relaxed">
-                {item.truth}
-              </p>
+              <div className="flex-1 h-px bg-white/10" />
             </div>
-          ))}
-        </div>
+            <div ref={facetasRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {facetasItems.map((item, index) => (
+                <div
+                  key={index}
+                  className="group bg-white/5 backdrop-blur-sm hover:bg-white/10 border border-white/10 hover:border-[#C9A962]/30 rounded-2xl p-5 transition-all duration-500 hover:-translate-y-1"
+                >
+                  {/* Icon */}
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${item.type === 'mito'
+                    ? 'bg-red-500/20'
+                    : 'bg-green-500/20'
+                    }`}>
+                    {item.type === 'mito' ? (
+                      <X className="w-6 h-6 text-red-400" />
+                    ) : (
+                      <Check className="w-6 h-6 text-green-400" />
+                    )}
+                  </div>
+
+                  {/* Statement */}
+                  <p className="text-white font-medium text-sm mb-3 leading-snug">
+                    &ldquo;{item.statement}&rdquo;
+                  </p>
+
+                  {/* Divider */}
+                  <div className="w-full h-px bg-white/10 mb-3" />
+
+                  {/* Truth */}
+                  <p className="text-white/70 text-xs leading-relaxed">
+                    {item.truth}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Implantes Section */}
+        {implantesItems.length > 0 && (
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-8">
+              <span className="inline-block text-sm font-semibold px-4 py-1.5 rounded-full bg-blue-400/20 text-blue-300">
+                {content.implantesSectionTitle}
+              </span>
+              <div className="flex-1 h-px bg-white/10" />
+            </div>
+            <div ref={implantesRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {implantesItems.map((item, index) => (
+                <div
+                  key={index}
+                  className="group bg-white/5 backdrop-blur-sm hover:bg-white/10 border border-white/10 hover:border-blue-400/30 rounded-2xl p-5 transition-all duration-500 hover:-translate-y-1"
+                >
+                  {/* Icon */}
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${item.type === 'mito'
+                    ? 'bg-red-500/20'
+                    : 'bg-green-500/20'
+                    }`}>
+                    {item.type === 'mito' ? (
+                      <X className="w-6 h-6 text-red-400" />
+                    ) : (
+                      <Check className="w-6 h-6 text-green-400" />
+                    )}
+                  </div>
+
+                  {/* Statement */}
+                  <p className="text-white font-medium text-sm mb-3 leading-snug">
+                    &ldquo;{item.statement}&rdquo;
+                  </p>
+
+                  {/* Divider */}
+                  <div className="w-full h-px bg-white/10 mb-3" />
+
+                  {/* Truth */}
+                  <p className="text-white/70 text-xs leading-relaxed">
+                    {item.truth}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Disclaimer */}
         <div className="mt-12 text-center">

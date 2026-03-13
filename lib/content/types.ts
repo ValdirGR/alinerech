@@ -186,6 +186,8 @@ export interface MythsContent {
   titleLead: string;
   titleHighlight: string;
   description: string;
+  facetasSectionTitle: string;
+  implantesSectionTitle: string;
   items: MythItem[];
   disclaimer: string;
 }

@@ -404,11 +404,13 @@ export const defaultMythsContent: MythsContent = {
   titleHighlight: 'Verdade?',
   description:
     'Separamos os principais mitos e verdades sobre facetas e implantes para que você tenha informações claras e tome a melhor decisão.',
+  facetasSectionTitle: 'Facetas em Resina',
+  implantesSectionTitle: 'Implantes Dentários',
   items: [
     {
       type: 'mito',
       statement: 'Facetas em resina estragam os dentes',
-      truth: 'FALSO! O desgaste é mínimo e planejado para preservar a estrutura dental. Na maioria dos casos, o preparo é conservador ou até inexistente.',
+      truth: 'Falso! Na maioria dos casos, o desgaste é zero. Em situações específicas, pode ser necessário um pequeno preparo.',
       category: 'Facetas',
     },
     {
@@ -841,6 +843,14 @@ export const normalizeMythsContent = (value: unknown): MythsContent => {
   return {
     ...defaultMythsContent,
     ...value,
+    facetasSectionTitle:
+      typeof value.facetasSectionTitle === 'string'
+        ? value.facetasSectionTitle
+        : defaultMythsContent.facetasSectionTitle,
+    implantesSectionTitle:
+      typeof value.implantesSectionTitle === 'string'
+        ? value.implantesSectionTitle
+        : defaultMythsContent.implantesSectionTitle,
     items: Array.isArray(value.items)
       ? value.items
           .map((item) => {

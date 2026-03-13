@@ -207,6 +207,8 @@ const mythsSchema = z.object({
   titleLead: z.string().trim().min(1, 'Informe a primeira parte do titulo.'),
   titleHighlight: z.string().trim().min(1, 'Informe o destaque do titulo.'),
   description: z.string().trim().min(1, 'Informe a descricao da seção.'),
+  facetasSectionTitle: z.string().trim().min(1, 'Informe o título da seção de facetas.'),
+  implantesSectionTitle: z.string().trim().min(1, 'Informe o título da seção de implantes.'),
   items: z.array(mythItemSchema).min(8).max(8),
   disclaimer: z.string().trim().min(1, 'Informe a observação final.'),
 })
@@ -493,6 +495,8 @@ const getMythsContentFromFormData = (formData: FormData): MythsContent => {
     titleLead: formData.get('titleLead'),
     titleHighlight: formData.get('titleHighlight'),
     description: formData.get('description'),
+    facetasSectionTitle: formData.get('facetasSectionTitle'),
+    implantesSectionTitle: formData.get('implantesSectionTitle'),
     items,
     disclaimer: formData.get('disclaimer'),
   })

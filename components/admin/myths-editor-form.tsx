@@ -123,6 +123,14 @@ export function MythsEditorForm({ snapshot }: MythsEditorFormProps) {
               <Label htmlFor="description">Descrição</Label>
               <Textarea id="description" name="description" rows={3} defaultValue={current.description} />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="facetasSectionTitle">Título da seção Facetas</Label>
+              <Input id="facetasSectionTitle" name="facetasSectionTitle" defaultValue={current.facetasSectionTitle} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="implantesSectionTitle">Título da seção Implantes</Label>
+              <Input id="implantesSectionTitle" name="implantesSectionTitle" defaultValue={current.implantesSectionTitle} />
+            </div>
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="disclaimer">Observação final</Label>
               <Textarea id="disclaimer" name="disclaimer" rows={3} defaultValue={current.disclaimer} />
