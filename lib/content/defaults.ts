@@ -333,7 +333,7 @@ export const defaultFaqContent: FAQContent = {
     {
       question: 'Serve para qualquer caso?',
       answer:
-        'Não. Dentes muito escurecidos, desgastes intensos, bruxismo severo ou casos que exigem grandes alterações de posição podem necessitar de outras abordagens. A avaliação clínica é fundamental para indicar o melhor tratamento.',
+        'Na maioria dos casos, sim! Porém dentes muito escurecidos, desgastes extremos ou casos que exigem grandes alterações de posição podem necessitar de outras abordagens. A avaliação clínica é fundamental para indicar o melhor tratamento.',
     },
   ],
   ctaText: 'Ainda tem dúvidas? Entre em contato diretamente pelo WhatsApp.',
